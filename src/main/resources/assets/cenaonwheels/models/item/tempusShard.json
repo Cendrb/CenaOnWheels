@@ -1,0 +1,6 @@
+{
+  "parent": "cenaonwheels:item/base",
+  "textures": {
+    "layer0": "cenaonwheels:items/johnCena"
+  }
+}
