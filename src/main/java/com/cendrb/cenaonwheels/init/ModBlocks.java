@@ -1,6 +1,7 @@
 package com.cendrb.cenaonwheels.init;
 
 import com.cendrb.cenaonwheels.block.BlockBase;
+import com.cendrb.cenaonwheels.block.BlockOreTempus;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -9,8 +10,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public class ModBlocks {
 
-    public static void init() {
+    public static BlockOreTempus oreTempus;
 
+    public static void init() {
+        oreTempus = registerWithDefaultItemblock(new BlockOreTempus());
     }
 
     private static <T extends BlockBase> T register(T block, ItemBlock itemBlock) {
