@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "cenaonwheels:visPylon"
+    },
+    "inventory": {
+      "model": "cenaonwheels:visPylon",
+      "transform": "forge:default-block"
+    }
+  }
+}

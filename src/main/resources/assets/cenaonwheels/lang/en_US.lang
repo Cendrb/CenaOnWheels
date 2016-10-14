@@ -1,6 +1,13 @@
 # Items
-item.tempusShard=Tempus Shard
+item.tempusShard.name=Tempus Shard
 
 # Blocks
-tile.oreTempus=Tempus Ore
-tile.visPylon=Vis Pylon
+tile.oreTempus.name=Tempus Ore
+tile.visPylon.name=Vis Pylon
+tile.visStorageCap.name=Vis Storage Cap
+tile.visStorageCasing.name=Vis Storage Casing
+tile.visStorageGlass.name=Vis Storage Glass
+tile.visStorageCore.name=Vis Storage Core
+
+# Creative Tabs
+itemGroup.COW=COW
