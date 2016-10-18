@@ -1,6 +1,10 @@
 # Items
 item.tempusShard.name=Tempus Shard
 item.wrench.name=Wrench
+item.klidProjector.name=Klid Projector
+item.klidManipulationCircuit.name=Klid Manipulation Circuit
+item.klidMetal.name=Klidmetal
+item.klidGem.name=Klidgem
 
 # Blocks
 tile.oreTempus.name=Tempus Ore
@@ -11,6 +15,7 @@ tile.klidStorageBasicCore.name=Klid Storage Basic Core
 tile.klidStorageAdvancedCore.name=Klid Storage Advanced Core
 tile.klidStorageUltimateCore.name=Klid Storage Ultimate Core
 tile.cowKlidGenerator.name=Cow Klid Generator
+tile.machineBase.name=Machine Base
 
 # Entities
 entity.cenaonwheels.KlidBurst.name=Klid Burst
