@@ -1,11 +1,8 @@
 package com.cendrb.cenaonwheels.tileentity;
 
-import com.cendrb.cenaonwheels.Core;
 import com.cendrb.cenaonwheels.ITargetable;
 import com.cendrb.cenaonwheels.KlidWorldSavedData;
-import com.cendrb.cenaonwheels.entity.EntityKlidBurst;
 import com.cendrb.cenaonwheels.init.ModBlocks;
-import com.cendrb.cenaonwheels.network.SyncEntityNBTMessage;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import com.cendrb.cenaonwheels.util.WorldHelper;
 import net.minecraft.entity.passive.EntityCow;
@@ -16,7 +13,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -92,8 +88,10 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable,
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        ticksTillBurst = compound.getInteger("ticksTillBurst");
-        triggered = compound.getBoolean("triggered");
+        if (compound.hasKey("ticksTillBurst"))
+            ticksTillBurst = compound.getInteger("ticksTillBurst");
+        if (compound.hasKey("triggered"))
+            triggered = compound.getBoolean("triggered");
         if (compound.hasKey("targetLocation"))
             targetLocation = BlockPos.fromLong(compound.getLong("targetLocation"));
     }
