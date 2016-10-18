@@ -17,7 +17,10 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
     private boolean multiblockComplete = false;
     private int currentEnergyMax = 0;
     private int currentEnergy = 0;
+    private int outputBurstVolume = 0;
 
     private int tickTimer = 0;
 
@@ -197,14 +201,32 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        currentEnergy = compound.getInteger("currentEnergy");
+        if (compound.hasKey("currentEnergy"))
+            currentEnergy = compound.getInteger("currentEnergy");
+        if (compound.hasKey("outputBurstVolume"))
+            outputBurstVolume = compound.getInteger("outputBurstVolume");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         compound.setInteger("currentEnergy", currentEnergy);
+        compound.setInteger("outputBurstVolume", outputBurstVolume);
         return compound;
+    }
+
+    /** Return an appropriate bounding box enclosing the TESR
+     * This method is used to control whether the TESR should be rendered or not, depending on where the player is looking.
+     * The default is the AABB for the parent block, which might be too small if the TESR renders outside the borders of the
+     *   parent block.
+     * If you get the boundary too small, the TESR may disappear when you aren't looking directly at it.
+     * @return an appropriately size AABB for the TileEntity
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public AxisAlignedBB getRenderBoundingBox()
+    {
+        return new AxisAlignedBB(getPos(), getPos().add(1, 2, 1));
     }
 
     public boolean isMultiblockComplete() {
