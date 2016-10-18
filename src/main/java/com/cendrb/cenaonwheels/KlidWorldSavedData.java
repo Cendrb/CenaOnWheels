@@ -61,7 +61,7 @@ public class KlidWorldSavedData extends WorldSavedData {
             if (calculatedTickRate < MINIMAL_TICKRATE)
                 calculatedTickRate = MINIMAL_TICKRATE;
             if ((int)TickrateAPI.getServerTickrate() != calculatedTickRate) {
-                TickrateAPI.changeDefaultTickrate(calculatedTickRate, true);
+                TickrateAPI.changeMapTickrate(calculatedTickRate);
                 TickrateAPI.changeTickrate(calculatedTickRate);
             }
         }
