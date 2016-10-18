@@ -1,12 +1,16 @@
 package com.cendrb.cenaonwheels.util;
 
+import com.cendrb.cenaonwheels.Core;
 import com.cendrb.cenaonwheels.KlidWorldSavedData;
+import com.cendrb.cenaonwheels.entity.EntityKlidBurst;
+import com.cendrb.cenaonwheels.network.SyncEntityNBTMessage;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.util.Random;
 
@@ -54,6 +58,16 @@ public class WorldHelper {
     private static void spawnKlidReleasedParticles(World world, double x, double y, double z)
     {
         spawnParticles(world, EnumParticleTypes.CLOUD, x, y, z, 3, 3, 3, 40);
+    }
+
+    public static void spawnKlidBurst(World world, double x, double y, double z, BlockPos targetLocation, int klidAmount)
+    {
+        EntityKlidBurst klidBurst = new EntityKlidBurst(world);
+        klidBurst.setPosition(x, y, z);
+        klidBurst.setTarget(targetLocation);
+        klidBurst.setValue(klidAmount);
+        world.spawnEntityInWorld(klidBurst);
+        Core.networkWrapper.sendToAllAround(new SyncEntityNBTMessage(klidBurst.getEntityId(), klidBurst.serializeNBT()), new NetworkRegistry.TargetPoint(world.provider.getDimension(), x, y, z, 256));
     }
 
     public static void releaseKlidAt(World world, double x, double y, double z, int klidAmount)

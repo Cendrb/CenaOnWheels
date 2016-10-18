@@ -6,6 +6,7 @@ import com.cendrb.cenaonwheels.entity.EntityKlidBurst;
 import com.cendrb.cenaonwheels.init.ModBlocks;
 import com.cendrb.cenaonwheels.network.SyncEntityNBTMessage;
 import com.cendrb.cenaonwheels.util.COWLogger;
+import com.cendrb.cenaonwheels.util.WorldHelper;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -49,12 +50,7 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable 
                     if (cowsCount > 0)
                         if (targetLocation != null) {
                             COWLogger.logDebug("Storage found");
-                            EntityKlidBurst klidBurst = new EntityKlidBurst(worldObj);
-                            klidBurst.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
-                            klidBurst.setTarget(targetLocation);
-                            klidBurst.setValue(cowsCount);
-                            worldObj.spawnEntityInWorld(klidBurst);
-                            Core.networkWrapper.sendToAllAround(new SyncEntityNBTMessage(klidBurst.getEntityId(), klidBurst.serializeNBT()), new NetworkRegistry.TargetPoint(worldObj.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+                            WorldHelper.spawnKlidBurst(worldObj, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, targetLocation, cowsCount);
                         } else {
                             COWLogger.logDebug("No storage found, releasing klid into the atmosphere");
                             KlidWorldSavedData savedData = KlidWorldSavedData.getFor(worldObj);
