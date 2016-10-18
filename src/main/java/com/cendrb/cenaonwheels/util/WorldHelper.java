@@ -32,7 +32,7 @@ public class WorldHelper {
     }
 
     public static <T extends Block> boolean isBlock(World world, BlockPos pos, Class<T> blockClass) {
-        return blockClass.isInstance(world.getBlockState(pos).getBlock());
+        return blockClass.isAssignableFrom(world.getBlockState(pos).getBlock().getClass());
     }
 
     public static <T extends Block> boolean isBlock(World world, BlockPos pos, Block block) {
