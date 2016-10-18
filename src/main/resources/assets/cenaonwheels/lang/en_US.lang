@@ -7,7 +7,9 @@ tile.oreTempus.name=Tempus Ore
 tile.klidStorageCap.name=Vis Storage Cap
 tile.klidStorageCasing.name=Klid Storage Casing
 tile.klidStorageGlass.name=Klid Storage Glass
-tile.klidStorageCore.name=Klid Storage Core
+tile.klidStorageBasicCore.name=Klid Storage Basic Core
+tile.klidStorageAdvancedCore.name=Klid Storage Advanced Core
+tile.klidStorageUltimateCore.name=Klid Storage Ultimate Core
 tile.cowKlidGenerator.name=Cow Klid Generator
 
 # Entities

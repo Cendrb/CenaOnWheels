@@ -13,7 +13,9 @@ public class ModBlocks {
     public static BlockKlidStorageCap klidStorageCap;
     public static BlockKlidStorageCasing klidStorageCasing;
     public static BlockKlidStorageGlass klidStorageGlass;
-    public static BlockKlidStorageCore klidStorageCore;
+    public static BlockKlidStorageCore klidStorageBasicCore;
+    public static BlockKlidStorageCore klidStorageAdvancedCore;
+    public static BlockKlidStorageCore klidStorageUltimateCore;
     public static BlockCowKlidGenerator cowKlidGenerator;
 
     public static void init() {
@@ -21,7 +23,9 @@ public class ModBlocks {
         klidStorageCap = registerWithDefaultItemblock(new BlockKlidStorageCap());
         klidStorageCasing = registerWithDefaultItemblock(new BlockKlidStorageCasing());
         klidStorageGlass = registerWithDefaultItemblock(new BlockKlidStorageGlass());
-        klidStorageCore = registerWithDefaultItemblock(new BlockKlidStorageCore());
+        klidStorageBasicCore = registerWithDefaultItemblock(new BlockKlidStorageCore("Basic", 20));
+        klidStorageAdvancedCore = registerWithDefaultItemblock(new BlockKlidStorageCore("Advanced", 100));
+        klidStorageUltimateCore = registerWithDefaultItemblock(new BlockKlidStorageCore("Ultimate", 500));
         cowKlidGenerator = registerWithDefaultItemblock(new BlockCowKlidGenerator());
     }
 
