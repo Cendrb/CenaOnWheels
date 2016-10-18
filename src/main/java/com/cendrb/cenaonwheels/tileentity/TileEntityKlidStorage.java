@@ -53,17 +53,12 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
     }
 
     public void acceptEnergy(int energy) {
-        COWLogger.logDebug("Accepting " + energy + " COW energy!");
         currentEnergy += energy;
+        COWLogger.logDebug("Accepted " + energy + " COW energy! TOTAL: " + currentEnergy);
         if (currentEnergy + energy > currentEnergyMax) {
             currentEnergy = currentEnergyMax;
-            COWLogger.logDebug("Vis overflow!");
-            if (!worldObj.isRemote) {
-                KlidWorldSavedData savedData = KlidWorldSavedData.getFor(worldObj);
-                savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + energy);
-            }
+            WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), energy);
         }
-        COWLogger.logDebug("Total energy: " + currentEnergy);
         markDirty();
     }
 

@@ -1,5 +1,6 @@
 package com.cendrb.cenaonwheels.util;
 
+import com.cendrb.cenaonwheels.KlidWorldSavedData;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -50,9 +51,16 @@ public class WorldHelper {
         }
     }
 
-    public static void spawnKlidReleasedParticles(World world, double x, double y, double z)
+    private static void spawnKlidReleasedParticles(World world, double x, double y, double z)
     {
         spawnParticles(world, EnumParticleTypes.CLOUD, x, y, z, 3, 3, 3, 40);
+    }
+
+    public static void releaseKlidAt(World world, double x, double y, double z, int klidAmount)
+    {
+        KlidWorldSavedData savedData = KlidWorldSavedData.getFor(world);
+        savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + klidAmount);
+        WorldHelper.spawnKlidReleasedParticles(world, x, y, z);
     }
 
     private static double getRandomPolarity(Random random) {

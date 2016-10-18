@@ -1,7 +1,8 @@
 package com.cendrb.cenaonwheels.entity;
 
-import com.cendrb.cenaonwheels.KlidWorldSavedData;
+import com.cendrb.cenaonwheels.block.BlockKlidStoragePart;
 import com.cendrb.cenaonwheels.tileentity.TileEntityKlidStorage;
+import com.cendrb.cenaonwheels.tileentity.TileEntityMultiblockPart;
 import com.cendrb.cenaonwheels.util.WorldHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -36,13 +37,6 @@ public class EntityKlidBurst extends Entity {
     @Override
     public void onUpdate() {
         if (target != null) {
-            //COWLogger.logDebug(COWLogger.formatBlockPos(target));
-            double xDiff = (target.getX() + 0.5) - posX;
-            double yDiff = (target.getY() + 0.5) - posY;
-            double zDiff = (target.getZ() + 0.5) - posZ;
-            motionX = xDiff / 15.0;
-            motionY = yDiff / 15.0;
-            motionZ = zDiff / 15.0;
 
             // so that it looks a bit better
             ProjectileHelper.rotateTowardsMovement(this, 1f);
@@ -50,15 +44,23 @@ public class EntityKlidBurst extends Entity {
             // casts a ray between current and the next position
             RayTraceResult rayTraceResult = ProjectileHelper.forwardsRaycast(this, false, false, this);
             if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK) {
+                boolean klidSaved = false;
                 TileEntity tileEntity;
-                if((tileEntity = worldObj.getTileEntity(rayTraceResult.getBlockPos())) instanceof TileEntityKlidStorage)
-                {
-                    ((TileEntityKlidStorage)tileEntity).acceptEnergy(value);
+                if (WorldHelper.isBlock(worldObj, rayTraceResult.getBlockPos(), BlockKlidStoragePart.class) && (tileEntity = worldObj.getTileEntity(rayTraceResult.getBlockPos())) != null) {
+                    if (tileEntity instanceof TileEntityKlidStorage) {
+                        ((TileEntityKlidStorage) tileEntity).acceptEnergy(value);
+                        klidSaved = true;
+                    } else if (tileEntity instanceof TileEntityMultiblockPart) {
+                        BlockPos masterPos = ((TileEntityMultiblockPart) tileEntity).getMasterPos();
+                        TileEntity masterTileEntity;
+                        if ((masterTileEntity = worldObj.getTileEntity(masterPos)) instanceof TileEntityKlidStorage) {
+                            ((TileEntityKlidStorage) masterTileEntity).acceptEnergy(value);
+                            klidSaved = true;
+                        }
+                    }
                 }
-                else {
-                    KlidWorldSavedData savedData = KlidWorldSavedData.getFor(worldObj);
-                    savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + value);
-                    WorldHelper.spawnKlidReleasedParticles(worldObj, posX, posY, posZ);
+                if (!klidSaved) {
+                    WorldHelper.releaseKlidAt(worldObj, posX, posY, posZ, value);
                 }
                 setDead();
             }
@@ -95,19 +97,31 @@ public class EntityKlidBurst extends Entity {
 
     @Override
     protected void readEntityFromNBT(NBTTagCompound compound) {
-        target = BlockPos.fromLong(compound.getLong("target"));
+        setTarget(BlockPos.fromLong(compound.getLong("target")));
+        setValue(compound.getInteger("value"));
     }
 
     @Override
     protected void writeEntityToNBT(NBTTagCompound compound) {
         compound.setLong("target", target.toLong());
+        compound.setInteger("value", value);
     }
 
     public void setTarget(BlockPos target) {
         this.target = target;
+        double xDiff = (target.getX() + 0.5) - posX;
+        double yDiff = (target.getY() + 0.5) - posY;
+        double zDiff = (target.getZ() + 0.5) - posZ;
+        motionX = xDiff / 15.0;
+        motionY = yDiff / 15.0;
+        motionZ = zDiff / 15.0;
     }
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

@@ -32,6 +32,10 @@ public class TileEntityMultiblockPart extends TileEntity {
         this.masterPos = masterPos;
     }
 
+    public BlockPos getMasterPos() {
+        return masterPos;
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         if (compound.hasKey("masterPos")) {

@@ -54,7 +54,7 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable 
                             klidBurst.setTarget(targetLocation);
                             klidBurst.setValue(cowsCount);
                             worldObj.spawnEntityInWorld(klidBurst);
-                            Core.networkWrapper.sendToAllAround(new SyncEntityNBTMessage(klidBurst.getEntityId(), klidBurst.serializeNBT()), new NetworkRegistry.TargetPoint(0, pos.getX(), pos.getY(), pos.getZ(), 64));
+                            Core.networkWrapper.sendToAllAround(new SyncEntityNBTMessage(klidBurst.getEntityId(), klidBurst.serializeNBT()), new NetworkRegistry.TargetPoint(worldObj.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
                         } else {
                             COWLogger.logDebug("No storage found, releasing klid into the atmosphere");
                             KlidWorldSavedData savedData = KlidWorldSavedData.getFor(worldObj);
