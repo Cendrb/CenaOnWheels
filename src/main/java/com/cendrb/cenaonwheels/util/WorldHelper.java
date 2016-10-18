@@ -52,7 +52,7 @@ public class WorldHelper {
 
     public static void spawnKlidReleasedParticles(World world, double x, double y, double z)
     {
-        spawnParticles(world, EnumParticleTypes.CLOUD, x, y, z, 5, 5, 5, 30);
+        spawnParticles(world, EnumParticleTypes.CLOUD, x, y, z, 3, 3, 3, 40);
     }
 
     private static double getRandomPolarity(Random random) {
