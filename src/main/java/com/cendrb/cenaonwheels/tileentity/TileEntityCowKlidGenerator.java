@@ -28,7 +28,7 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable 
 
     private int ticksTillBurst = 0;
     private boolean triggered;
-    private BlockPos storageLocation;
+    private BlockPos targetLocation;
 
     public TileEntityCowKlidGenerator() {
     }
@@ -46,13 +46,12 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable 
                             pos.getX() + 10, pos.getY() + 5, pos.getZ() + 10));
                     int cowsCount = cowsInRange.size();
                     COWLogger.logDebug(cowsCount + " cows found!");
-                    TileEntity tileEntityStorage;
-                    if (storageLocation != null && (tileEntityStorage = worldObj.getTileEntity(storageLocation)) instanceof TileEntityKlidStorage && ((TileEntityKlidStorage)tileEntityStorage).isMultiblockComplete()) {
+                    if (targetLocation != null) {
                         COWLogger.logDebug("Storage found");
-                        ((TileEntityKlidStorage) tileEntityStorage).acceptEnergy(cowsCount); // souldn't request the tile netity twice
                         EntityKlidBurst klidBurst = new EntityKlidBurst(worldObj);
-                        klidBurst.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
-                        klidBurst.setTarget(storageLocation);
+                        klidBurst.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
+                        klidBurst.setTarget(targetLocation);
+                        klidBurst.setValue(cowsCount);
                         worldObj.spawnEntityInWorld(klidBurst);
                         Core.networkWrapper.sendToAllAround(new SyncEntityNBTMessage(klidBurst.getEntityId(), klidBurst.serializeNBT()), new NetworkRegistry.TargetPoint(0, pos.getX(), pos.getY(), pos.getZ(), 64));
                     } else {
@@ -97,8 +96,8 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable 
         super.readFromNBT(compound);
         ticksTillBurst = compound.getInteger("ticksTillBurst");
         triggered = compound.getBoolean("triggered");
-        if (compound.hasKey("storageLocation"))
-            storageLocation = BlockPos.fromLong(compound.getLong("storageLocation"));
+        if (compound.hasKey("targetLocation"))
+            targetLocation = BlockPos.fromLong(compound.getLong("targetLocation"));
     }
 
     @Override
@@ -106,8 +105,8 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable 
         super.writeToNBT(compound);
         compound.setInteger("ticksTillBurst", ticksTillBurst);
         compound.setBoolean("triggered", triggered);
-        if (storageLocation != null)
-            compound.setLong("storageLocation", storageLocation.toLong());
+        if (targetLocation != null)
+            compound.setLong("targetLocation", targetLocation.toLong());
         return compound;
     }
 
@@ -121,8 +120,8 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable 
         worldObj.notifyBlockOfStateChange(pos, ModBlocks.cowKlidGenerator);
     }
 
-    public void setStorageLocation(BlockPos pos) {
-        storageLocation = pos;
+    public void setTargetLocation(BlockPos pos) {
+        targetLocation = pos;
     }
 
 }

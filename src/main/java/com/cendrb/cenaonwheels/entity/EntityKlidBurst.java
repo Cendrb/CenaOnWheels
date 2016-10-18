@@ -1,12 +1,15 @@
 package com.cendrb.cenaonwheels.entity;
 
-import com.cendrb.cenaonwheels.util.COWLogger;
+import com.cendrb.cenaonwheels.KlidWorldSavedData;
+import com.cendrb.cenaonwheels.tileentity.TileEntityKlidStorage;
+import com.cendrb.cenaonwheels.util.WorldHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,6 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityKlidBurst extends Entity {
 
     private BlockPos target;
+    private int value;
 
     public EntityKlidBurst(World worldIn) {
         super(worldIn);
@@ -40,17 +44,30 @@ public class EntityKlidBurst extends Entity {
             motionY = yDiff / 15.0;
             motionZ = zDiff / 15.0;
 
-            // yeah, you need to move the entity yourself
-            setPosition(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-
             // so that it looks a bit better
             ProjectileHelper.rotateTowardsMovement(this, 1f);
 
-            if(xDiff < 0.3 && yDiff <0.3 && zDiff < 0.3)
+            // casts a ray between current and the next position
+            RayTraceResult rayTraceResult = ProjectileHelper.forwardsRaycast(this, false, false, this);
+            if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK) {
+                TileEntity tileEntity;
+                if((tileEntity = worldObj.getTileEntity(rayTraceResult.getBlockPos())) instanceof TileEntityKlidStorage)
+                {
+                    ((TileEntityKlidStorage)tileEntity).acceptEnergy(value);
+                }
+                else {
+                    KlidWorldSavedData savedData = KlidWorldSavedData.getFor(worldObj);
+                    savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + value);
+                    WorldHelper.spawnKlidReleasedParticles(worldObj, posX, posY, posZ);
+                }
                 setDead();
+            }
+
+            // yeah, you need to move the entity yourself
+            setPosition(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
         }
 
-        if(worldObj.isRemote)
+        if (worldObj.isRemote)
             worldObj.spawnParticle(EnumParticleTypes.CRIT_MAGIC, posX, posY, posZ, -motionX, -motionY, -motionZ);
 
         super.onUpdate();
@@ -88,5 +105,9 @@ public class EntityKlidBurst extends Entity {
 
     public void setTarget(BlockPos target) {
         this.target = target;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

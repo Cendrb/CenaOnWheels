@@ -41,59 +41,36 @@ public class ItemWrench extends ItemBase {
 
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos posClicked, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (stack.getTagCompound() == null)
-            stack.setTagCompound(new NBTTagCompound());
+        NBTTagCompound tag = stack.getTagCompound();
+        if (tag == null) {
+            NBTTagCompound compound = new NBTTagCompound();
+            stack.setTagCompound(compound);
+            tag = compound;
+        }
 
         if (playerIn.isSneaking()) {
             // link mode
-            if (WorldHelper.isBlock(worldIn, posClicked, BlockKlidStorageCap.class)) {
-                TileEntity tileEntityClicked = worldIn.getTileEntity(posClicked);
-                if (tileEntityClicked instanceof TileEntityKlidStorage) {
-                    NBTTagCompound tag = stack.getTagCompound();
-                    if (tag.hasKey(LINK_BLOCK_POS)) {
-                        BlockPos linkBlockPos = BlockPos.fromLong(tag.getLong(LINK_BLOCK_POS));
-                        if (WorldHelper.isBlock(worldIn, linkBlockPos, BlockCowKlidGenerator.class)) {
-                            TileEntity tileEntity = worldIn.getTileEntity(linkBlockPos);
-                            if (tileEntity instanceof TileEntityCowKlidGenerator) {
-                                ((TileEntityCowKlidGenerator) tileEntity).setStorageLocation(posClicked);
-                            }
-                        }
-                        tag.removeTag(LINK_BLOCK_POS);
-                        tag.removeTag(LINK_BLOCK_CLASS);
-                    } else {
-                        tag.setLong(LINK_BLOCK_POS, posClicked.toLong());
-                        tag.setString(LINK_BLOCK_CLASS, "Klid Storage");
-                    }
-                }
-                return EnumActionResult.SUCCESS;
-            } else if (WorldHelper.isBlock(worldIn, posClicked, BlockCowKlidGenerator.class)) {
+            if (WorldHelper.isBlock(worldIn, posClicked, BlockCowKlidGenerator.class)) {
                 TileEntity tileEntityClicked = worldIn.getTileEntity(posClicked);
                 if (tileEntityClicked instanceof TileEntityCowKlidGenerator) {
-                    NBTTagCompound tag = stack.getTagCompound();
-                    if (tag.hasKey(LINK_BLOCK_POS)) {
-                        BlockPos linkBlockPos = BlockPos.fromLong(tag.getLong(LINK_BLOCK_POS));
-                        if (WorldHelper.isBlock(worldIn, linkBlockPos, BlockKlidStorageCap.class)) {
-                            TileEntity tileEntity = worldIn.getTileEntity(linkBlockPos);
-                            if (tileEntity instanceof TileEntityKlidStorage) {
-                                ((TileEntityCowKlidGenerator) tileEntityClicked).setStorageLocation(linkBlockPos);
-                            }
-                        }
-                        tag.removeTag(LINK_BLOCK_POS);
-                        tag.removeTag(LINK_BLOCK_CLASS);
-                    } else {
-                        tag.setLong(LINK_BLOCK_POS, posClicked.toLong());
-                        tag.setString(LINK_BLOCK_CLASS, "Klid Generator");
-                    }
+                    tag.setLong(LINK_BLOCK_POS, posClicked.toLong());
+                    tag.setString(LINK_BLOCK_CLASS, "Klid Generator");
                 }
                 return EnumActionResult.SUCCESS;
             } else {
-                stack.getTagCompound().removeTag(LINK_BLOCK_POS);
-                stack.getTagCompound().removeTag(LINK_BLOCK_CLASS);
+                if(tag.hasKey(LINK_BLOCK_POS)) {
+                    BlockPos savedPos = BlockPos.fromLong(tag.getLong(LINK_BLOCK_POS));
+                    TileEntity tileEntity;
+                    if (WorldHelper.isBlock(worldIn, savedPos, BlockCowKlidGenerator.class) && (tileEntity = worldIn.getTileEntity(savedPos)) instanceof TileEntityCowKlidGenerator)
+                    {
+                        ((TileEntityCowKlidGenerator)tileEntity).setTargetLocation(posClicked);
+                    }
+                }
+                tag.removeTag(LINK_BLOCK_POS);
+                tag.removeTag(LINK_BLOCK_CLASS);
             }
-        }
-        else
-        {
-            if(!worldIn.isRemote) {
+        } else {
+            if (!worldIn.isRemote) {
                 // info mode
                 TileEntity tileEntity;
                 if (WorldHelper.isBlock(worldIn, posClicked, BlockKlidStorageCap.class) && (tileEntity = worldIn.getTileEntity(posClicked)) instanceof TileEntityKlidStorage) {
