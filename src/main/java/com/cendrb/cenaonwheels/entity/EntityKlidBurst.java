@@ -1,5 +1,6 @@
 package com.cendrb.cenaonwheels.entity;
 
+import com.cendrb.cenaonwheels.IKlidAcceptor;
 import com.cendrb.cenaonwheels.block.BlockKlidStoragePart;
 import com.cendrb.cenaonwheels.tileentity.TileEntityKlidStorage;
 import com.cendrb.cenaonwheels.tileentity.TileEntityMultiblockPart;
@@ -45,18 +46,16 @@ public class EntityKlidBurst extends Entity {
             RayTraceResult rayTraceResult = ProjectileHelper.forwardsRaycast(this, false, false, this);
             if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK) {
                 boolean klidSaved = false;
-                TileEntity tileEntity;
-                if (WorldHelper.isBlock(worldObj, rayTraceResult.getBlockPos(), BlockKlidStoragePart.class) && (tileEntity = worldObj.getTileEntity(rayTraceResult.getBlockPos())) != null) {
-                    if (tileEntity instanceof TileEntityKlidStorage) {
-                        ((TileEntityKlidStorage) tileEntity).acceptKlid(value);
+                TileEntity tileEntity = worldObj.getTileEntity(rayTraceResult.getBlockPos());
+                if (tileEntity instanceof IKlidAcceptor) {
+                    ((IKlidAcceptor) tileEntity).acceptKlid(value);
+                    klidSaved = true;
+                } else if (WorldHelper.isBlock(worldObj, rayTraceResult.getBlockPos(), BlockKlidStoragePart.class) && tileEntity instanceof TileEntityMultiblockPart) {
+                    BlockPos masterPos = ((TileEntityMultiblockPart) tileEntity).getMasterPos();
+                    TileEntity masterTileEntity = worldObj.getTileEntity(masterPos);
+                    if (masterTileEntity instanceof TileEntityKlidStorage) {
+                        ((TileEntityKlidStorage) masterTileEntity).acceptKlid(value);
                         klidSaved = true;
-                    } else if (tileEntity instanceof TileEntityMultiblockPart) {
-                        BlockPos masterPos = ((TileEntityMultiblockPart) tileEntity).getMasterPos();
-                        TileEntity masterTileEntity;
-                        if ((masterTileEntity = worldObj.getTileEntity(masterPos)) instanceof TileEntityKlidStorage) {
-                            ((TileEntityKlidStorage) masterTileEntity).acceptKlid(value);
-                            klidSaved = true;
-                        }
                     }
                 }
                 if (!klidSaved) {
@@ -117,11 +116,11 @@ public class EntityKlidBurst extends Entity {
         motionZ = zDiff / 15.0;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     public int getValue() {
         return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }
