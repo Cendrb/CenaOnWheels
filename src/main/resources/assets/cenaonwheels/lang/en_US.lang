@@ -1,13 +1,17 @@
 # Items
 item.tempusShard.name=Tempus Shard
+item.wrench.name=Wrench
 
 # Blocks
 tile.oreTempus.name=Tempus Ore
-tile.visPylon.name=Vis Pylon
-tile.visStorageCap.name=Vis Storage Cap
-tile.visStorageCasing.name=Vis Storage Casing
-tile.visStorageGlass.name=Vis Storage Glass
-tile.visStorageCore.name=Vis Storage Core
+tile.klidStorageCap.name=Vis Storage Cap
+tile.klidStorageCasing.name=Klid Storage Casing
+tile.klidStorageGlass.name=Klid Storage Glass
+tile.klidStorageCore.name=Klid Storage Core
+tile.cowKlidGenerator.name=Cow Klid Generator
+
+# Entities
+entity.cenaonwheels.KlidBurst.name=Klid Burst
 
 # Creative Tabs
 itemGroup.COW=COW

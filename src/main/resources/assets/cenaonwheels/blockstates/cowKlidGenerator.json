@@ -8,17 +8,17 @@
     "triggered": {
       "true": {
         "textures": {
-          "all": "cenaonwheels:blocks/cowVisGeneratorOn"
+          "all": "cenaonwheels:blocks/cowKlidGeneratorOn"
         }
       },
       "false": {
         "textures": {
-          "all": "cenaonwheels:blocks/cowVisGeneratorOff"
+          "all": "cenaonwheels:blocks/cowKlidGeneratorOff"
         }
       },
       "inventory": {
         "textures": {
-          "all": "cenaonwheels:blocks/cowVisGeneratorOff"
+          "all": "cenaonwheels:blocks/cowKlidGeneratorOff"
         }
       }
     }

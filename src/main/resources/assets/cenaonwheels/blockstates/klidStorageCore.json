@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "all": "cenaonwheels:blocks/visStorageGlass"
+      "all": "cenaonwheels:blocks/klidStorageCore"
     }
   },
   "variants": {
