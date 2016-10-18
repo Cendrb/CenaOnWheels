@@ -52,10 +52,12 @@ public class EntityKlidBurst extends Entity {
                     klidSaved = true;
                 } else if (WorldHelper.isBlock(worldObj, rayTraceResult.getBlockPos(), BlockKlidStoragePart.class) && tileEntity instanceof TileEntityMultiblockPart) {
                     BlockPos masterPos = ((TileEntityMultiblockPart) tileEntity).getMasterPos();
-                    TileEntity masterTileEntity = worldObj.getTileEntity(masterPos);
-                    if (masterTileEntity instanceof TileEntityKlidStorage) {
-                        ((TileEntityKlidStorage) masterTileEntity).acceptKlid(value);
-                        klidSaved = true;
+                    if (masterPos != null) {
+                        TileEntity masterTileEntity = worldObj.getTileEntity(masterPos);
+                        if (masterTileEntity instanceof TileEntityKlidStorage) {
+                            ((TileEntityKlidStorage) masterTileEntity).acceptKlid(value);
+                            klidSaved = true;
+                        }
                     }
                 }
                 if (!klidSaved) {
