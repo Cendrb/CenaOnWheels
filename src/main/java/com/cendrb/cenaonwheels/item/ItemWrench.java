@@ -1,6 +1,5 @@
 package com.cendrb.cenaonwheels.item;
 
-import com.cendrb.cenaonwheels.IKlidAcceptor;
 import com.cendrb.cenaonwheels.ITargetable;
 import com.cendrb.cenaonwheels.block.BlockCowKlidGenerator;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageCap;
@@ -52,21 +51,19 @@ public class ItemWrench extends ItemBase {
 
         if (playerIn.isSneaking()) {
             // link mode
-            if (WorldHelper.isBlock(worldIn, posClicked, BlockCowKlidGenerator.class)) {
-                TileEntity tileEntityClicked = worldIn.getTileEntity(posClicked);
-                if (tileEntityClicked instanceof ITargetable) {
-                    tag.setLong(LINK_BLOCK_POS, posClicked.toLong());
-                    tag.setString(LINK_BLOCK_CLASS, tileEntityClicked.getClass().getSimpleName());
-                }
+            TileEntity tileEntityClicked;
+            if ((tileEntityClicked = worldIn.getTileEntity(posClicked)) instanceof ITargetable) {
+                tag.setLong(LINK_BLOCK_POS, posClicked.toLong());
+                tag.setString(LINK_BLOCK_CLASS, tileEntityClicked.getClass().getSimpleName());
                 return EnumActionResult.SUCCESS;
             } else {
-                if(tag.hasKey(LINK_BLOCK_POS)) {
+                if (tag.hasKey(LINK_BLOCK_POS)) {
                     BlockPos savedPos = BlockPos.fromLong(tag.getLong(LINK_BLOCK_POS));
                     TileEntity tileEntity = worldIn.getTileEntity(savedPos);
-                    if (tileEntity instanceof ITargetable)
-                    {
-                        ((ITargetable)tileEntity).setTargetLocation(posClicked);
+                    if (tileEntity instanceof ITargetable) {
+                        ((ITargetable) tileEntity).setTargetLocation(posClicked);
                     }
+                    return EnumActionResult.SUCCESS;
                 }
                 tag.removeTag(LINK_BLOCK_POS);
                 tag.removeTag(LINK_BLOCK_CLASS);
