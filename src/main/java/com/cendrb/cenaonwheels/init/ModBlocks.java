@@ -9,17 +9,24 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public class ModBlocks {
 
+    // general
     public static BlockOreTempus oreTempus;
+    public static BlockMachineBase machineBase;
+
+    // klid storage
     public static BlockKlidStorageCap klidStorageCap;
     public static BlockKlidStorageCasing klidStorageCasing;
     public static BlockKlidStorageGlass klidStorageGlass;
     public static BlockKlidStorageCore klidStorageBasicCore;
     public static BlockKlidStorageCore klidStorageAdvancedCore;
     public static BlockKlidStorageCore klidStorageUltimateCore;
+
+    // klid generator
     public static BlockCowKlidGenerator cowKlidGenerator;
 
     public static void init() {
         oreTempus = registerWithDefaultItemblock(new BlockOreTempus());
+        machineBase = registerWithDefaultItemblock(new BlockMachineBase());
         klidStorageCap = registerWithDefaultItemblock(new BlockKlidStorageCap());
         klidStorageCasing = registerWithDefaultItemblock(new BlockKlidStorageCasing());
         klidStorageGlass = registerWithDefaultItemblock(new BlockKlidStorageGlass());
