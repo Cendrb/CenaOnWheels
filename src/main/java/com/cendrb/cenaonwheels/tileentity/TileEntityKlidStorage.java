@@ -1,6 +1,7 @@
 package com.cendrb.cenaonwheels.tileentity;
 
 import com.cendrb.cenaonwheels.IKlidAcceptor;
+import com.cendrb.cenaonwheels.ITargetable;
 import com.cendrb.cenaonwheels.KlidWorldSavedData;
 import com.cendrb.cenaonwheels.VisStorageBlockEnergyValues;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageCasing;
@@ -26,7 +27,7 @@ import java.util.List;
  * Created by cendr_000 on 02.10.2016.
  */
 @SuppressWarnings("Duplicates")
-public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements ITickable, IKlidAcceptor {
+public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements ITickable, IKlidAcceptor, ITargetable {
 
     private static final int TICKS_BETWEEN_CHECKS = 20;
 
@@ -35,6 +36,8 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
     private int currentEnergy = 0;
 
     private int tickTimer = 0;
+
+    private BlockPos targetLocation;
 
     public TileEntityKlidStorage() {
 
@@ -52,7 +55,7 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
                 checkMultiblock();
         }
     }
-    
+
     @Override
     public void acceptKlid(int amount) {
         currentEnergy += amount;
@@ -214,5 +217,10 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
 
     public int getCurrentEnergy() {
         return currentEnergy;
+    }
+
+    @Override
+    public void setTargetLocation(BlockPos targetLocation) {
+        this.targetLocation = targetLocation;
     }
 }
