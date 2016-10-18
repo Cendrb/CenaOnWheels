@@ -56,7 +56,7 @@ public class ItemWrench extends ItemBase {
                 TileEntity tileEntityClicked = worldIn.getTileEntity(posClicked);
                 if (tileEntityClicked instanceof ITargetable) {
                     tag.setLong(LINK_BLOCK_POS, posClicked.toLong());
-                    tag.setString(LINK_BLOCK_CLASS, "Klid Generator");
+                    tag.setString(LINK_BLOCK_CLASS, tileEntityClicked.getClass().getSimpleName());
                 }
                 return EnumActionResult.SUCCESS;
             } else {
