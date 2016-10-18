@@ -48,13 +48,13 @@ public class EntityKlidBurst extends Entity {
                 TileEntity tileEntity;
                 if (WorldHelper.isBlock(worldObj, rayTraceResult.getBlockPos(), BlockKlidStoragePart.class) && (tileEntity = worldObj.getTileEntity(rayTraceResult.getBlockPos())) != null) {
                     if (tileEntity instanceof TileEntityKlidStorage) {
-                        ((TileEntityKlidStorage) tileEntity).acceptEnergy(value);
+                        ((TileEntityKlidStorage) tileEntity).acceptKlid(value);
                         klidSaved = true;
                     } else if (tileEntity instanceof TileEntityMultiblockPart) {
                         BlockPos masterPos = ((TileEntityMultiblockPart) tileEntity).getMasterPos();
                         TileEntity masterTileEntity;
                         if ((masterTileEntity = worldObj.getTileEntity(masterPos)) instanceof TileEntityKlidStorage) {
-                            ((TileEntityKlidStorage) masterTileEntity).acceptEnergy(value);
+                            ((TileEntityKlidStorage) masterTileEntity).acceptKlid(value);
                             klidSaved = true;
                         }
                     }

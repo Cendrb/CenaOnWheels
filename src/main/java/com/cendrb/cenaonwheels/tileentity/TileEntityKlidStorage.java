@@ -1,5 +1,6 @@
 package com.cendrb.cenaonwheels.tileentity;
 
+import com.cendrb.cenaonwheels.IKlidAcceptor;
 import com.cendrb.cenaonwheels.KlidWorldSavedData;
 import com.cendrb.cenaonwheels.VisStorageBlockEnergyValues;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageCasing;
@@ -25,7 +26,7 @@ import java.util.List;
  * Created by cendr_000 on 02.10.2016.
  */
 @SuppressWarnings("Duplicates")
-public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements ITickable {
+public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements ITickable, IKlidAcceptor {
 
     private static final int TICKS_BETWEEN_CHECKS = 20;
 
@@ -51,13 +52,14 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
                 checkMultiblock();
         }
     }
-
-    public void acceptEnergy(int energy) {
-        currentEnergy += energy;
-        COWLogger.logDebug("Accepted " + energy + " COW energy! TOTAL: " + currentEnergy);
-        if (currentEnergy + energy > currentEnergyMax) {
+    
+    @Override
+    public void acceptKlid(int amount) {
+        currentEnergy += amount;
+        COWLogger.logDebug("Accepted " + amount + " klid! TOTAL: " + currentEnergy);
+        if (currentEnergy + amount > currentEnergyMax) {
             currentEnergy = currentEnergyMax;
-            WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), energy);
+            WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), amount);
         }
         markDirty();
     }
