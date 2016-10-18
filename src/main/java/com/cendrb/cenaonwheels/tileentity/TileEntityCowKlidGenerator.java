@@ -1,6 +1,7 @@
 package com.cendrb.cenaonwheels.tileentity;
 
 import com.cendrb.cenaonwheels.Core;
+import com.cendrb.cenaonwheels.ITargetable;
 import com.cendrb.cenaonwheels.KlidWorldSavedData;
 import com.cendrb.cenaonwheels.entity.EntityKlidBurst;
 import com.cendrb.cenaonwheels.init.ModBlocks;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * Created by cendr_000 on 14.10.2016.
  */
-public class TileEntityCowKlidGenerator extends TileEntity implements ITickable {
+public class TileEntityCowKlidGenerator extends TileEntity implements ITickable, ITargetable {
 
     private static final int BASE_PULSE_TICKS = 40;
 
