@@ -39,6 +39,7 @@ public class Core {
         ModBlocks.init();
         ModTileEntities.init();
         ModEntities.init();
+        ModRecipes.init();
 
         proxy.registerEntityRederers();
 
