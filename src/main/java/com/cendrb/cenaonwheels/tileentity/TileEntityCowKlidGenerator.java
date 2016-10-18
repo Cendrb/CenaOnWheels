@@ -46,19 +46,20 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable 
                             pos.getX() + 10, pos.getY() + 5, pos.getZ() + 10));
                     int cowsCount = cowsInRange.size();
                     COWLogger.logDebug(cowsCount + " cows found!");
-                    if (targetLocation != null) {
-                        COWLogger.logDebug("Storage found");
-                        EntityKlidBurst klidBurst = new EntityKlidBurst(worldObj);
-                        klidBurst.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
-                        klidBurst.setTarget(targetLocation);
-                        klidBurst.setValue(cowsCount);
-                        worldObj.spawnEntityInWorld(klidBurst);
-                        Core.networkWrapper.sendToAllAround(new SyncEntityNBTMessage(klidBurst.getEntityId(), klidBurst.serializeNBT()), new NetworkRegistry.TargetPoint(0, pos.getX(), pos.getY(), pos.getZ(), 64));
-                    } else {
-                        COWLogger.logDebug("No storage found, releasing klid into the atmosphere");
-                        KlidWorldSavedData savedData = KlidWorldSavedData.getFor(worldObj);
-                        savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + cowsCount);
-                    }
+                    if (cowsCount > 0)
+                        if (targetLocation != null) {
+                            COWLogger.logDebug("Storage found");
+                            EntityKlidBurst klidBurst = new EntityKlidBurst(worldObj);
+                            klidBurst.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
+                            klidBurst.setTarget(targetLocation);
+                            klidBurst.setValue(cowsCount);
+                            worldObj.spawnEntityInWorld(klidBurst);
+                            Core.networkWrapper.sendToAllAround(new SyncEntityNBTMessage(klidBurst.getEntityId(), klidBurst.serializeNBT()), new NetworkRegistry.TargetPoint(0, pos.getX(), pos.getY(), pos.getZ(), 64));
+                        } else {
+                            COWLogger.logDebug("No storage found, releasing klid into the atmosphere");
+                            KlidWorldSavedData savedData = KlidWorldSavedData.getFor(worldObj);
+                            savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + cowsCount);
+                        }
                 }
             }
         }
