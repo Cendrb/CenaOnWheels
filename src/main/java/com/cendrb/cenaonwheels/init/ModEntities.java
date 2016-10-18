@@ -11,6 +11,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModEntities {
     public static void init()
     {
-        EntityRegistry.registerModEntity(EntityKlidBurst.class, "KlidBurst", 0, Core.instance, 64, 3, true, 69, 420);
+        EntityRegistry.registerModEntity(EntityKlidBurst.class, "KlidBurst", 0, Core.instance, 64, 3, true);
     }
 }
