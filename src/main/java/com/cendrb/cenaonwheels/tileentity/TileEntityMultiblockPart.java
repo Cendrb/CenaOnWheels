@@ -38,6 +38,7 @@ public class TileEntityMultiblockPart extends TileEntity {
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
         if (compound.hasKey("masterPos")) {
             int[] posArray = compound.getIntArray("masterPos");
             masterPos = new BlockPos(posArray[0], posArray[1], posArray[2]);
@@ -46,6 +47,7 @@ public class TileEntityMultiblockPart extends TileEntity {
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
         if (masterPos != null)
             compound.setIntArray("masterPos", new int[]{masterPos.getX(), masterPos.getY(), masterPos.getZ()});
         return compound;
