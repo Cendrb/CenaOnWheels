@@ -35,6 +35,10 @@ public class WorldHelper {
         return blockClass.isInstance(world.getBlockState(pos).getBlock());
     }
 
+    public static <T extends Block> boolean isBlock(World world, BlockPos pos, Block block) {
+        return block == world.getBlockState(pos).getBlock();
+    }
+
     public static void spawnParticles(World world, EnumParticleTypes type, double x, double y, double z, double xRadius, double yRadius, double zRadius, int count) {
         Random random = new Random();
         for (int i = count; i > 0; i--) {
