@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 /**
  * Created by cendr_000 on 02.10.2016.
  */
-public class BlockKlidStorageGlass extends BlockMultiblockPart {
+public class BlockKlidStorageGlass extends BlockKlidStoragePart {
     public BlockKlidStorageGlass() {
         super(Material.ROCK, "klidStorageGlass");
     }

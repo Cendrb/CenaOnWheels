@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 /**
  * Created by cendr_000 on 02.10.2016.
  */
-public class BlockKlidStorageCap extends BlockMultiblockMaster implements ITileEntityProvider {
+public class BlockKlidStorageCap extends BlockKlidStoragePart implements ITileEntityProvider {
 
     public BlockKlidStorageCap() {
         super(Material.ROCK, "klidStorageCap");

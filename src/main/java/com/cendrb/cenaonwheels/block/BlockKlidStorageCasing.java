@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 /**
  * Created by cendr_000 on 02.10.2016.
  */
-public class BlockKlidStorageCasing extends BlockMultiblockPart {
+public class BlockKlidStorageCasing extends BlockKlidStoragePart {
     public BlockKlidStorageCasing() {
         super(Material.ROCK, "klidStorageCasing");
     }
