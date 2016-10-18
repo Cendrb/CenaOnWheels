@@ -35,8 +35,12 @@ public class KlidBurstRenderFactory implements IRenderFactory<EntityKlidBurst> {
         public void doRender(EntityKlidBurst entity, double x, double y, double z, float entityYaw, float partialTicks) {
             GlStateManager.pushMatrix();
 
-            GlStateManager.translate(x, y + 0.5, z);
+            double sizeFactor = (double) entity.getValue() / 10.0;
+
+
+            GlStateManager.translate(x, y + (sizeFactor / 2), z);
             bindEntityTexture(entity);
+            GlStateManager.scale(sizeFactor, sizeFactor, sizeFactor);
             GlStateManager.rotate(180, 0, 0, 1);
             model.render(entity, 0.0F, 0.0F, 0.0F, entityYaw, 0, 0.03125F);
             GlStateManager.popMatrix();
