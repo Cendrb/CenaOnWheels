@@ -1,90 +1,244 @@
 {
   "textures": {
-    "pedestal": "blocks/stonebrick",
-    "particle": "blocks/stonebrick"
+    "penis": "blocks/stonebrick"
   },
   "elements": [
     {
-      "from": [3, 0, 3],
-      "to": [13, 11, 13],
+      "name": "ball1",
+      "from": [ 0.0, 0.0, 6.0 ],
+      "to": [ 6.0, 1.0, 12.0 ],
       "faces": {
-        "down": {
-          "uv": [0, 0, 10, 10],
-          "texture": "#pedestal",
-          "cullface": "down"
-        },
-        "north": {
-          "uv": [0, 0, 10, 11],
-          "texture": "#pedestal"
-        },
-        "south": {
-          "uv": [0, 0, 10, 11],
-          "texture": "#pedestal"
-        },
-        "west": {
-          "uv": [0, 0, 10, 11],
-          "texture": "#pedestal"
-        },
-        "east": {
-          "uv": [0, 0, 10, 11],
-          "texture": "#pedestal"
-        }
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 6.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 6.0 ] }
       }
     },
     {
-      "from": [2, 11, 2],
-      "to": [14, 12, 14],
+      "name": "ball2",
+      "from": [ 10.0, 0.0, 6.0 ],
+      "to": [ 16.0, 1.0, 12.0 ],
       "faces": {
-        "down": {
-          "uv": [0, 0, 12, 12],
-          "texture": "#pedestal"
-        },
-        "north": {
-          "uv": [0, 0, 12, 1],
-          "texture": "#pedestal"
-        },
-        "south": {
-          "uv": [0, 0, 12, 1],
-          "texture": "#pedestal"
-        },
-        "west": {
-          "uv": [0, 0, 12, 1],
-          "texture": "#pedestal"
-        },
-        "east": {
-          "uv": [0, 0, 12, 1],
-          "texture": "#pedestal"
-        }
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 6.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 6.0 ] }
       }
     },
     {
-      "from": [1, 12, 1],
-      "to": [15, 13, 15],
+      "name": "balltop1",
+      "from": [ 2.0, 4.0, 8.0 ],
+      "to": [ 4.0, 5.0, 10.0 ],
       "faces": {
-        "down": {
-          "uv": [0, 0, 14, 14],
-          "texture": "#pedestal"
-        },
-        "up": {
-          "uv": [0, 0, 14, 14],
-          "texture": "#pedestal"
-        },
-        "north": {
-          "uv": [0, 0, 14, 1],
-          "texture": "#pedestal"
-        },
-        "south": {
-          "uv": [0, 0, 14, 1],
-          "texture": "#pedestal"
-        },
-        "west": {
-          "uv": [0, 0, 14, 1],
-          "texture": "#pedestal"
-        },
-        "east": {
-          "uv": [0, 0, 14, 1],
-          "texture": "#pedestal"
-        }
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+      }
+    },
+    {
+      "name": "balltop2",
+      "from": [ 12.0, 4.0, 8.0 ],
+      "to": [ 14.0, 5.0, 10.0 ],
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+      }
+    },
+    {
+      "name": "ballmidx1",
+      "from": [ 1.0, 3.0, 8.0 ],
+      "to": [ 5.0, 4.0, 10.0 ],
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 2.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 2.0 ] }
+      }
+    },
+    {
+      "name": "ballmidx2",
+      "from": [ 11.0, 3.0, 8.0 ],
+      "to": [ 15.0, 4.0, 10.0 ],
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 2.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 2.0 ] }
+      }
+    },
+    {
+      "name": "ballmidy2",
+      "from": [ 12.0, 3.0, 7.0 ],
+      "to": [ 14.0, 4.0, 11.0 ],
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 4.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 4.0 ] }
+      }
+    },
+    {
+      "name": "ballmidy1",
+      "from": [ 2.0, 3.0, 7.0 ],
+      "to": [ 4.0, 4.0, 11.0 ],
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 4.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 2.0, 4.0 ] }
+      }
+    },
+    {
+      "name": "dickmidx",
+      "from": [ 7.0, 6.0, 7.0 ],
+      "to": [ 9.0, 11.0, 11.0 ],
+      "rotation": { "origin": [ 8.0, 0.0, 8.0 ], "axis": "x", "angle": -22.5 },
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 5.0 ] },
+        "east": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 5.0 ] },
+        "south": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 5.0 ] },
+        "west": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 5.0 ] },
+        "up": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 4.0 ] },
+        "down": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 4.0 ] }
+      }
+    },
+    {
+      "name": "dickcore",
+      "from": [ 7.0, -1.0, 8.0 ],
+      "to": [ 9.0, 12.0, 10.0 ],
+      "rotation": { "origin": [ 8.0, 0.0, 8.0 ], "axis": "x", "angle": -22.5 },
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 13.0 ] },
+        "east": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 13.0 ] },
+        "south": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 13.0 ] },
+        "west": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 13.0 ] },
+        "up": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 2.0 ] },
+        "down": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 2.0 ] }
+      }
+    },
+    {
+      "name": "dickbase",
+      "from": [ 6.0, -1.0, 7.0 ],
+      "to": [ 10.0, 10.0, 11.0 ],
+      "rotation": { "origin": [ 8.0, 0.0, 8.0 ], "axis": "x", "angle": -22.5 },
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 11.0 ] },
+        "east": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 11.0 ] },
+        "south": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 11.0 ] },
+        "west": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 11.0 ] },
+        "up": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 4.0 ] },
+        "down": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 4.0 ] }
+      }
+    },
+    {
+      "name": "dickmidy",
+      "from": [ 6.0, 6.0, 8.0 ],
+      "to": [ 10.0, 11.0, 10.0 ],
+      "rotation": { "origin": [ 8.0, 0.0, 8.0 ], "axis": "x", "angle": -22.5 },
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 5.0 ] },
+        "east": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 5.0 ] },
+        "south": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 5.0 ] },
+        "west": { "texture": "#penis", "uv": [ 14.0, 0.0, 16.0, 5.0 ] },
+        "up": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 2.0 ] },
+        "down": { "texture": "#penis", "uv": [ 12.0, 0.0, 16.0, 2.0 ] }
+      }
+    },
+    {
+      "name": "ballbottom1",
+      "from": [ 1.0, 2.0, 7.0 ],
+      "to": [ 5.0, 3.0, 11.0 ],
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 4.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 4.0 ] }
+      }
+    },
+    {
+      "name": "ballbottom2",
+      "from": [ 11.0, 2.0, 7.0 ],
+      "to": [ 15.0, 3.0, 11.0 ],
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 4.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 4.0 ] }
+      }
+    },
+    {
+      "name": "ballbottomlowx1",
+      "from": [ 1.0, 1.0, 6.0 ],
+      "to": [ 5.0, 2.0, 12.0 ],
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 6.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 6.0 ] }
+      }
+    },
+    {
+      "name": "ballbottomlowx2",
+      "from": [ 11.0, 1.0, 6.0 ],
+      "to": [ 15.0, 2.0, 12.0 ],
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 6.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 6.0 ] }
+      }
+    },
+    {
+      "name": "ballbottomlowy1",
+      "from": [ 0.0, 1.0, 7.0 ],
+      "to": [ 6.0, 2.0, 11.0 ],
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 4.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 4.0 ] }
+      }
+    },
+    {
+      "name": "ballbottomlowy2",
+      "from": [ 10.0, 1.0, 7.0 ],
+      "to": [ 16.0, 2.0, 11.0 ],
+      "faces": {
+        "north": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "east": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "south": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+        "west": { "texture": "#penis", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+        "up": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 4.0 ] },
+        "down": { "texture": "#penis", "uv": [ 0.0, 0.0, 6.0, 4.0 ] }
       }
     }
   ]

@@ -1,6 +1,7 @@
 package com.cendrb.cenaonwheels.init;
 
 import com.cendrb.cenaonwheels.item.ItemBase;
+import com.cendrb.cenaonwheels.item.ItemWrench;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -9,9 +10,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModItems {
 
     public static ItemBase tempusShard;
+    public static ItemWrench wrench;
 
     public static void init() {
         tempusShard = register(new ItemBase("tempusShard"));
+        wrench = register(new ItemWrench());
     }
 
     private static <T extends ItemBase> T register(T item) {

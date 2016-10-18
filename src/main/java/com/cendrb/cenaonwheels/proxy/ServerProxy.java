@@ -10,4 +10,9 @@ public class ServerProxy extends CommonProxy {
     public void registerItemRenderer(Item item, int meta, String id) {
         // no rendering on server side
     }
+
+    @Override
+    public void registerEntityRederers() {
+        // no rendering on server side
+    }
 }

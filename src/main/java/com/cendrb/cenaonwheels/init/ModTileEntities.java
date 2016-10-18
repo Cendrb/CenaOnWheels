@@ -1,8 +1,10 @@
 package com.cendrb.cenaonwheels.init;
 
 import com.cendrb.cenaonwheels.RefStrings;
+import com.cendrb.cenaonwheels.tileentity.TileEntityCowKlidGenerator;
 import com.cendrb.cenaonwheels.tileentity.TileEntityMultiblockPart;
-import com.cendrb.cenaonwheels.tileentity.TileEntityVisStorage;
+import com.cendrb.cenaonwheels.tileentity.TileEntityKlidStorage;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -12,7 +14,13 @@ public class ModTileEntities {
 
     public static void init()
     {
-        GameRegistry.registerTileEntity(TileEntityVisStorage.class, RefStrings.MODID + ":" + "visStorage");
-        GameRegistry.registerTileEntity(TileEntityMultiblockPart.class, RefStrings.MODID + ":" + "multiblockPart");
+        register(TileEntityKlidStorage.class, "klidStorage");
+        register(TileEntityMultiblockPart.class, "multiblockPart");
+        register(TileEntityCowKlidGenerator.class, "cowKlidGenerator");
+    }
+
+    private static void register(Class<? extends TileEntity> clazz, String name)
+    {
+        GameRegistry.registerTileEntity(clazz, RefStrings.MODID + ":" + name);
     }
 }

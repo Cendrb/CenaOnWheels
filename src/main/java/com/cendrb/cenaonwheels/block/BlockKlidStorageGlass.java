@@ -11,9 +11,9 @@ import net.minecraft.world.World;
 /**
  * Created by cendr_000 on 02.10.2016.
  */
-public class BlockVisStorageGlass extends BlockMultiblockPart {
-    public BlockVisStorageGlass() {
-        super(Material.ROCK, "visStorageGlass");
+public class BlockKlidStorageGlass extends BlockMultiblockPart {
+    public BlockKlidStorageGlass() {
+        super(Material.ROCK, "klidStorageGlass");
     }
 
     @Override

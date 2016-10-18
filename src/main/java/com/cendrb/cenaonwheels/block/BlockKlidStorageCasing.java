@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 /**
  * Created by cendr_000 on 02.10.2016.
  */
-public class BlockVisStorageCasing extends BlockMultiblockPart {
-    public BlockVisStorageCasing() {
-        super(Material.ROCK, "visStorageCasing");
+public class BlockKlidStorageCasing extends BlockMultiblockPart {
+    public BlockKlidStorageCasing() {
+        super(Material.ROCK, "klidStorageCasing");
     }
 }
