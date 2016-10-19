@@ -18,6 +18,14 @@ public class ModRecipes {
         addShapedRecipe(new ItemStack(ModBlocks.klidStorageCasing, 4), "ITI", "TIT", "ITI", 'I', Items.IRON_INGOT, 'T', ModItems.tempusShard);
         addShapelessRecipe(new ItemStack(ModBlocks.klidStorageGlass), new ItemStack(ModBlocks.klidStorageCasing), new ItemStack(Blocks.GLASS));
 
+        // klid generation
+        addShapedRecipe(new ItemStack(ModBlocks.cowKlidGenerator), "CPC", "TBT", "TTT", 'T', ModItems.tempusShard, 'P', ModItems.klidProjector, 'C', ModItems.klidManipulationCircuit);
+
+        // klid infusion
+        addShapedRecipe(new ItemStack(ModBlocks.klidInfusionBasicPlate), " C ", "GDG", "GBG", 'C', ModItems.klidManipulationCircuit, 'G', Items.GOLD_INGOT, 'D', Items.DIAMOND);
+        addShapedRecipe(new ItemStack(ModBlocks.klidInfusionAdvancedPlate), " C ", "MGM", "MBM", 'C', ModItems.klidManipulationCircuit, 'M', ModItems.klidMetal, 'G', ModItems.klidGem);
+        addShapedRecipe(new ItemStack(ModBlocks.klidInfusionUltimatePlate), " C ", "GGG", "GBG", 'C', ModItems.klidManipulationCircuit, 'G', ModItems.klidGem);
+
         // components
         addShapedRecipe(new ItemStack(ModItems.klidProjector), " T ", "TDT", " T ", 'T', ModItems.tempusShard, 'D', Items.DIAMOND);
         addShapedRecipe(new ItemStack(ModItems.klidManipulationCircuit), "LLL", "TGT", "LLL", 'L', new ItemStack(Items.DYE, 1, 4), 'G', Items.GOLD_INGOT, 'T', ModItems.tempusShard);

@@ -21,6 +21,11 @@ public class ModBlocks {
     public static BlockKlidStorageCore klidStorageAdvancedCore;
     public static BlockKlidStorageCore klidStorageUltimateCore;
 
+    // klid infusion
+    public static BlockKlidInfusionPlate klidInfusionBasicPlate;
+    public static BlockKlidInfusionPlate klidInfusionAdvancedPlate;
+    public static BlockKlidInfusionPlate klidInfusionUltimatePlate;
+
     // klid generator
     public static BlockCowKlidGenerator cowKlidGenerator;
 
@@ -34,6 +39,9 @@ public class ModBlocks {
         klidStorageAdvancedCore = registerWithDefaultItemblock(new BlockKlidStorageCore("Advanced", 100));
         klidStorageUltimateCore = registerWithDefaultItemblock(new BlockKlidStorageCore("Ultimate", 500));
         cowKlidGenerator = registerWithDefaultItemblock(new BlockCowKlidGenerator());
+        klidInfusionBasicPlate = registerWithDefaultItemblock(new BlockKlidInfusionPlate("Basic", 0.3f));
+        klidInfusionAdvancedPlate = registerWithDefaultItemblock(new BlockKlidInfusionPlate("Advanced", 0.7f));
+        klidInfusionUltimatePlate = registerWithDefaultItemblock(new BlockKlidInfusionPlate("Ultimate", 1.0f));
     }
 
     private static <T extends BlockBase> T register(T block, ItemBlock itemBlock) {
