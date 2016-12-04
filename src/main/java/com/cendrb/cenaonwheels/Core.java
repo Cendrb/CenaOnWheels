@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
 /**
@@ -60,6 +61,9 @@ public class Core {
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
         System.out.println("INIT for " + RefStrings.NAME);
+
+        GameRegistry.registerWorldGenerator(new OreGenerator(), 0);
+
         // crafting recipes, new handlers
         MinecraftForge.EVENT_BUS.register(new WorldLoadHandler());
         MinecraftForge.EVENT_BUS.register(new EntityStruckByLightningHandler());

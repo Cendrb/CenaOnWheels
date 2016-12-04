@@ -45,7 +45,7 @@ public class SyncEntityNBTMessage implements IMessage {
     public static class Handler implements IMessageHandler<SyncEntityNBTMessage, IMessage>
     {
         @Override
-        public IMessage onMessage(SyncEntityNBTMessage message, MessageContext ctx) {
+        public IMessage onMessage(final SyncEntityNBTMessage message, MessageContext ctx) {
             IThreadListener mainThread = Minecraft.getMinecraft();
             mainThread.addScheduledTask(new Runnable() {
                 @Override

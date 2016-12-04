@@ -48,7 +48,7 @@ public class SpawnParticleMessage implements IMessage {
 
     public static class Handler implements IMessageHandler<SpawnParticleMessage, IMessage> {
         @Override
-        public IMessage onMessage(SpawnParticleMessage message, MessageContext ctx) {
+        public IMessage onMessage(final SpawnParticleMessage message, MessageContext ctx) {
             IThreadListener mainThread = Minecraft.getMinecraft();
             mainThread.addScheduledTask(new Runnable() {
                 @Override
