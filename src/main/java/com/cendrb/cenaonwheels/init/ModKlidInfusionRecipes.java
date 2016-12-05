@@ -44,4 +44,8 @@ public class ModKlidInfusionRecipes {
         }
         return null;
     }
+
+    public static ArrayList<KlidInfusionRecipe> getRecipes() {
+        return recipes;
+    }
 }

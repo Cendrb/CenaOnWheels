@@ -13,16 +13,16 @@ import java.util.List;
 public class KlidInfusionRecipe {
     private int requiredKlid;
     private final ItemStack result;
-    private final Item[] components;
+    private final Item[] ingredients;
 
-    public KlidInfusionRecipe(int requiredKlid, ItemStack result, Item... components) {
+    public KlidInfusionRecipe(int requiredKlid, ItemStack result, Item... ingredients) {
         this.requiredKlid = requiredKlid;
         this.result = result;
-        this.components = components;
+        this.ingredients = ingredients;
     }
 
     public KlidInfusionRecipeResult isCompatible(List<Item> components) {
-        ArrayList<Item> localComponents = new ArrayList<>(Arrays.asList(this.components));
+        ArrayList<Item> localComponents = new ArrayList<>(Arrays.asList(this.ingredients));
         for (Item item : components) {
             if(localComponents.contains(item))
                 localComponents.remove(item);
@@ -41,5 +41,9 @@ public class KlidInfusionRecipe {
 
     public int getRequiredKlid() {
         return requiredKlid;
+    }
+
+    public Item[] getIngredients() {
+        return ingredients;
     }
 }

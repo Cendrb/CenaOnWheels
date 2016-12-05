@@ -1,6 +1,8 @@
 package com.cendrb.cenaonwheels.tileentity;
 
+import com.cendrb.cenaonwheels.IKlidAcceptor;
 import com.cendrb.cenaonwheels.init.ModBlocks;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -16,14 +18,16 @@ import net.minecraftforge.items.ItemStackHandler;
 /**
  * Created by cendr_000 on 21.10.2016.
  */
-public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable {
+public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable, IKlidAcceptor {
 
     // in case the nbt is corrupt use this default value
     private float efficiency = ModBlocks.klidInfusionBasicPlate.getEfficiency();
     private int klidInfused = 0;
 
-    public TileEntityKlidInfusionPlate() {
+    private MainItemStackHandler itemStackHandler;
 
+    public TileEntityKlidInfusionPlate() {
+        itemStackHandler = new MainItemStackHandler();
     }
 
     @Override
@@ -32,11 +36,25 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
     }
 
     @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return true;
+        return super.hasCapability(capability, facing);
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return (T) itemStackHandler;
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         if (compound.hasKey("efficiency"))
             efficiency = compound.getFloat("efficiency");
-        if(compound.hasKey("klidInfused"))
+        if (compound.hasKey("klidInfused"))
             klidInfused = compound.getInteger("klidInfused");
     }
 
@@ -52,22 +70,23 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
         this.efficiency = efficiency;
     }
 
-    public static class MainItemStackHandler extends ItemStackHandler
-    {
-        public MainItemStackHandler()
-        {
+    @Override
+    public void acceptKlid(int amount) {
+
+    }
+
+    public static class MainItemStackHandler extends ItemStackHandler {
+        public MainItemStackHandler() {
             setSize(1);
         }
 
         @Override
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if(stacks[0] == null || stacks[0].stackSize != 0)
-            {
+            if (stacks[0] == null || stacks[0].stackSize != 0) {
                 return stack;
-            }
-            else
-            {
+            } else {
                 // check if can be klid infused
+
             }
             return null;
         }

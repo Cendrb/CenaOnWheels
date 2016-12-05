@@ -41,6 +41,7 @@ public class Core {
         ModTileEntities.init();
         ModEntities.init();
         ModRecipes.init();
+        ModKlidInfusionRecipes.init();
 
         proxy.registerEntityRederers();
 
