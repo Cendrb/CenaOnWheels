@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,5 +34,10 @@ public class KlidInfusionRecipeWrapper extends BlankRecipeWrapper {
             inputItemstacks.add(new ItemStack(item, 1));
         }
         ingredients.setInputs(ItemStack.class, inputItemstacks);
+    }
+
+    @Override
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
+        minecraft.fontRendererObj.drawString(klidInfusionRecipe.getRequiredKlid() + " KLID", 12, 20, Color.GRAY.getRGB());
     }
 }

@@ -37,7 +37,7 @@ public class KlidInfusionRecipeCategory extends BlankRecipeCategory<KlidInfusion
     {
         ResourceLocation backgroundResourceLocation = new ResourceLocation(RefStrings.MODID, "textures/jei/klidInfusion.png");
         background = guiHelper.createDrawable(backgroundResourceLocation, 0, 0, 175, 165);
-        icon = guiHelper.createDrawable(backgroundResourceLocation, 176, 0, 55, 65);
+        icon = guiHelper.createDrawable(backgroundResourceLocation, 210, 0, 11, 14);
     }
 
     @Override

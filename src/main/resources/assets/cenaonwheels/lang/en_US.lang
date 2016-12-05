@@ -28,4 +28,4 @@ itemGroup.COW=COW
 
 # JEI descriptions
 jei.description.tempusShard=Found as an ore underground. Used to harness power of The Mighty Aš.
-jei.description.wrench=Right-click to get info about a machine.\nShift-right-click to select the machine and then shift-right-click again to choose the target block.
+jei.description.wrench=Right-click to get info about a machine.\nShift-right-click to select a machine and then shift-right-click again to choose the target block.
