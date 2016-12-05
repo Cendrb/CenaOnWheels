@@ -29,6 +29,9 @@ public class ModRecipes {
         // components
         addShapedRecipe(new ItemStack(ModItems.klidProjector), " T ", "TDT", " T ", 'T', ModItems.tempusShard, 'D', Items.DIAMOND);
         addShapedRecipe(new ItemStack(ModItems.klidManipulationCircuit), "LLL", "TGT", "LLL", 'L', new ItemStack(Items.DYE, 1, 4), 'G', Items.GOLD_INGOT, 'T', ModItems.tempusShard);
+
+        // wrench
+        addShapedRecipe(new ItemStack(ModItems.wrench), "I I", " T ", " I ", 'T', ModItems.tempusShard, 'I', Items.IRON_INGOT);
     }
 
     private static void addShapedRecipe(ItemStack itemStack, Object... data) {
