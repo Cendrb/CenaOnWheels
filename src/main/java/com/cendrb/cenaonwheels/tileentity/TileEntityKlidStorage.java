@@ -78,6 +78,7 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
         // gets automatically called by TileEntityMultiblockParts
         multiblockComplete = false;
         currentEnergyMax = 0;
+        outputBurstVolume = 0;
 
         boolean success = true;
         ArrayList<BlockPos> blockPositions = new ArrayList<>();
@@ -116,9 +117,10 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
             // check the cores
             for (int yOff = 1; yOff < successfulLayers + 2; yOff++) {
                 BlockPos calculatedPos = pos.down(yOff);
-                if (WorldHelper.isBlock(worldObj, calculatedPos, BlockKlidStorageCore.class))
+                if (WorldHelper.isBlock(worldObj, calculatedPos, BlockKlidStorageCore.class)) {
+                    outputBurstVolume += ((BlockKlidStorageCore) worldObj.getBlockState(calculatedPos).getBlock()).getValue();
                     blockPositions.add(calculatedPos);
-                else
+                } else
                     success = false;
             }
 
@@ -205,6 +207,8 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
             currentEnergy = compound.getInteger("currentEnergy");
         if (compound.hasKey("outputBurstVolume"))
             outputBurstVolume = compound.getInteger("outputBurstVolume");
+        if (compound.hasKey("targetLocation"))
+            targetLocation = BlockPos.fromLong(compound.getLong("targetLocation"));
     }
 
     @Override
@@ -212,20 +216,22 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
         super.writeToNBT(compound);
         compound.setInteger("currentEnergy", currentEnergy);
         compound.setInteger("outputBurstVolume", outputBurstVolume);
+        compound.setLong("targetLocation", targetLocation.toLong());
         return compound;
     }
 
-    /** Return an appropriate bounding box enclosing the TESR
+    /**
+     * Return an appropriate bounding box enclosing the TESR
      * This method is used to control whether the TESR should be rendered or not, depending on where the player is looking.
      * The default is the AABB for the parent block, which might be too small if the TESR renders outside the borders of the
-     *   parent block.
+     * parent block.
      * If you get the boundary too small, the TESR may disappear when you aren't looking directly at it.
+     *
      * @return an appropriately size AABB for the TileEntity
      */
     @SideOnly(Side.CLIENT)
     @Override
-    public AxisAlignedBB getRenderBoundingBox()
-    {
+    public AxisAlignedBB getRenderBoundingBox() {
         return new AxisAlignedBB(getPos(), getPos().add(1, 2, 1));
     }
 
