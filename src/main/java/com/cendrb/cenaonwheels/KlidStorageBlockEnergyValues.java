@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * Created by cendr_000 on 02.10.2016.
  */
-public class VisStorageBlockEnergyValues {
+public class KlidStorageBlockEnergyValues {
 
     private static HashMap<Block, Integer> blockValues = new HashMap<>();
 

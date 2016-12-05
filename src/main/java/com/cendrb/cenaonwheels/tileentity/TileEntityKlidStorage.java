@@ -3,7 +3,7 @@ package com.cendrb.cenaonwheels.tileentity;
 import com.cendrb.cenaonwheels.IKlidAcceptor;
 import com.cendrb.cenaonwheels.ITargetable;
 import com.cendrb.cenaonwheels.KlidWorldSavedData;
-import com.cendrb.cenaonwheels.VisStorageBlockEnergyValues;
+import com.cendrb.cenaonwheels.KlidStorageBlockEnergyValues;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageCasing;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageCore;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageGlass;
@@ -140,7 +140,7 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
                         for (int zOff = -1; zOff < 2; zOff++)
                             if (xOff != 0 || zOff != 0) { // do not count cores - do not execute when both coords are 0
                                 IBlockState blockState = worldObj.getBlockState(pos.down(yOff).west(xOff).north(zOff));
-                                Integer energyValue = VisStorageBlockEnergyValues.getEnergyValue(blockState.getBlock());
+                                Integer energyValue = KlidStorageBlockEnergyValues.getEnergyValue(blockState.getBlock());
                                 if (energyValue != null)
                                     currentEnergyMax += energyValue;
                             }
