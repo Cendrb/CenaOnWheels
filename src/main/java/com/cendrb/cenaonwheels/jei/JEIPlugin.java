@@ -28,5 +28,8 @@ public class JEIPlugin extends BlankModPlugin {
 
         registry.addRecipes(ModKlidInfusionRecipes.getRecipes());
 
+        // descriptions
+        registry.addDescription(new ItemStack(ModItems.tempusShard), "jei.description.tempusShard");
+        registry.addDescription(new ItemStack(ModItems.wrench), "jei.description.wrench");
     }
 }
