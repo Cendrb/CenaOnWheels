@@ -23,6 +23,9 @@ public class COWLogger {
     }
 
     public static String formatBlockPos(BlockPos blockPos) {
-        return blockPos.toString();
+        if (blockPos != null)
+            return blockPos.toString();
+        else
+            return "No BlockPos specified";
     }
 }

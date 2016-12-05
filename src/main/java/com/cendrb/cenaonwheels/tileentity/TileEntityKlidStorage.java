@@ -41,6 +41,8 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
 
     private int tickTimer = 0;
 
+    private boolean triggered;
+
     private BlockPos targetLocation;
 
     public TileEntityKlidStorage() {
@@ -54,7 +56,15 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
             tickTimer = 0;
 
             if (multiblockComplete) {
-                // do something?
+                if (!worldObj.isRemote && triggered && targetLocation != null) {
+                    int toBeReleased;
+                    if(currentEnergy < outputBurstVolume)
+                        toBeReleased = currentEnergy;
+                    else
+                        toBeReleased = outputBurstVolume;
+                    WorldHelper.spawnKlidBurst(worldObj, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, targetLocation, toBeReleased);
+                    currentEnergy -= toBeReleased;
+                }
             } else
                 checkMultiblock();
         }
@@ -65,8 +75,8 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
         currentEnergy += amount;
         COWLogger.logDebug("Accepted " + amount + " klid! TOTAL: " + currentEnergy);
         if (currentEnergy + amount > currentEnergyMax) {
+            WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), amount - (currentEnergyMax - currentEnergy));
             currentEnergy = currentEnergyMax;
-            WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), amount);
         }
         markDirty();
     }
@@ -209,6 +219,8 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
             outputBurstVolume = compound.getInteger("outputBurstVolume");
         if (compound.hasKey("targetLocation"))
             targetLocation = BlockPos.fromLong(compound.getLong("targetLocation"));
+        if (compound.hasKey("triggered"))
+            triggered = compound.getBoolean("triggered");
     }
 
     @Override
@@ -216,7 +228,9 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
         super.writeToNBT(compound);
         compound.setInteger("currentEnergy", currentEnergy);
         compound.setInteger("outputBurstVolume", outputBurstVolume);
-        compound.setLong("targetLocation", targetLocation.toLong());
+        if (targetLocation != null)
+            compound.setLong("targetLocation", targetLocation.toLong());
+        compound.setBoolean("triggered", triggered);
         return compound;
     }
 
@@ -250,5 +264,17 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
     @Override
     public void setTargetLocation(BlockPos targetLocation) {
         this.targetLocation = targetLocation;
+    }
+
+    public boolean isTriggered() {
+        return triggered;
+    }
+
+    public void setTriggered(boolean triggered) {
+        this.triggered = triggered;
+    }
+
+    public BlockPos getTargetLocation() {
+        return targetLocation;
     }
 }

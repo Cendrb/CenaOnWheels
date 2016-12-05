@@ -26,6 +26,7 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable,
 
     private int ticksTillBurst = 0;
     private boolean triggered;
+
     private BlockPos targetLocation;
 
     public TileEntityCowKlidGenerator() {
@@ -120,4 +121,7 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable,
         targetLocation = pos;
     }
 
+    public BlockPos getTargetLocation() {
+        return targetLocation;
+    }
 }

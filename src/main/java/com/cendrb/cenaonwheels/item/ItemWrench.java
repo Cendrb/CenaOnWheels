@@ -74,14 +74,22 @@ public class ItemWrench extends ItemBase {
                 TileEntity tileEntity;
                 if (WorldHelper.isBlock(worldIn, posClicked, BlockKlidStorageCap.class) && (tileEntity = worldIn.getTileEntity(posClicked)) instanceof TileEntityKlidStorage) {
                     TileEntityKlidStorage visStorage = (TileEntityKlidStorage) tileEntity;
-                    playerIn.addChatComponentMessage(new TextComponentString(String.format("\n\n\nKlid Storage\nStructure complete: %s\nMaximum capacity: %d\nCurrent energy: %d",
+                    playerIn.addChatComponentMessage(new TextComponentString(String.format("\n\n\n\n" +
+                                    "Klid Storage\n" +
+                                    "Structure complete: %s\n" +
+                                    "Maximum capacity: %d\n" +
+                                    "Current energy: %d\n" +
+                                    "Activated: %b\n" +
+                                    "Target: %s",
                             String.valueOf(visStorage.isMultiblockComplete()),
                             visStorage.getCurrentEnergyMax(),
-                            visStorage.getCurrentEnergy())));
+                            visStorage.getCurrentEnergy(),
+                            visStorage.isTriggered(),
+                            COWLogger.formatBlockPos(visStorage.getTargetLocation()))));
                     return EnumActionResult.SUCCESS;
                 } else if (WorldHelper.isBlock(worldIn, posClicked, BlockCowKlidGenerator.class) && (tileEntity = worldIn.getTileEntity(posClicked)) instanceof TileEntityCowKlidGenerator) {
                     TileEntityCowKlidGenerator cowVisGenerator = (TileEntityCowKlidGenerator) tileEntity;
-                    playerIn.addChatComponentMessage(new TextComponentString("\n\n\nCow Klid Generator\nPěkná sračka"));
+                    playerIn.addChatComponentMessage(new TextComponentString("\n\n\n\nCow Klid Generator\nPěkná sračka"));
                     return EnumActionResult.SUCCESS;
                 }
             }
