@@ -38,6 +38,7 @@ public class KlidInfusionRecipeWrapper extends BlankRecipeWrapper {
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-        minecraft.fontRendererObj.drawString(klidInfusionRecipe.getRequiredKlid() + " KLID", 12, 20, Color.GRAY.getRGB());
+        minecraft.fontRendererObj.drawString(klidInfusionRecipe.getRequiredKlid() + " TOTAL", 12, 85, Color.GRAY.getRGB());
+        minecraft.fontRendererObj.drawString(klidInfusionRecipe.getKlidAcceptanceThreshold() + " MIN PER BURST", 12, 96, Color.GRAY.getRGB());
     }
 }
