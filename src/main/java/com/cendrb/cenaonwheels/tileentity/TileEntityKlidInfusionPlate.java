@@ -67,6 +67,8 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
+        if(compound.hasKey("efficiency"))
+            efficiency = compound.getFloat("efficiency");
         if (compound.hasKey("klidInfused"))
             klidInfused = compound.getInteger("klidInfused");
     }
@@ -74,6 +76,7 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
+        compound.setFloat("efficiency", efficiency);
         compound.setInteger("klidInfused", klidInfused);
         return compound;
     }
