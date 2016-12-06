@@ -46,4 +46,9 @@ public class KlidInfusionRecipe {
     public Item[] getIngredients() {
         return ingredients;
     }
+
+    public int getKlidAcceptanceThreshold()
+    {
+        return requiredKlid / 20;
+    }
 }

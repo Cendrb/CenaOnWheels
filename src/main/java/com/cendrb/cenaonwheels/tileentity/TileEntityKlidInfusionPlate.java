@@ -126,13 +126,20 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
 
     private void infuseWith(int klidAmount) {
         int efficientKlidAmount = (int) (klidAmount * efficiency);
-        int klidLost = klidAmount - efficientKlidAmount;
+        int klidLost;
+        if(efficientKlidAmount >= currentRecipe.getKlidAcceptanceThreshold()) {
+            klidLost = klidAmount - efficientKlidAmount;
+            klidInfused += efficientKlidAmount;
+            COWLogger.logDebug("Total done: " + klidInfused);
+            COWLogger.logDebug("Infused: " + efficientKlidAmount);
+            COWLogger.logDebug("Klid lost: " + klidLost);
+        }
+        else {
+            klidLost = klidAmount;
+            COWLogger.logDebug("Threshold not reached");
+            COWLogger.logDebug("Klid lost: " + klidLost);
+        }
         WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), klidLost);
-
-        klidInfused += efficientKlidAmount;
-        COWLogger.logDebug("Total done: " + klidInfused);
-        COWLogger.logDebug("Infused: " + efficientKlidAmount);
-        COWLogger.logDebug("Klid lost: " + klidLost);
 
         if (klidInfused >= currentRecipe.getRequiredKlid()) {
             COWLogger.logDebug("Infusion done!");
