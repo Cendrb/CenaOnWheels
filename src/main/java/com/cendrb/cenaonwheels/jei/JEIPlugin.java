@@ -1,11 +1,15 @@
 package com.cendrb.cenaonwheels.jei;
 
+import com.cendrb.cenaonwheels.block.BlockKlidStorageCore;
 import com.cendrb.cenaonwheels.init.ModBlocks;
 import com.cendrb.cenaonwheels.init.ModItems;
 import com.cendrb.cenaonwheels.init.ModKlidInfusionRecipes;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
 
 /**
  * Created by cendr on 05/12/2016.
@@ -31,5 +35,10 @@ public class JEIPlugin extends BlankModPlugin {
         // descriptions
         registry.addDescription(new ItemStack(ModItems.tempusShard), "jei.description.tempusShard");
         registry.addDescription(new ItemStack(ModItems.wrench), "jei.description.wrench");
+        registry.addDescription(new ArrayList<ItemStack>() {{
+            add(new ItemStack(ModBlocks.klidStorageBasicCore));
+            add(new ItemStack(ModBlocks.klidStorageAdvancedCore));
+            add(new ItemStack(ModBlocks.klidStorageUltimateCore));
+        }}, "jei.description.core");
     }
 }
