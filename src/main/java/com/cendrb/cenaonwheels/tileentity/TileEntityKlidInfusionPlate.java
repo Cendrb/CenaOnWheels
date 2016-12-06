@@ -1,12 +1,14 @@
 package com.cendrb.cenaonwheels.tileentity;
 
 import com.cendrb.cenaonwheels.IKlidAcceptor;
+import com.cendrb.cenaonwheels.block.BlockKlidInfusionPlate;
 import com.cendrb.cenaonwheels.init.KlidInfusionRecipe;
 import com.cendrb.cenaonwheels.init.KlidInfusionRecipeResult;
 import com.cendrb.cenaonwheels.init.ModBlocks;
 import com.cendrb.cenaonwheels.init.ModKlidInfusionRecipes;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import com.cendrb.cenaonwheels.util.WorldHelper;
+import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -29,10 +31,10 @@ import java.util.List;
  */
 public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable, IKlidAcceptor {
 
-    // in case the nbt is corrupt use this default value
-    private float efficiency = ModBlocks.klidInfusionBasicPlate.getEfficiency();
+    private float efficiency;
     private int klidInfused = 0;
     private ArrayList<Item> currentIngredients;
+    private ItemStack outputItemStack;
     private boolean infusionRunning;
     private KlidInfusionRecipe currentRecipe;
 
@@ -65,8 +67,6 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        if (compound.hasKey("efficiency"))
-            efficiency = compound.getFloat("efficiency");
         if (compound.hasKey("klidInfused"))
             klidInfused = compound.getInteger("klidInfused");
     }
@@ -74,7 +74,6 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        compound.setFloat("efficiency", efficiency);
         compound.setInteger("klidInfused", klidInfused);
         return compound;
     }
@@ -107,6 +106,7 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
             COWLogger.logDebug("Infusion done!");
             if (klidInfused > currentRecipe.getRequiredKlid())
                 WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), klidInfused - currentRecipe.getRequiredKlid());
+            outputItemStack = new ItemStack(currentRecipe.getResult().getItem(), currentRecipe.getResult().stackSize);
             infusionRunning = false;
             currentRecipe = null;
             klidInfused = 0;
@@ -148,7 +148,7 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
 
         @Override
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (infusionRunning) {
+            if (infusionRunning || outputItemStack != null) {
                 return stack;
             } else {
                 // check if can be klid infused
@@ -157,12 +157,15 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
                     theoreticalFutureList.add(stack.getItem());
                 KlidInfusionRecipeResult result = ModKlidInfusionRecipes.isPartOfRecipe(theoreticalFutureList);
                 if (result == KlidInfusionRecipeResult.Complete) {
-                    COWLogger.logDebug("Infusion ready!");
-                    currentRecipe = ModKlidInfusionRecipes.getRecipeFor(theoreticalFutureList);
-                    currentIngredients = theoreticalFutureList;
+                    if (!simulate) {
+                        COWLogger.logDebug("Infusion ready!");
+                        currentRecipe = ModKlidInfusionRecipes.getRecipeFor(theoreticalFutureList);
+                        currentIngredients = theoreticalFutureList;
+                    }
                     return null;
                 } else if (result == KlidInfusionRecipeResult.PartOfTheRecipe) {
-                    currentIngredients = theoreticalFutureList;
+                    if (!simulate)
+                        currentIngredients = theoreticalFutureList;
                     return null;
                 } else {
                     return stack;
@@ -172,7 +175,13 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
 
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return super.extractItem(slot, amount, simulate);
+            if (outputItemStack != null) {
+                ItemStack toBeReturned = outputItemStack;
+                if (!simulate)
+                    outputItemStack = null;
+                return toBeReturned;
+            } else
+                return null;
         }
     }
 }
