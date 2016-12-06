@@ -106,7 +106,7 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
             COWLogger.logDebug("Infusion done!");
             if (klidInfused > currentRecipe.getRequiredKlid())
                 WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), klidInfused - currentRecipe.getRequiredKlid());
-            outputItemStack = new ItemStack(currentRecipe.getResult().getItem(), currentRecipe.getResult().stackSize);
+            outputItemStack = currentRecipe.getResult().copy();
             infusionRunning = false;
             currentRecipe = null;
             klidInfused = 0;
