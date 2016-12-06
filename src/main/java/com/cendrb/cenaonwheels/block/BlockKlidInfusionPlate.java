@@ -6,6 +6,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -13,6 +14,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 /**
  * Created by cendr_000 on 18.10.2016.
@@ -62,5 +65,11 @@ public class BlockKlidInfusionPlate extends BlockBase implements ITileEntityProv
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityKlidInfusionPlate();
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+        tooltip.add("Efficiency (see JEI): " + efficiency);
+        super.addInformation(stack, player, tooltip, advanced);
     }
 }
