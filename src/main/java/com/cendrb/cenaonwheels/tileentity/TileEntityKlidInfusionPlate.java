@@ -1,30 +1,25 @@
 package com.cendrb.cenaonwheels.tileentity;
 
 import com.cendrb.cenaonwheels.IKlidAcceptor;
-import com.cendrb.cenaonwheels.block.BlockKlidInfusionPlate;
 import com.cendrb.cenaonwheels.init.KlidInfusionRecipe;
 import com.cendrb.cenaonwheels.init.KlidInfusionRecipeResult;
-import com.cendrb.cenaonwheels.init.ModBlocks;
 import com.cendrb.cenaonwheels.init.ModKlidInfusionRecipes;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import com.cendrb.cenaonwheels.util.WorldHelper;
-import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by cendr_000 on 21.10.2016.
@@ -67,10 +62,25 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        if(compound.hasKey("efficiency"))
+        if (compound.hasKey("efficiency"))
             efficiency = compound.getFloat("efficiency");
         if (compound.hasKey("klidInfused"))
             klidInfused = compound.getInteger("klidInfused");
+        if (compound.hasKey("infusionRunning"))
+            infusionRunning = compound.getBoolean("infusionRunning");
+        if (compound.hasKey("outputItemStack")) {
+            outputItemStack = new ItemStack(Items.APPLE, 0);
+            outputItemStack.readFromNBT(compound.getCompoundTag("outputItemStack"));
+        }
+
+        if (compound.hasKey("currentIngredients")) {
+            NBTTagList tagList = (NBTTagList) compound.getTag("currentIngredients");
+            for (int i = 0; i < tagList.tagCount(); i++) {
+                NBTTagCompound itemCompound = tagList.getCompoundTagAt(i);
+                currentIngredients.add(Item.getByNameOrId(itemCompound.getString("id")));
+            }
+            currentRecipe = ModKlidInfusionRecipes.getRecipeFor(currentIngredients);
+        }
     }
 
     @Override
@@ -78,6 +88,25 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
         super.writeToNBT(compound);
         compound.setFloat("efficiency", efficiency);
         compound.setInteger("klidInfused", klidInfused);
+        compound.setBoolean("infusionRunning", infusionRunning);
+
+        if (outputItemStack != null) {
+            NBTTagCompound outputCompound = new NBTTagCompound();
+            outputItemStack.writeToNBT(outputCompound);
+            compound.setTag("outputItemStack", outputCompound);
+        }
+
+        NBTTagList ingredientsTagList = new NBTTagList();
+        for (Item item : currentIngredients) {
+            ResourceLocation resourceLocation = Item.REGISTRY.getNameForObject(item);
+            if (resourceLocation != null) {
+                NBTTagCompound itemCompound = new NBTTagCompound();
+                itemCompound.setString("id", resourceLocation.toString());
+                ingredientsTagList.appendTag(itemCompound);
+            }
+        }
+        compound.setTag("currentIngredients", ingredientsTagList);
+
         return compound;
     }
 
