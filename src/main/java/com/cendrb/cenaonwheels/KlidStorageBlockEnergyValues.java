@@ -16,7 +16,7 @@ public class KlidStorageBlockEnergyValues {
     static {
         blockValues.put(Blocks.IRON_BLOCK, 50);
         blockValues.put(Blocks.GOLD_BLOCK, 200);
-        blockValues.put(Blocks.DIAMOND_ORE, 500);
+        blockValues.put(Blocks.DIAMOND_BLOCK, 500);
     }
 
     public static Integer getEnergyValue(Block block)
