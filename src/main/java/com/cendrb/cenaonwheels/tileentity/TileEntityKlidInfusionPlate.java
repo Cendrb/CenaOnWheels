@@ -79,10 +79,6 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
         return compound;
     }
 
-    public void setEfficiency(float efficiency) {
-        this.efficiency = efficiency;
-    }
-
     @Override
     public void acceptKlid(int amount) {
         if (infusionRunning) {
@@ -103,22 +99,46 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
         WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), klidLost);
 
         klidInfused += efficientKlidAmount;
+        COWLogger.logDebug("Total done: " + klidInfused);
+        COWLogger.logDebug("Infused: " + efficientKlidAmount);
+        COWLogger.logDebug("Klid lost: " + klidLost);
+
         if (klidInfused >= currentRecipe.getRequiredKlid()) {
-            infusionRunning = false;
-            currentRecipe = null;
-            currentIngredients = new ArrayList<>();
+            COWLogger.logDebug("Infusion done!");
             if (klidInfused > currentRecipe.getRequiredKlid())
                 WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), klidInfused - currentRecipe.getRequiredKlid());
+            infusionRunning = false;
+            currentRecipe = null;
+            klidInfused = 0;
+            currentIngredients = new ArrayList<>();
         }
+    }
+
+    public void setEfficiency(float efficiency) {
+        this.efficiency = efficiency;
+    }
+
+    public float getEfficiency() {
+        return efficiency;
     }
 
     public boolean isInfusionReady() {
         return currentRecipe != null;
     }
 
-    public boolean isInfusionRunning()
-    {
+    public boolean isInfusionRunning() {
         return infusionRunning;
+    }
+
+    public int getKlidInfused() {
+        return klidInfused;
+    }
+
+    public int getKlidRequired() {
+        if (currentRecipe == null)
+            return 0;
+        else
+            return currentRecipe.getRequiredKlid();
     }
 
     public class MainItemStackHandler extends ItemStackHandler {
@@ -128,7 +148,7 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
 
         @Override
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (infusionRunning || stacks[0] == null || stacks[0].stackSize != 0) {
+            if (infusionRunning) {
                 return stack;
             } else {
                 // check if can be klid infused

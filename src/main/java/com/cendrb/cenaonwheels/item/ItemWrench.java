@@ -2,8 +2,10 @@ package com.cendrb.cenaonwheels.item;
 
 import com.cendrb.cenaonwheels.ITargetable;
 import com.cendrb.cenaonwheels.block.BlockCowKlidGenerator;
+import com.cendrb.cenaonwheels.block.BlockKlidInfusionPlate;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageCap;
 import com.cendrb.cenaonwheels.tileentity.TileEntityCowKlidGenerator;
+import com.cendrb.cenaonwheels.tileentity.TileEntityKlidInfusionPlate;
 import com.cendrb.cenaonwheels.tileentity.TileEntityKlidStorage;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import com.cendrb.cenaonwheels.util.WorldHelper;
@@ -90,6 +92,20 @@ public class ItemWrench extends ItemBase {
                 } else if (WorldHelper.isBlock(worldIn, posClicked, BlockCowKlidGenerator.class) && (tileEntity = worldIn.getTileEntity(posClicked)) instanceof TileEntityCowKlidGenerator) {
                     TileEntityCowKlidGenerator cowVisGenerator = (TileEntityCowKlidGenerator) tileEntity;
                     playerIn.addChatComponentMessage(new TextComponentString("\n\n\n\nCow Klid Generator\nPěkná sračka"));
+                    return EnumActionResult.SUCCESS;
+                } else if (WorldHelper.isBlock(worldIn, posClicked, BlockKlidInfusionPlate.class) && (tileEntity = worldIn.getTileEntity(posClicked)) instanceof TileEntityKlidInfusionPlate) {
+                    TileEntityKlidInfusionPlate klidInfusionPlate = (TileEntityKlidInfusionPlate) tileEntity;
+                    playerIn.addChatComponentMessage(new TextComponentString(String.format("\n\n\n\n" +
+                                    "Klid Infusion Plate\n" +
+                                    "Infusion ready: %b\n" +
+                                    "Infusion running: %b\n" +
+                                    "Infusion progress: %d/%d\n" +
+                                    "Efficiency: %f\n",
+                            klidInfusionPlate.isInfusionReady(),
+                            klidInfusionPlate.isInfusionRunning(),
+                            klidInfusionPlate.getKlidInfused(),
+                            klidInfusionPlate.getKlidRequired(),
+                            klidInfusionPlate.getEfficiency())));
                     return EnumActionResult.SUCCESS;
                 }
             }
