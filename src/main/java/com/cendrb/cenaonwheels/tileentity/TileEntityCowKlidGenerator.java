@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by cendr_000 on 14.10.2016.
@@ -23,11 +24,14 @@ import java.util.List;
 public class TileEntityCowKlidGenerator extends TileEntity implements ITickable, ITargetable {
 
     private static final int BASE_PULSE_TICKS = 40;
+    private static final int MAX_COWS = 20;
 
     private int ticksTillBurst = 0;
     private boolean triggered;
 
     private BlockPos targetLocation;
+
+    private Random random = new Random();
 
     public TileEntityCowKlidGenerator() {
     }
@@ -40,19 +44,34 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable,
                 if (ticksTillBurst <= 0) {
                     // do a burst
                     ticksTillBurst = BASE_PULSE_TICKS;
+                    int x1 = pos.getX() - 5;
+                    int x2 = pos.getX() + 5;
+                    int y1 = pos.getY() + 5;
+                    int y2 = pos.getY() - 2;
+                    int z1 = pos.getZ() + 5;
+                    int z2 = pos.getZ() - 5;
+
                     List<EntityCow> cowsInRange = worldObj.getEntitiesWithinAABB(EntityCow.class, new AxisAlignedBB(
-                            pos.getX() - 10, getPos().getY() - 5, pos.getZ() - 10,
-                            pos.getX() + 10, pos.getY() + 5, pos.getZ() + 10));
+                            x1, y1, z1,
+                            x2, y2, z2));
                     int cowsCount = cowsInRange.size();
-                    COWLogger.logDebug(cowsCount + " cows found!");
-                    if (cowsCount > 0)
+
+                    // algorithm to automatically kill cows
+                    int cowsToKill = cowsCount / (MAX_COWS / 2);
+                    if(random.nextInt(MAX_COWS * 5) < cowsCount)
+                    {
+                        for(int i = 0; i < cowsToKill; i++)
+                        {
+                            cowsInRange.get(i).setDead();
+                        }
+                    }
+
+                    int extractedKlidAmount = (int) (cowsCount * (random.nextFloat() + 0.5f));
+                    if (extractedKlidAmount > 0)
                         if (targetLocation != null) {
-                            COWLogger.logDebug("Storage found");
-                            WorldHelper.spawnKlidBurst(worldObj, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, targetLocation, cowsCount);
+                            WorldHelper.spawnKlidBurst(worldObj, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, targetLocation, extractedKlidAmount);
                         } else {
-                            COWLogger.logDebug("No storage found, releasing klid into the atmosphere");
-                            KlidWorldSavedData savedData = KlidWorldSavedData.getFor(worldObj);
-                            savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + cowsCount);
+                            WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), extractedKlidAmount);
                         }
                 }
             }
