@@ -55,26 +55,27 @@ public class WorldHelper {
         }
     }
 
-    private static void spawnKlidReleasedParticles(World world, double x, double y, double z)
-    {
+    private static void spawnKlidReleasedParticles(World world, double x, double y, double z) {
         spawnParticles(world, EnumParticleTypes.CLOUD, x, y, z, 3, 3, 3, 40);
     }
 
-    public static void spawnKlidBurst(World world, double x, double y, double z, BlockPos targetLocation, int klidAmount)
-    {
-        EntityKlidBurst klidBurst = new EntityKlidBurst(world);
-        klidBurst.setPosition(x, y, z);
-        klidBurst.setTarget(targetLocation);
-        klidBurst.setValue(klidAmount);
-        world.spawnEntityInWorld(klidBurst);
-        Core.networkWrapper.sendToAllAround(new SyncEntityNBTMessage(klidBurst.getEntityId(), klidBurst.serializeNBT()), new NetworkRegistry.TargetPoint(world.provider.getDimension(), x, y, z, 256));
+    public static void spawnKlidBurst(World world, double x, double y, double z, BlockPos targetLocation, int klidAmount) {
+        if (klidAmount > 0) {
+            EntityKlidBurst klidBurst = new EntityKlidBurst(world);
+            klidBurst.setPosition(x, y, z);
+            klidBurst.setTarget(targetLocation);
+            klidBurst.setValue(klidAmount);
+            world.spawnEntityInWorld(klidBurst);
+            Core.networkWrapper.sendToAllAround(new SyncEntityNBTMessage(klidBurst.getEntityId(), klidBurst.serializeNBT()), new NetworkRegistry.TargetPoint(world.provider.getDimension(), x, y, z, 256));
+        }
     }
 
-    public static void releaseKlidAt(World world, double x, double y, double z, int klidAmount)
-    {
-        KlidWorldSavedData savedData = KlidWorldSavedData.getFor(world);
-        savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + klidAmount);
-        WorldHelper.spawnKlidReleasedParticles(world, x, y, z);
+    public static void releaseKlidAt(World world, double x, double y, double z, int klidAmount) {
+        if (klidAmount > 0) {
+            KlidWorldSavedData savedData = KlidWorldSavedData.getFor(world);
+            savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + klidAmount);
+            WorldHelper.spawnKlidReleasedParticles(world, x, y, z);
+        }
     }
 
     private static double getRandomPolarity(Random random) {
