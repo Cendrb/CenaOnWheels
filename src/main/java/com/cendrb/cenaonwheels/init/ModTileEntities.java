@@ -2,6 +2,7 @@ package com.cendrb.cenaonwheels.init;
 
 import com.cendrb.cenaonwheels.RefStrings;
 import com.cendrb.cenaonwheels.tileentity.TileEntityCowKlidGenerator;
+import com.cendrb.cenaonwheels.tileentity.TileEntityKlidInfusionPlate;
 import com.cendrb.cenaonwheels.tileentity.TileEntityMultiblockPart;
 import com.cendrb.cenaonwheels.tileentity.TileEntityKlidStorage;
 import net.minecraft.tileentity.TileEntity;
@@ -17,6 +18,7 @@ public class ModTileEntities {
         register(TileEntityKlidStorage.class, "klidStorage");
         register(TileEntityMultiblockPart.class, "multiblockPart");
         register(TileEntityCowKlidGenerator.class, "cowKlidGenerator");
+        register(TileEntityKlidInfusionPlate.class, "klidInfusionPlate");
     }
 
     private static void register(Class<? extends TileEntity> clazz, String name)
