@@ -14,6 +14,7 @@ public class ModItems {
     public static ItemBase klidManipulationCircuit;
     public static ItemBase klidMetal;
     public static ItemBase klidGem;
+    public static ItemBase aschGem;
     public static ItemWrench wrench;
 
     public static void init() {
@@ -22,6 +23,7 @@ public class ModItems {
         klidManipulationCircuit = register(new ItemBase("klidManipulationCircuit"));
         klidMetal = register(new ItemBase("klidMetal"));
         klidGem = register(new ItemBase("klidGem"));
+        aschGem = register(new ItemBase("aschGem"));
         wrench = register(new ItemWrench());
     }
 

@@ -17,7 +17,8 @@ public class ModKlidInfusionRecipes {
     public static void init() {
         recipes = new ArrayList<>();
         recipes.add(new KlidInfusionRecipe(1000, new ItemStack(ModItems.klidMetal, 1), ModItems.tempusShard, Items.IRON_INGOT, Items.GOLD_INGOT));
-        recipes.add(new KlidInfusionRecipe(10000, new ItemStack(ModItems.klidGem, 1), ModItems.tempusShard, Items.ENDER_PEARL, Items.DIAMOND));
+        recipes.add(new KlidInfusionRecipe(5000, new ItemStack(ModItems.klidGem, 1), ModItems.tempusShard, Items.ENDER_PEARL, Items.DIAMOND));
+        recipes.add(new KlidInfusionRecipe(10000, new ItemStack(ModItems.aschGem, 1), ModItems.klidGem, Item.getItemFromBlock(ModBlocks.klidMetalBlock), ModItems.klidGem));
     }
 
     public static KlidInfusionRecipeResult isPartOfRecipe(List<Item> items) {

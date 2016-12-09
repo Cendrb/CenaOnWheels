@@ -24,7 +24,7 @@ public class ModRecipes {
         // klid infusion
         addShapedRecipe(new ItemStack(ModBlocks.klidInfusionBasicPlate), " C ", "GDG", "GBG", 'C', ModItems.klidManipulationCircuit, 'G', Items.GOLD_INGOT, 'D', Items.DIAMOND);
         addShapedRecipe(new ItemStack(ModBlocks.klidInfusionAdvancedPlate), " C ", "MGM", "MBM", 'C', ModItems.klidManipulationCircuit, 'M', ModItems.klidMetal, 'G', ModItems.klidGem);
-        addShapedRecipe(new ItemStack(ModBlocks.klidInfusionUltimatePlate), " C ", "GGG", "GBG", 'C', ModItems.klidManipulationCircuit, 'G', ModItems.klidGem);
+        addShapedRecipe(new ItemStack(ModBlocks.klidInfusionUltimatePlate), " C ", "GAG", "GBG", 'C', ModItems.klidManipulationCircuit, 'G', ModItems.klidGem, 'A', ModItems.aschGem);
 
         // components
         addShapedRecipe(new ItemStack(ModItems.klidProjector), " T ", "TDT", " T ", 'T', ModItems.tempusShard, 'D', Items.DIAMOND);

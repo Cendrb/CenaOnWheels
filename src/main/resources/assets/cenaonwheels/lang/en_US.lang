@@ -5,6 +5,7 @@ item.klidProjector.name=Klid Projector
 item.klidManipulationCircuit.name=Klid Manipulation Circuit
 item.klidMetal.name=Klidmetal
 item.klidGem.name=Klidgem
+item.aschGem.name=Aschgem
 
 # Blocks
 tile.oreTempus.name=Tempus Ore
@@ -19,7 +20,7 @@ tile.machineBase.name=Machine Base
 tile.klidInfusionBasicPlate.name=Basic Klid Infusion Plate
 tile.klidInfusionAdvancedPlate.name=Advanced Klid Infusion Plate
 tile.klidInfusionUltimatePlate.name=Ultimate Klid Infusion Plate
-tile.klidMetalBlock.name=Block of Klid Metal
+tile.klidMetalBlock.name=Block of Klidmetal
 
 # Entities
 entity.cenaonwheels.KlidBurst.name=Klid Burst
