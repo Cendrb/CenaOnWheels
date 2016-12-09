@@ -24,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by cendr_000 on 21.10.2016.
  */
-public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable, IKlidAcceptor {
+public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcceptor {
 
     private float efficiency;
     private int klidInfused = 0;
@@ -38,11 +38,6 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements ITickable
     public TileEntityKlidInfusionPlate() {
         itemStackHandler = new MainItemStackHandler();
         currentIngredients = new ArrayList<>();
-    }
-
-    @Override
-    public void update() {
-
     }
 
     @Override
