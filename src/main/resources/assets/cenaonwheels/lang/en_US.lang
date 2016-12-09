@@ -19,6 +19,7 @@ tile.machineBase.name=Machine Base
 tile.klidInfusionBasicPlate.name=Basic Klid Infusion Plate
 tile.klidInfusionAdvancedPlate.name=Advanced Klid Infusion Plate
 tile.klidInfusionUltimatePlate.name=Ultimate Klid Infusion Plate
+tile.klidMetalBlock.name=Block of Klid Metal
 
 # Entities
 entity.cenaonwheels.KlidBurst.name=Klid Burst
@@ -27,7 +28,7 @@ entity.cenaonwheels.KlidBurst.name=Klid Burst
 itemGroup.COW=COW
 
 # JEI descriptions
-jei.description.tempusShard=Found as an ore underground. Used to harness power of The Mighty Aš.
+jei.description.tempusShard=Found as an ore underground. Used to harness power of The Mighty Asch.
 jei.description.wrench=Right-click to get info about a machine.\nShift-right-click to select a machine and then shift-right-click again to choose the target block.
 jei.description.core=Used in the center of the Klid Storage\nSum of all cores in the storage specifies how much klid will be released in one burst.\nValues for different kinds of cores are in their tooltips.
 jei.description.plate=Used to infuse items with klid energy.\nEach tier has efficiency. Efficiency specifies how much klid is actually used to infuse the item. Rest of the klid is RELEASED INTO THE ATMOSPHERE!\nValues for different kinds of plates are in their tooltips.

@@ -1,6 +1,7 @@
 package com.cendrb.cenaonwheels.init;
 
 import com.cendrb.cenaonwheels.block.*;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -29,6 +30,9 @@ public class ModBlocks {
     // klid generator
     public static BlockCowKlidGenerator cowKlidGenerator;
 
+    // blocks
+    public static BlockBase klidMetalBlock;
+
     public static void init() {
         oreTempus = registerWithDefaultItemblock(new BlockOreTempus());
         machineBase = registerWithDefaultItemblock(new BlockMachineBase());
@@ -42,6 +46,7 @@ public class ModBlocks {
         klidInfusionBasicPlate = registerWithDefaultItemblock(new BlockKlidInfusionPlate("Basic", 0.3f));
         klidInfusionAdvancedPlate = registerWithDefaultItemblock(new BlockKlidInfusionPlate("Advanced", 0.7f));
         klidInfusionUltimatePlate = registerWithDefaultItemblock(new BlockKlidInfusionPlate("Ultimate", 1.0f));
+        klidMetalBlock = registerWithDefaultItemblock(new BlockBase(Material.ROCK, "klidMetalBlock"));
     }
 
     private static <T extends BlockBase> T register(T block, ItemBlock itemBlock) {

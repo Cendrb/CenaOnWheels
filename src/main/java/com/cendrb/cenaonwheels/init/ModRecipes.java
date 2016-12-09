@@ -33,6 +33,9 @@ public class ModRecipes {
 
         // wrench
         addShapedRecipe(new ItemStack(ModItems.wrench), "I I", " T ", " I ", 'T', ModItems.tempusShard, 'I', Items.IRON_INGOT);
+
+        // blocks
+        addShapedRecipe(new ItemStack(ModBlocks.klidMetalBlock), "III", "III", "III", 'I', ModItems.klidMetal);
     }
 
     private static void addShapedRecipe(ItemStack itemStack, Object... data) {
