@@ -19,13 +19,11 @@ public class SyncEntityNBTMessage implements IMessage {
     private int entityId;
     private NBTTagCompound data;
 
-    public SyncEntityNBTMessage()
-    {
+    public SyncEntityNBTMessage() {
 
     }
 
-    public SyncEntityNBTMessage(int targetEntityId, NBTTagCompound data)
-    {
+    public SyncEntityNBTMessage(int targetEntityId, NBTTagCompound data) {
         this.entityId = targetEntityId;
         this.data = data;
     }
