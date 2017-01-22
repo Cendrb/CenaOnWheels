@@ -28,7 +28,7 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
 
     private float efficiency;
     private int klidInfused = 0;
-    private ArrayList<Item> currentIngredients;
+    private ArrayList<ItemStack> currentIngredients;
     private ItemStack outputItemStack;
     private boolean infusionRunning;
     private KlidInfusionRecipe currentRecipe;
@@ -64,15 +64,14 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
         if (compound.hasKey("infusionRunning"))
             infusionRunning = compound.getBoolean("infusionRunning");
         if (compound.hasKey("outputItemStack")) {
-            outputItemStack = new ItemStack(Items.APPLE, 0);
-            outputItemStack.readFromNBT(compound.getCompoundTag("outputItemStack"));
+            outputItemStack = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("outputItemStack"));
         }
 
         if (compound.hasKey("currentIngredients")) {
             NBTTagList tagList = (NBTTagList) compound.getTag("currentIngredients");
             for (int i = 0; i < tagList.tagCount(); i++) {
                 NBTTagCompound itemCompound = tagList.getCompoundTagAt(i);
-                currentIngredients.add(Item.getByNameOrId(itemCompound.getString("id")));
+                currentIngredients.add(ItemStack.loadItemStackFromNBT(itemCompound));
             }
             currentRecipe = ModKlidInfusionRecipes.getRecipeFor(currentIngredients);
         }

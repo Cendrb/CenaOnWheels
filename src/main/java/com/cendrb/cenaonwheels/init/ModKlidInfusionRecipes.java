@@ -36,7 +36,7 @@ public class ModKlidInfusionRecipes {
             return KlidInfusionRecipeResult.Incompatible;
     }
 
-    public static KlidInfusionRecipe getRecipeFor(List<Item> items)
+    public static KlidInfusionRecipe getRecipeFor(List<ItemStack> items)
     {
         for (KlidInfusionRecipe recipe : recipes) {
             KlidInfusionRecipeResult result = recipe.isCompatible(items);
