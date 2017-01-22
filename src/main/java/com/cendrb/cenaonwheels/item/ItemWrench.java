@@ -57,6 +57,11 @@ public class ItemWrench extends ItemBase {
             if ((tileEntityClicked = worldIn.getTileEntity(posClicked)) instanceof ITargetable) {
                 tag.setLong(LINK_BLOCK_POS, posClicked.toLong());
                 tag.setString(LINK_BLOCK_CLASS, tileEntityClicked.getClass().getSimpleName());
+                if (!worldIn.isRemote)
+                    playerIn.addChatComponentMessage(new TextComponentString(String.format(
+                            "You are currently targeting %s block located at %s",
+                            tag.getString(LINK_BLOCK_CLASS),
+                            COWLogger.formatBlockPos(posClicked))));
                 return EnumActionResult.SUCCESS;
             } else {
                 if (tag.hasKey(LINK_BLOCK_POS)) {
@@ -65,6 +70,11 @@ public class ItemWrench extends ItemBase {
                     if (tileEntity instanceof ITargetable) {
                         ((ITargetable) tileEntity).setTargetLocation(posClicked);
                     }
+                    if (!worldIn.isRemote)
+                        playerIn.addChatComponentMessage(new TextComponentString(String.format(
+                                "Block %s is now targeted at %s",
+                                tag.getString(LINK_BLOCK_CLASS),
+                                COWLogger.formatBlockPos(posClicked))));
                     return EnumActionResult.SUCCESS;
                 }
                 tag.removeTag(LINK_BLOCK_POS);
@@ -76,8 +86,8 @@ public class ItemWrench extends ItemBase {
                 TileEntity tileEntity;
                 if (WorldHelper.isBlock(worldIn, posClicked, BlockKlidStorageCap.class) && (tileEntity = worldIn.getTileEntity(posClicked)) instanceof TileEntityKlidStorage) {
                     TileEntityKlidStorage visStorage = (TileEntityKlidStorage) tileEntity;
-                    playerIn.addChatComponentMessage(new TextComponentString(String.format("\n\n\n\n" +
-                                    "Klid Storage\n" +
+                    playerIn.addChatComponentMessage(new TextComponentString(String.format(
+                            "Klid Storage\n" +
                                     "Structure complete: %s\n" +
                                     "Maximum capacity: %d\n" +
                                     "Current energy: %d\n" +
@@ -91,16 +101,17 @@ public class ItemWrench extends ItemBase {
                     return EnumActionResult.SUCCESS;
                 } else if (WorldHelper.isBlock(worldIn, posClicked, BlockCowKlidGenerator.class) && (tileEntity = worldIn.getTileEntity(posClicked)) instanceof TileEntityCowKlidGenerator) {
                     TileEntityCowKlidGenerator cowVisGenerator = (TileEntityCowKlidGenerator) tileEntity;
-                    playerIn.addChatComponentMessage(new TextComponentString(String.format("\n\n\n\nCow Klid Generator\n" +
-                            "TRIGGERED: %b\n" +
-                            "Target location: %s\n",
+                    playerIn.addChatComponentMessage(new TextComponentString(String.format(
+                            "Cow Klid Generator\n" +
+                                    "TRIGGERED: %b\n" +
+                                    "Target location: %s\n",
                             cowVisGenerator.getTriggered(),
                             COWLogger.formatBlockPos(cowVisGenerator.getTargetLocation()))));
                     return EnumActionResult.SUCCESS;
                 } else if (WorldHelper.isBlock(worldIn, posClicked, BlockKlidInfusionPlate.class) && (tileEntity = worldIn.getTileEntity(posClicked)) instanceof TileEntityKlidInfusionPlate) {
                     TileEntityKlidInfusionPlate klidInfusionPlate = (TileEntityKlidInfusionPlate) tileEntity;
-                    playerIn.addChatComponentMessage(new TextComponentString(String.format("\n\n\n\n" +
-                                    "Klid Infusion Plate\n" +
+                    playerIn.addChatComponentMessage(new TextComponentString(String.format(
+                            "Klid Infusion Plate\n" +
                                     "Infusion ready: %b\n" +
                                     "Infusion running: %b\n" +
                                     "Infusion progress: %d/%d\n" +
