@@ -12,7 +12,12 @@ public class ServerProxy extends CommonProxy {
     }
 
     @Override
-    public void registerEntityRederers() {
+    public void registerEntityRenderers() {
+        // no rendering on server side
+    }
+
+    @Override
+    public void registerTileEntitySpecialRenderers() {
         // no rendering on server side
     }
 }

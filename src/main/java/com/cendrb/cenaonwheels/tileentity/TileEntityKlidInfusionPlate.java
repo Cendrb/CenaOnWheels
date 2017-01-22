@@ -6,11 +6,14 @@ import com.cendrb.cenaonwheels.init.KlidInfusionRecipeResult;
 import com.cendrb.cenaonwheels.init.ModKlidInfusionRecipes;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import com.cendrb.cenaonwheels.util.WorldHelper;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -19,6 +22,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 /**
@@ -55,6 +59,32 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
     }
 
     @Override
+    public NBTTagCompound getUpdateTag() {
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        writeToNBT(nbtTagCompound);
+        return nbtTagCompound;
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag) {
+        readFromNBT(tag);
+    }
+
+    @Nullable
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        writeToNBT(nbtTagCompound);
+        int metadata = getBlockMetadata();
+        return new SPacketUpdateTileEntity(this.pos, metadata, nbtTagCompound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        readFromNBT(pkt.getNbtCompound());
+    }
+
+    @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         if (compound.hasKey("efficiency"))
@@ -68,6 +98,7 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
         }
 
         if (compound.hasKey("currentIngredients")) {
+            currentIngredients = new ArrayList<>();
             NBTTagList tagList = (NBTTagList) compound.getTag("currentIngredients");
             for (int i = 0; i < tagList.tagCount(); i++) {
                 NBTTagCompound itemCompound = tagList.getCompoundTagAt(i);
@@ -136,7 +167,7 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
             infusionRunning = false;
             currentRecipe = null;
             klidInfused = 0;
-            currentIngredients = new ArrayList<>();
+            setCurrentIngredients(new ArrayList<>());
         }
     }
 
@@ -167,6 +198,18 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
             return currentRecipe.getRequiredKlid();
     }
 
+    private void setCurrentIngredients(ArrayList<ItemStack> ingredients)
+    {
+        currentIngredients = ingredients;
+        IBlockState blockState = worldObj.getBlockState(pos);
+        worldObj.notifyBlockUpdate(pos, blockState, blockState, 1);
+    }
+
+    public ArrayList<ItemStack> getCurrentIngredients()
+    {
+        return currentIngredients;
+    }
+
     public class MainItemStackHandler extends ItemStackHandler {
         public MainItemStackHandler() {
             setSize(1);
@@ -185,12 +228,12 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
                     if (!simulate) {
                         COWLogger.logDebug("Infusion ready!");
                         currentRecipe = ModKlidInfusionRecipes.getRecipeFor(theoreticalFutureList);
-                        currentIngredients = theoreticalFutureList;
+                        setCurrentIngredients(theoreticalFutureList);
                     }
                     return null;
                 } else if (result == KlidInfusionRecipeResult.PartOfTheRecipe) {
                     if (!simulate)
-                        currentIngredients = theoreticalFutureList;
+                        setCurrentIngredients(theoreticalFutureList);
                     return null;
                 } else {
                     return stack;

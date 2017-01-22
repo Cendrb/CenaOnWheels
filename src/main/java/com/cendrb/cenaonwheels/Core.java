@@ -6,7 +6,6 @@ import com.cendrb.cenaonwheels.init.*;
 import com.cendrb.cenaonwheels.network.SpawnParticleMessage;
 import com.cendrb.cenaonwheels.network.SyncEntityNBTMessage;
 import com.cendrb.cenaonwheels.proxy.CommonProxy;
-import com.sun.corba.se.impl.orbutil.concurrent.Sync;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -43,7 +42,8 @@ public class Core {
         ModRecipes.init();
         ModKlidInfusionRecipes.init();
 
-        proxy.registerEntityRederers();
+        proxy.registerEntityRenderers();
+        proxy.registerTileEntitySpecialRenderers();
 
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(RefStrings.MODID + "_channel");
         networkWrapper.registerMessage(SpawnParticleMessage.Handler.class, SpawnParticleMessage.class, 0, Side.CLIENT);
