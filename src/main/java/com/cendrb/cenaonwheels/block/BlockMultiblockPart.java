@@ -21,7 +21,6 @@ public abstract class BlockMultiblockPart extends BlockBase implements ITileEnti
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn) {
         if (!(blockIn instanceof BlockMultiblockMaster)) {
-            COWLogger.logDebug("neighborChanged called");
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if (tileEntity != null && tileEntity instanceof TileEntityMultiblockPart)
                 ((TileEntityMultiblockPart) tileEntity).requestMultiblockCheck();

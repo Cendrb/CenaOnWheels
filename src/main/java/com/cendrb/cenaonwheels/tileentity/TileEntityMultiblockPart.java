@@ -20,7 +20,6 @@ public class TileEntityMultiblockPart extends TileEntity {
             TileEntity tileEntity = worldObj.getTileEntity(masterPos);
             if (tileEntity != null && TileEntityMultiblockMaster.class.isAssignableFrom(tileEntity.getClass()))
             {
-                COWLogger.logDebug("Requesting multiblock check...");
                 ((TileEntityMultiblockMaster) tileEntity).checkMultiblock();
             }
             else

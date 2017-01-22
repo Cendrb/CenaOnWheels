@@ -92,9 +92,9 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
 
         NBTTagList ingredientsTagList = new NBTTagList();
         for (ItemStack itemStack : currentIngredients) {
-                NBTTagCompound itemStackCompound = new NBTTagCompound();
-                itemStack.writeToNBT(itemStackCompound);
-                ingredientsTagList.appendTag(itemStackCompound);
+            NBTTagCompound itemStackCompound = new NBTTagCompound();
+            itemStack.writeToNBT(itemStackCompound);
+            ingredientsTagList.appendTag(itemStackCompound);
         }
         compound.setTag("currentIngredients", ingredientsTagList);
 
@@ -118,22 +118,18 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
     private void infuseWith(int klidAmount) {
         int efficientKlidAmount = (int) (klidAmount * efficiency);
         int klidLost;
-        if(efficientKlidAmount >= currentRecipe.getKlidAcceptanceThreshold()) {
+        if (efficientKlidAmount >= currentRecipe.getKlidAcceptanceThreshold()) {
             klidLost = klidAmount - efficientKlidAmount;
             klidInfused += efficientKlidAmount;
-            COWLogger.logDebug("Total done: " + klidInfused);
-            COWLogger.logDebug("Infused: " + efficientKlidAmount);
-            COWLogger.logDebug("Klid lost: " + klidLost);
-        }
-        else {
+            COWLogger.logDebug("Added " + efficientKlidAmount + ", progress " + klidInfused + "/" + getKlidRequired() + ", klid loss: " + klidLost);
+        } else {
             klidLost = klidAmount;
-            COWLogger.logDebug("Threshold not reached");
-            COWLogger.logDebug("Klid lost: " + klidLost);
+            COWLogger.logDebug("Threshold not reached. Klid lost: " + klidLost);
         }
         WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), klidLost);
 
         if (klidInfused >= currentRecipe.getRequiredKlid()) {
-            COWLogger.logDebug("Infusion done!");
+            COWLogger.logDebug("Infusion complete!");
             if (klidInfused > currentRecipe.getRequiredKlid())
                 WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), klidInfused - currentRecipe.getRequiredKlid());
             outputItemStack = currentRecipe.getResult().copy();

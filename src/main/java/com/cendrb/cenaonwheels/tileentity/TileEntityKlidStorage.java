@@ -83,8 +83,6 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
 
     @Override
     public void checkMultiblock() {
-        COWLogger.logDebug("Checking multiblock...");
-
         // gets automatically called by TileEntityMultiblockParts
         multiblockComplete = false;
         currentEnergyMax = 0;
