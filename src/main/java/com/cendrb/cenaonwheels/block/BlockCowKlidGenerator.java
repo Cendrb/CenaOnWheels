@@ -1,6 +1,7 @@
 package com.cendrb.cenaonwheels.block;
 
 import com.cendrb.cenaonwheels.tileentity.TileEntityCowKlidGenerator;
+import com.cendrb.cenaonwheels.util.COWLogger;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -41,21 +42,15 @@ public class BlockCowKlidGenerator extends BlockBase implements ITileEntityProvi
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return 0;
+        if (state.getValue(TRIGGERED))
+            return 1;
+        else
+            return 0;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState();
-    }
-
-    @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity instanceof TileEntityCowKlidGenerator) {
-            return state.withProperty(TRIGGERED, ((TileEntityCowKlidGenerator) tileEntity).getTriggered());
-        } else
-            return state;
+        return getDefaultState().withProperty(TRIGGERED, meta == 1);
     }
 
     @Override
@@ -65,6 +60,7 @@ public class BlockCowKlidGenerator extends BlockBase implements ITileEntityProvi
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         boolean poweredInWorld = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(pos.up());
+        worldIn.setBlockState(pos, state.withProperty(TRIGGERED, poweredInWorld));
 
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity != null && tileEntity instanceof TileEntityCowKlidGenerator) {

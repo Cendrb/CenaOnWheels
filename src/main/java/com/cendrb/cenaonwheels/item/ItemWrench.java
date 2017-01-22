@@ -91,7 +91,11 @@ public class ItemWrench extends ItemBase {
                     return EnumActionResult.SUCCESS;
                 } else if (WorldHelper.isBlock(worldIn, posClicked, BlockCowKlidGenerator.class) && (tileEntity = worldIn.getTileEntity(posClicked)) instanceof TileEntityCowKlidGenerator) {
                     TileEntityCowKlidGenerator cowVisGenerator = (TileEntityCowKlidGenerator) tileEntity;
-                    playerIn.addChatComponentMessage(new TextComponentString("\n\n\n\nCow Klid Generator\nPěkná sračka"));
+                    playerIn.addChatComponentMessage(new TextComponentString(String.format("\n\n\n\nCow Klid Generator\n" +
+                            "TRIGGERED: %b\n" +
+                            "Target location: %s\n",
+                            cowVisGenerator.getTriggered(),
+                            COWLogger.formatBlockPos(cowVisGenerator.getTargetLocation()))));
                     return EnumActionResult.SUCCESS;
                 } else if (WorldHelper.isBlock(worldIn, posClicked, BlockKlidInfusionPlate.class) && (tileEntity = worldIn.getTileEntity(posClicked)) instanceof TileEntityKlidInfusionPlate) {
                     TileEntityKlidInfusionPlate klidInfusionPlate = (TileEntityKlidInfusionPlate) tileEntity;

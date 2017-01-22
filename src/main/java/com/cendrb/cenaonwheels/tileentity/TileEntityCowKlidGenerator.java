@@ -2,9 +2,11 @@ package com.cendrb.cenaonwheels.tileentity;
 
 import com.cendrb.cenaonwheels.ITargetable;
 import com.cendrb.cenaonwheels.KlidWorldSavedData;
+import com.cendrb.cenaonwheels.block.BlockCowKlidGenerator;
 import com.cendrb.cenaonwheels.init.ModBlocks;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import com.cendrb.cenaonwheels.util.WorldHelper;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -13,6 +15,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import org.omg.CORBA.TRANSACTION_MODE;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -79,33 +83,6 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable,
     }
 
     @Override
-    public NBTTagCompound getUpdateTag() {
-        NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        writeToNBT(nbtTagCompound);
-        return nbtTagCompound;
-    }
-
-    @Override
-    public void handleUpdateTag(NBTTagCompound tag) {
-        readFromNBT(tag);
-    }
-
-    @Nullable
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        writeToNBT(nbtTagCompound);
-        int metadata = getBlockMetadata();
-        return new SPacketUpdateTileEntity(this.pos, metadata, nbtTagCompound);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        readFromNBT(pkt.getNbtCompound());
-    }
-
-
-    @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         if (compound.hasKey("ticksTillBurst"))
@@ -132,8 +109,11 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable,
 
     public void setTriggered(boolean triggered) {
         this.triggered = triggered;
-        markDirty();
-        worldObj.notifyBlockOfStateChange(pos, ModBlocks.cowKlidGenerator);
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+        return (oldState.getBlock() != newState.getBlock());
     }
 
     public void setTargetLocation(BlockPos pos) {

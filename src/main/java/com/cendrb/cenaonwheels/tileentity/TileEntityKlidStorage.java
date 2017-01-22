@@ -78,7 +78,6 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
             WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), amount - (currentEnergyMax - currentEnergy));
             currentEnergy = currentEnergyMax;
         }
-        markDirty();
     }
 
     @Override
