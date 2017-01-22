@@ -21,7 +21,7 @@ public class ModKlidInfusionRecipes {
         recipes.add(new KlidInfusionRecipe(10000, new ItemStack(ModItems.aschGem, 1), ModItems.klidGem, Item.getItemFromBlock(ModBlocks.klidMetalBlock), ModItems.klidGem));
     }
 
-    public static KlidInfusionRecipeResult isPartOfRecipe(List<Item> items) {
+    public static KlidInfusionRecipeResult isPartOfRecipe(List<ItemStack> items) {
         boolean recipeFound = false;
         for (KlidInfusionRecipe recipe : recipes) {
             KlidInfusionRecipeResult result = recipe.isCompatible(items);

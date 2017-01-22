@@ -91,13 +91,10 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
         }
 
         NBTTagList ingredientsTagList = new NBTTagList();
-        for (Item item : currentIngredients) {
-            ResourceLocation resourceLocation = Item.REGISTRY.getNameForObject(item);
-            if (resourceLocation != null) {
-                NBTTagCompound itemCompound = new NBTTagCompound();
-                itemCompound.setString("id", resourceLocation.toString());
-                ingredientsTagList.appendTag(itemCompound);
-            }
+        for (ItemStack itemStack : currentIngredients) {
+                NBTTagCompound itemStackCompound = new NBTTagCompound();
+                itemStack.writeToNBT(itemStackCompound);
+                ingredientsTagList.appendTag(itemStackCompound);
         }
         compound.setTag("currentIngredients", ingredientsTagList);
 
@@ -185,9 +182,8 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
                 return stack;
             } else {
                 // check if can be klid infused
-                ArrayList<Item> theoreticalFutureList = new ArrayList<>(currentIngredients);
-                for (int i = 0; i < stack.stackSize; i++)
-                    theoreticalFutureList.add(stack.getItem());
+                ArrayList<ItemStack> theoreticalFutureList = new ArrayList<>(currentIngredients);
+                theoreticalFutureList.add(stack);
                 KlidInfusionRecipeResult result = ModKlidInfusionRecipes.isPartOfRecipe(theoreticalFutureList);
                 if (result == KlidInfusionRecipeResult.Complete) {
                     if (!simulate) {
