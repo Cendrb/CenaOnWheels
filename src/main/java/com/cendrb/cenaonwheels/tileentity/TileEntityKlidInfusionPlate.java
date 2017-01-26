@@ -167,7 +167,7 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
             infusionRunning = false;
             currentRecipe = null;
             klidInfused = 0;
-            setCurrentIngredients(new ArrayList<>());
+            setCurrentIngredients(new ArrayList<ItemStack>());
         }
     }
 

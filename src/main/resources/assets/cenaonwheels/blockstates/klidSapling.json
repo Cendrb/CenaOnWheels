@@ -1,0 +1,25 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "uvlock": true,
+    "textures": {
+      "all": "cenaonwheels:blocks/klidSapling"
+    }
+  },
+  "variants": {
+    "type": {
+      "asch": {
+        "textures": {
+          "all": "cenaonwheels:blocks/klidSapling"
+        }
+      }
+    },
+    "state": {
+      "0": {
+      },
+      "1": {
+      }
+    }
+  }
+}

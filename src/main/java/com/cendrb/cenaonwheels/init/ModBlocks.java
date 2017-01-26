@@ -1,6 +1,9 @@
 package com.cendrb.cenaonwheels.init;
 
 import com.cendrb.cenaonwheels.block.*;
+import com.cendrb.cenaonwheels.block.tree.*;
+import com.cendrb.cenaonwheels.util.WorldHelper;
+import net.minecraft.block.BlockSapling;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -33,6 +36,12 @@ public class ModBlocks {
     // blocks
     public static BlockBase klidMetalBlock;
 
+    // trees
+    public static BlockKlidSapling aschSapling;
+    public static BlockKlidPlanks klidPlanks;
+    public static BlockKlidLog klidLog;
+    public static BlockKlidLeaves klidLeaves;
+
     public static void init() {
         oreTempus = registerWithDefaultItemblock(new BlockOreTempus());
         machineBase = registerWithDefaultItemblock(new BlockMachineBase());
@@ -47,6 +56,11 @@ public class ModBlocks {
         klidInfusionAdvancedPlate = registerWithDefaultItemblock(new BlockKlidInfusionPlate("Advanced", 0.7f));
         klidInfusionUltimatePlate = registerWithDefaultItemblock(new BlockKlidInfusionPlate("Ultimate", 1.0f));
         klidMetalBlock = registerWithDefaultItemblock(new BlockBase(Material.ROCK, "klidMetalBlock"));
+
+        aschSapling = registerWithDefaultItemblock(new BlockKlidSapling(KlidWoodType.ASCH));
+        klidPlanks = registerWithDefaultItemblock(new BlockKlidPlanks());
+        klidLog = registerWithDefaultItemblock(new BlockKlidLog());
+        klidLeaves = registerWithDefaultItemblock(new BlockKlidLeaves());
     }
 
     private static <T extends BlockBase> T register(T block, ItemBlock itemBlock) {

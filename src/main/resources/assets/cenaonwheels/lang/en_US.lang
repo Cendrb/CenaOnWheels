@@ -21,6 +21,10 @@ tile.klidInfusionBasicPlate.name=Basic Klid Infusion Plate
 tile.klidInfusionAdvancedPlate.name=Advanced Klid Infusion Plate
 tile.klidInfusionUltimatePlate.name=Ultimate Klid Infusion Plate
 tile.klidMetalBlock.name=Block of Klidmetal
+tile.klidSapling.name=Fucking sapling
+tile.klidPlanks.name=Fucking planks
+tile.klidLog.name=Fuckin log
+tile.klidLeaves.name=Fucking leaves
 
 # Entities
 entity.cenaonwheels.KlidBurst.name=Klid Burst

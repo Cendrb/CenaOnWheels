@@ -56,7 +56,7 @@ public class KlidWorldSavedData extends WorldSavedData {
     }
 
     public void refreshCurrentTickRate() {
-        if (klidInTheAtmosphere > 1000) {
+        if (klidInTheAtmosphere > 100000) {
             int calculatedTickRate = DEFAULT_TICKRATE - (klidInTheAtmosphere - 1000) / 100;
             if (calculatedTickRate < MINIMAL_TICKRATE)
                 calculatedTickRate = MINIMAL_TICKRATE;

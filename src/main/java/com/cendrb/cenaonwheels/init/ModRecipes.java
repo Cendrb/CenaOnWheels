@@ -36,6 +36,9 @@ public class ModRecipes {
 
         // blocks
         addShapedRecipe(new ItemStack(ModBlocks.klidMetalBlock), "III", "III", "III", 'I', ModItems.klidMetal);
+
+        // trees
+        addShapelessRecipe(new ItemStack(ModBlocks.klidPlanks, 4), new ItemStack(ModBlocks.klidLog));
     }
 
     private static void addShapedRecipe(ItemStack itemStack, Object... data) {
