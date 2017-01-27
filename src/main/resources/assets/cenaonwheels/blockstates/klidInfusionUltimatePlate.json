@@ -7,10 +7,10 @@
   },
   "variants": {
     "normal": {
-      "model": "cenaonwheels:visInfusionTable"
+      "model": "cenaonwheels:klidInfusionTable"
     },
     "inventory": {
-      "model": "cenaonwheels:visInfusionTable",
+      "model": "cenaonwheels:klidInfusionTable",
       "transform": "forge:default-block"
     }
   }
