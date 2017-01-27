@@ -17,10 +17,12 @@
         }
       }
     },
-    "inventory": {
-      "textures": {
-        "all": "cenaonwheels:blocks/cowKlidGeneratorOff"
+    "inventory": [
+      {
+        "textures": {
+          "all": "cenaonwheels:blocks/cowKlidGeneratorOff"
+        }
       }
-    }
+    ]
   }
 }

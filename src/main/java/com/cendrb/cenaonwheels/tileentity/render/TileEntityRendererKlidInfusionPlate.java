@@ -56,51 +56,53 @@ public class TileEntityRendererKlidInfusionPlate extends TileEntitySpecialRender
         float scale = 0.5F;
 
         ArrayList<ItemStack> currentIngredients = te.getCurrentIngredients();
-        final float modifier = 6F;
-        final float rotationModifier = 0.25F;
-        final float radiusBase = 1.2F;
-        final float radiusMod = 0.1F;
+        if(currentIngredients.size() > 0) {
+            final float modifier = 6F;
+            final float rotationModifier = 0.25F;
+            final float radiusBase = 1.2F;
+            final float radiusMod = 0.1F;
 
-        double ticks = 1;
+            double ticks = 1;
 
-        float offsetPerItem = 360 / currentIngredients.size();
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(-0.05F, -0.5F, 0F);
-        GlStateManager.scale(scale, scale, scale);
-
-        int index = 0;
-        for (ItemStack itemStack : currentIngredients) {
-            float offset = offsetPerItem * index;
-            float deg = (int) (ticks / rotationModifier % 360F + offset);
-            float rad = deg * (float) Math.PI / 180F;
-            float radiusX = (float) (radiusBase + radiusMod * Math.sin(ticks / modifier));
-            float radiusZ = (float) (radiusBase + radiusMod * Math.cos(ticks / modifier));
-            float xItem =  (float) (radiusX * Math.cos(rad));
-            float zItem = (float) (radiusZ * Math.sin(rad));
-            float yItem = (float) Math.cos((ticks + 50 * index) / 5F) / 10F;
-
+            float offsetPerItem = 360 / currentIngredients.size();
             GlStateManager.pushMatrix();
-            GlStateManager.translate(xItem, yItem, zItem);
-            float xRotate = (float) Math.sin(ticks * rotationModifier) / 2F;
-            float yRotate = (float) Math.max(0.6F, Math.sin(ticks * 0.1F) / 2F + 0.5F);
-            float zRotate = (float) Math.cos(ticks * rotationModifier) / 2F;
+            GlStateManager.translate(-0.05F, -0.5F, 0F);
+            GlStateManager.scale(scale, scale, scale);
 
-            scale /= 2F;
-            GlStateManager.translate(scale, scale, scale);
-            GlStateManager.rotate(deg, xRotate, yRotate, zRotate);
-            GlStateManager.translate(-scale, -scale, -scale);
-            scale *= 2F;
+            int index = 0;
+            for (ItemStack itemStack : currentIngredients) {
+                float offset = offsetPerItem * index;
+                float deg = (int) (ticks / rotationModifier % 360F + offset);
+                float rad = deg * (float) Math.PI / 180F;
+                float radiusX = (float) (radiusBase + radiusMod * Math.sin(ticks / modifier));
+                float radiusZ = (float) (radiusBase + radiusMod * Math.cos(ticks / modifier));
+                float xItem = (float) (radiusX * Math.cos(rad));
+                float zItem = (float) (radiusZ * Math.sin(rad));
+                float yItem = (float) Math.cos((ticks + 50 * index) / 5F) / 10F;
 
-            GlStateManager.color(1F, 1F, 1F, 1F);
+                GlStateManager.pushMatrix();
+                GlStateManager.translate(xItem, yItem, zItem);
+                float xRotate = (float) Math.sin(ticks * rotationModifier) / 2F;
+                float yRotate = (float) Math.max(0.6F, Math.sin(ticks * 0.1F) / 2F + 0.5F);
+                float zRotate = (float) Math.cos(ticks * rotationModifier) / 2F;
 
-            Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-            Minecraft.getMinecraft().getRenderItem().renderItem(itemStack, ItemCameraTransforms.TransformType.GROUND);
+                scale /= 2F;
+                GlStateManager.translate(scale, scale, scale);
+                GlStateManager.rotate(deg, xRotate, yRotate, zRotate);
+                GlStateManager.translate(-scale, -scale, -scale);
+                scale *= 2F;
+
+                GlStateManager.color(1F, 1F, 1F, 1F);
+
+                Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+                Minecraft.getMinecraft().getRenderItem().renderItem(itemStack, ItemCameraTransforms.TransformType.GROUND);
+                GlStateManager.popMatrix();
+
+                index++;
+            }
+
             GlStateManager.popMatrix();
-
-            index++;
         }
-
-        GlStateManager.popMatrix();
         GlStateManager.popMatrix();
 
         /*

@@ -2,10 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "model": "cube_all",
-    "uvlock": true,
-    "textures": {
-      "all": "cenaonwheels:blocks/klidSapling"
-    }
+    "uvlock": true
   },
   "variants": {
     "type": {
@@ -15,11 +12,18 @@
         }
       }
     },
-    "state": {
+    "stage": {
       "0": {
       },
       "1": {
       }
-    }
+    },
+    "inventory": [
+      {
+        "textures": {
+          "all": "cenaonwheels:blocks/klidSapling"
+        }
+      }
+    ]
   }
 }

@@ -24,6 +24,7 @@ public class ModBlocks {
     public static BlockKlidStorageCore klidStorageBasicCore;
     public static BlockKlidStorageCore klidStorageAdvancedCore;
     public static BlockKlidStorageCore klidStorageUltimateCore;
+    public static BlockKlidStorageExtractor klidStorageExtractor;
 
     // klid infusion
     public static BlockKlidInfusionPlate klidInfusionBasicPlate;
@@ -55,6 +56,7 @@ public class ModBlocks {
         klidInfusionBasicPlate = registerWithDefaultItemblock(new BlockKlidInfusionPlate("Basic", 0.3f));
         klidInfusionAdvancedPlate = registerWithDefaultItemblock(new BlockKlidInfusionPlate("Advanced", 0.7f));
         klidInfusionUltimatePlate = registerWithDefaultItemblock(new BlockKlidInfusionPlate("Ultimate", 1.0f));
+        klidStorageExtractor = registerWithDefaultItemblock(new BlockKlidStorageExtractor());
         klidMetalBlock = registerWithDefaultItemblock(new BlockBase(Material.ROCK, "klidMetalBlock"));
 
         aschSapling = registerWithDefaultItemblock(new BlockKlidSapling(KlidWoodType.ASCH));

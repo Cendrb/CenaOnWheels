@@ -90,14 +90,10 @@ public class ItemWrench extends ItemBase {
                             "Klid Storage\n" +
                                     "Structure complete: %s\n" +
                                     "Maximum capacity: %d\n" +
-                                    "Current energy: %d\n" +
-                                    "Activated: %b\n" +
-                                    "Target: %s",
+                                    "Current energy: %d\n",
                             String.valueOf(visStorage.isMultiblockComplete()),
                             visStorage.getCurrentEnergyMax(),
-                            visStorage.getCurrentEnergy(),
-                            visStorage.isTriggered(),
-                            COWLogger.formatBlockPos(visStorage.getTargetLocation()))));
+                            visStorage.getCurrentEnergy())));
                     return EnumActionResult.SUCCESS;
                 } else if (WorldHelper.isBlock(worldIn, posClicked, BlockCowKlidGenerator.class) && (tileEntity = worldIn.getTileEntity(posClicked)) instanceof TileEntityCowKlidGenerator) {
                     TileEntityCowKlidGenerator cowVisGenerator = (TileEntityCowKlidGenerator) tileEntity;

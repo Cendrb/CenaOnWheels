@@ -6,6 +6,7 @@ import com.cendrb.cenaonwheels.KlidWorldSavedData;
 import com.cendrb.cenaonwheels.KlidStorageBlockEnergyValues;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageCasing;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageCore;
+import com.cendrb.cenaonwheels.block.BlockKlidStorageExtractor;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageGlass;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import com.cendrb.cenaonwheels.util.WorldHelper;
@@ -30,7 +31,7 @@ import java.util.List;
  * Created by cendr_000 on 02.10.2016.
  */
 @SuppressWarnings("Duplicates")
-public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements ITickable, IKlidAcceptor, ITargetable {
+public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements ITickable, IKlidAcceptor {
 
     private static final int TICKS_BETWEEN_CHECKS = 20;
 
@@ -41,10 +42,6 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
 
     private int tickTimer = 0;
 
-    private boolean triggered;
-
-    private BlockPos targetLocation;
-
     public TileEntityKlidStorage() {
 
     }
@@ -54,19 +51,9 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
         tickTimer++;
         if (tickTimer >= TICKS_BETWEEN_CHECKS) {
             tickTimer = 0;
-
-            if (multiblockComplete) {
-                if (!worldObj.isRemote && triggered && targetLocation != null) {
-                    int toBeReleased;
-                    if(currentEnergy < outputBurstVolume)
-                        toBeReleased = currentEnergy;
-                    else
-                        toBeReleased = outputBurstVolume;
-                    WorldHelper.spawnKlidBurst(worldObj, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, targetLocation, toBeReleased);
-                    currentEnergy -= toBeReleased;
-                }
-            } else
+            if (!multiblockComplete) {
                 checkMultiblock();
+            }
         }
     }
 
@@ -106,6 +93,22 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
 
         if (!success)
             return;
+
+        // check for klid extractors at the top
+        ArrayList<BlockPos> extractorPossiblePositions = new ArrayList<>();
+        extractorPossiblePositions.add(pos.west());
+        extractorPossiblePositions.add(pos.east());
+        extractorPossiblePositions.add(pos.north());
+        extractorPossiblePositions.add(pos.south());
+        extractorPossiblePositions.add(pos.north().west());
+        extractorPossiblePositions.add(pos.north().east());
+        extractorPossiblePositions.add(pos.south().west());
+        extractorPossiblePositions.add(pos.south().east());
+        for (BlockPos extractorBlockPos : extractorPossiblePositions) {
+            if (WorldHelper.isBlock(worldObj, extractorBlockPos, BlockKlidStorageExtractor.class)) {
+                blockPositions.add(extractorBlockPos);
+            }
+        }
 
         // check "the tunnel" casings
         boolean allCasingsFound = true;
@@ -214,10 +217,7 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
             currentEnergy = compound.getInteger("currentEnergy");
         if (compound.hasKey("outputBurstVolume"))
             outputBurstVolume = compound.getInteger("outputBurstVolume");
-        if (compound.hasKey("targetLocation"))
-            targetLocation = BlockPos.fromLong(compound.getLong("targetLocation"));
-        if (compound.hasKey("triggered"))
-            triggered = compound.getBoolean("triggered");
+
     }
 
     @Override
@@ -225,9 +225,6 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
         super.writeToNBT(compound);
         compound.setInteger("currentEnergy", currentEnergy);
         compound.setInteger("outputBurstVolume", outputBurstVolume);
-        if (targetLocation != null)
-            compound.setLong("targetLocation", targetLocation.toLong());
-        compound.setBoolean("triggered", triggered);
         return compound;
     }
 
@@ -258,20 +255,7 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
         return currentEnergy;
     }
 
-    @Override
-    public void setTargetLocation(BlockPos targetLocation) {
-        this.targetLocation = targetLocation;
-    }
-
-    public boolean isTriggered() {
-        return triggered;
-    }
-
-    public void setTriggered(boolean triggered) {
-        this.triggered = triggered;
-    }
-
-    public BlockPos getTargetLocation() {
-        return targetLocation;
+    public int getOutputBurstVolume() {
+        return outputBurstVolume;
     }
 }

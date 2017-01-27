@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "main": "cenaonwheels:blocks/klidMetalBlock"
+    },
+    "model": "cenaonwheels:klidStorageExtractorBase"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{
+      "transform": "forge:default-block"
+    }]
+  }
+}

@@ -9,27 +9,19 @@
   "variants": {
     "decayable": {
       "true": {
-        "textures": {
-          "all": "cenaonwheels:blocks/klidLeaves"
-        }
       },
       "false": {
-        "textures": {
-          "all": "cenaonwheels:blocks/klidLeaves"
-        }
       }
     },
     "check_decay": {
       "true": {
-        "textures": {
-          "all": "cenaonwheels:blocks/klidLeaves"
-        }
       },
       "false": {
-        "textures": {
-          "all": "cenaonwheels:blocks/klidLeaves"
-        }
       }
-    }
+    },
+    "inventory": [
+      {
+      }
+    ]
   }
 }

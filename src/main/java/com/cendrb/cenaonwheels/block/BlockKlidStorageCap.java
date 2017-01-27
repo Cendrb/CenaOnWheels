@@ -15,23 +15,10 @@ import java.util.Random;
 /**
  * Created by cendr_000 on 02.10.2016.
  */
-public class BlockKlidStorageCap extends BlockKlidStoragePart implements ITileEntityProvider {
+public class BlockKlidStorageCap extends BlockMultiblockMaster implements ITileEntityProvider {
 
     public BlockKlidStorageCap() {
         super(Material.ROCK, "klidStorageCap");
-    }
-
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn) {
-        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
-    }
-
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-        boolean poweredInWorld = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(pos.up());
-
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity != null && tileEntity instanceof TileEntityKlidStorage) {
-            ((TileEntityKlidStorage) tileEntity).setTriggered(poweredInWorld);
-        }
     }
 
     @Override
