@@ -1,0 +1,33 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "explosive": {
+      "true": {
+        "textures": {
+          "all": "cenaonwheels:blocks/heimCoreExplosive"
+        }
+      },
+      "false": {
+        "textures": {
+          "all": "cenaonwheels:blocks/heimCore"
+        }
+      }
+    },
+    "inventory": [
+      {
+        "textures": {
+          "all": "cenaonwheels:blocks/heimCoreExplosive"
+        }
+      },
+      {
+        "textures": {
+          "all": "cenaonwheels:blocks/heimCore"
+        }
+      }
+    ]
+  }
+}

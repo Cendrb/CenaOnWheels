@@ -1,0 +1,10 @@
+{
+  "heimRiot": {"category": "master", "sounds": [{"name": "cenaonwheels:heimSong", "stream": true}]},
+  "heimSong": {"category": "master", "sounds": [{"name": "cenaonwheels:heimSong", "stream": true}]},
+  "heimArmed": {"category": "master", "sounds": [{"name": "cenaonwheels:heimArmed", "stream": true}]},
+  "adhan": {"category": "master", "sounds": [{"name": "cenaonwheels:adhan", "stream": true}]},
+  "psim": {"category": "master", "sounds": ["cenaonwheels:psim"]},
+  "heimExplosion": {"category": "master", "sounds": ["cenaonwheels:heimExplosion"]},
+  "gei": {"category": "master", "sounds": ["cenaonwheels:gei"]},
+  "surprise": {"category": "master", "sounds": ["cenaonwheels:surprise"]}
+}

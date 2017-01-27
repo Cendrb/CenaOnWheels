@@ -4,6 +4,7 @@ import com.cendrb.cenaonwheels.ITargetable;
 import com.cendrb.cenaonwheels.KlidWorldSavedData;
 import com.cendrb.cenaonwheels.block.BlockCowKlidGenerator;
 import com.cendrb.cenaonwheels.init.ModBlocks;
+import com.cendrb.cenaonwheels.init.ModSounds;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import com.cendrb.cenaonwheels.util.WorldHelper;
 import net.minecraft.block.state.IBlockState;
@@ -13,6 +14,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -41,7 +43,7 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable,
     }
 
     @Override
-    public void update() {
+        public void update() {
         if (!worldObj.isRemote) {
             if (triggered) {
                 ticksTillBurst--;
@@ -73,6 +75,7 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable,
                     int extractedKlidAmount = (int) (cowsCount * (random.nextFloat() + 0.5f));
                     if (extractedKlidAmount > 0)
                         if (targetLocation != null) {
+                            worldObj.playSound(null, pos, ModSounds.whoa, SoundCategory.BLOCKS, 5f, 1f);
                             WorldHelper.spawnKlidBurst(worldObj, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, targetLocation, extractedKlidAmount);
                         } else {
                             WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), extractedKlidAmount);

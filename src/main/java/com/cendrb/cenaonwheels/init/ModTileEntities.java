@@ -17,6 +17,7 @@ public class ModTileEntities {
         register(TileEntityCowKlidGenerator.class, "cowKlidGenerator");
         register(TileEntityKlidInfusionPlate.class, "klidInfusionPlate");
         register(TileEntityKlidStorageExtractor.class, "klidStorageExtractor");
+        register(TileEntityHeimCore.class, "heimCore");
     }
 
     private static void register(Class<? extends TileEntity> clazz, String name)

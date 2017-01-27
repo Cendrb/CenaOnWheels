@@ -3,12 +3,15 @@ package com.cendrb.cenaonwheels.util;
 import com.cendrb.cenaonwheels.Core;
 import com.cendrb.cenaonwheels.KlidWorldSavedData;
 import com.cendrb.cenaonwheels.entity.EntityKlidBurst;
+import com.cendrb.cenaonwheels.init.ModSounds;
 import com.cendrb.cenaonwheels.network.SyncEntityNBTMessage;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
@@ -80,5 +83,23 @@ public class WorldHelper {
 
     private static double getRandomPolarity(Random random) {
         return random.nextBoolean() ? 1 : -1;
+    }
+
+    public static void createHeimExplosion(World world, Entity entity, double x, double y, double z, float power) {
+        Explosion explosion = new CustomSoundExplosion(world, entity, x, y, z, power, false, true, ModSounds.heimExplosion);
+        //if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(world, explosion)) return;
+        explosion.doExplosionA();
+        explosion.doExplosionB(true);
+    }
+
+    public static boolean surroundedBy(World world, BlockPos pos, Class<? extends Block> block) {
+        for (int xOff = -1; xOff != 1; xOff++)
+            for (int yOff = -1; yOff != 1; yOff++)
+                for (int zOff = -1; zOff != 1; zOff++)
+                    if (!(xOff == 0 && yOff == 0 && zOff == 0)) {
+                        if (!block.isInstance(world.getBlockState(pos.add(xOff, yOff, zOff)).getBlock()))
+                            return false;
+                    }
+        return true;
     }
 }

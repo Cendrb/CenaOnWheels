@@ -20,7 +20,7 @@ import java.util.Random;
  */
 public class BlockCowKlidGenerator extends BlockBase implements ITileEntityProvider {
 
-    public static PropertyBool TRIGGERED = PropertyBool.create("triggered");
+    public static final PropertyBool TRIGGERED = PropertyBool.create("triggered");
 
     public BlockCowKlidGenerator() {
         super(Material.ROCK, "cowKlidGenerator");

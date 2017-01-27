@@ -43,6 +43,10 @@ public class ModBlocks {
     public static BlockKlidLog klidLog;
     public static BlockKlidLeaves klidLeaves;
 
+    // heim
+    public static BlockHeim heim;
+    public static BlockHeimCore heimCore;
+
     public static void init() {
         oreTempus = registerWithDefaultItemblock(new BlockOreTempus());
         machineBase = registerWithDefaultItemblock(new BlockMachineBase());
@@ -63,10 +67,12 @@ public class ModBlocks {
         klidPlanks = registerWithDefaultItemblock(new BlockKlidPlanks());
         klidLog = registerWithDefaultItemblock(new BlockKlidLog());
         klidLeaves = registerWithDefaultItemblock(new BlockKlidLeaves());
+
+        heim = registerWithDefaultItemblock(new BlockHeim());
+        heimCore = registerWithDefaultItemblock(new BlockHeimCore());
     }
 
     private static <T extends BlockBase> T register(T block, ItemBlock itemBlock) {
-
         GameRegistry.register(block);
         GameRegistry.register(itemBlock);
         block.registerItemModel(itemBlock);

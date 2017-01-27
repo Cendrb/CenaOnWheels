@@ -34,6 +34,7 @@ public class Core {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
+        ModSounds.init();
         ModCreativeTabs.init();
         ModItems.init();
         ModBlocks.init();
