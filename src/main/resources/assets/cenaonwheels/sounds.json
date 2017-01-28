@@ -6,5 +6,11 @@
   "psim": {"category": "master", "sounds": ["cenaonwheels:psim"]},
   "heimExplosion": {"category": "master", "sounds": ["cenaonwheels:heimExplosion"]},
   "gei": {"category": "master", "sounds": ["cenaonwheels:gei"]},
-  "surprise": {"category": "master", "sounds": ["cenaonwheels:surprise"]}
+  "surprise": {"category": "master", "sounds": ["cenaonwheels:surprise"]},
+  "kana": {"category": "master", "sounds": ["cenaonwheels:kana"]},
+  "klid": {"category": "master", "sounds": ["cenaonwheels:klid"]},
+  "nadavat": {"category": "master", "sounds": ["cenaonwheels:nadavat"]},
+  "nesmysl": {"category": "master", "sounds": ["cenaonwheels:nesmysl"]},
+  "saka": {"category": "master", "sounds": ["cenaonwheels:saka"]},
+  "whoa": {"category": "master", "sounds": ["cenaonwheels:whoa"]}
 }

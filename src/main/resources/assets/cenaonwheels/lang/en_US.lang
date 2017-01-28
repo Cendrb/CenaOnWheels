@@ -25,6 +25,9 @@ tile.klidSapling.name=Fucking sapling
 tile.klidPlanks.name=Fucking planks
 tile.klidLog.name=Fuckin log
 tile.klidLeaves.name=Fucking leaves
+tile.heim.name=Akbar
+tile.heimCore=Akbar Core
+tile.klidStorageExtractor.name=Klid Storage Extractor
 
 # Entities
 entity.cenaonwheels.KlidBurst.name=Klid Burst
