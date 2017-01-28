@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -61,6 +62,20 @@ public class BlockKlidInfusionPlate extends BlockBase implements ITileEntityProv
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         // don't use this for TileEntity initialization - TileEntity doesn't exist yet
         return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer);
+    }
+
+    @Override
+    public boolean hasComparatorInputOverride(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
+        TileEntityKlidInfusionPlate klidInfusionPlate = (TileEntityKlidInfusionPlate) worldIn.getTileEntity(pos);
+        if (klidInfusionPlate != null) {
+            return klidInfusionPlate.getComparatorOutput();
+        }
+        return 0;
     }
 
     @Override

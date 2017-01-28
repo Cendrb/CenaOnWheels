@@ -9,7 +9,7 @@ item.aschGem.name=Aschgem
 
 # Blocks
 tile.oreTempus.name=Tempus Ore
-tile.klidStorageCap.name=Vis Storage Cap
+tile.klidStorageCap.name=Klid Storage Cap
 tile.klidStorageCasing.name=Klid Storage Casing
 tile.klidStorageGlass.name=Klid Storage Glass
 tile.klidStorageBasicCore.name=Klid Storage Basic Core
@@ -26,7 +26,7 @@ tile.klidPlanks.name=Fucking planks
 tile.klidLog.name=Fuckin log
 tile.klidLeaves.name=Fucking leaves
 tile.heim.name=Akbar
-tile.heimCore=Akbar Core
+tile.heimCore.name=Akbar Core
 tile.klidStorageExtractor.name=Klid Storage Extractor
 
 # Entities
@@ -38,5 +38,6 @@ itemGroup.COW=COW
 # JEI descriptions
 jei.description.tempusShard=Found as an ore underground. Used to harness power of The Mighty Asch.
 jei.description.wrench=Right-click to get info about a machine.\nShift-right-click to select a machine and then shift-right-click again to choose the target block.
-jei.description.core=Used in the center of the Klid Storage\nSum of all cores in the storage specifies how much klid will be released in one burst.\nValues for different kinds of cores are in their tooltips.
-jei.description.plate=Used to infuse items with klid energy.\nEach tier has efficiency. Efficiency specifies how much klid is actually used to infuse the item. Rest of the klid is RELEASED INTO THE ATMOSPHERE!\nValues for different kinds of plates are in their tooltips.
+jei.description.klidStorageCore=Used in the center of the Klid Storage\nSum of all cores in the storage specifies how much klid will be released in one burst.\nValues for different kinds of cores are in their tooltips.
+jei.description.klidStoragePlate=Used to infuse items with klid energy.\nEach tier has efficiency. Efficiency specifies how much klid is actually used to infuse the item. Rest of the klid is RELEASED INTO THE ATMOSPHERE!\nValues for different kinds of plates are in their tooltips.
+jei.description.klidStorageCap=Main klid storage block, every storage needs exactly one of them.\nPlace on top of the cores.

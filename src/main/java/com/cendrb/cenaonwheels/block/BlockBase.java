@@ -22,6 +22,8 @@ public class BlockBase extends Block implements ItemBlockModelProvider {
         setUnlocalizedName(pureName);
         setRegistryName(pureName);
         setCreativeTab(ModCreativeTabs.cowCreativeTab);
+        setHardness(2.0F);
+        setHarvestLevel("pickaxe", 0);
     }
 
     public String getPureName() {

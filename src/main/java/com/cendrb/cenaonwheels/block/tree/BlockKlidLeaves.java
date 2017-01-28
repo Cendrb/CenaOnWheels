@@ -40,7 +40,8 @@ public class BlockKlidLeaves extends BlockBase {
         this.setHardness(0.2F);
         this.setLightOpacity(1);
         this.setSoundType(SoundType.PLANT);
-        setDefaultState(this.blockState.getBaseState().withProperty(DECAYABLE, true).withProperty(CHECK_DECAY, true));
+        setDefaultState(this.blockState.getBaseState().withProperty(DECAYABLE, false).withProperty(CHECK_DECAY, true));
+        setHarvestLevel("none", 0);
     }
 
     @Override

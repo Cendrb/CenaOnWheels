@@ -1,9 +1,7 @@
 package com.cendrb.cenaonwheels.tileentity;
 
 import com.cendrb.cenaonwheels.IKlidAcceptor;
-import com.cendrb.cenaonwheels.init.KlidInfusionRecipe;
-import com.cendrb.cenaonwheels.init.KlidInfusionRecipeResult;
-import com.cendrb.cenaonwheels.init.ModKlidInfusionRecipes;
+import com.cendrb.cenaonwheels.init.*;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import com.cendrb.cenaonwheels.util.WorldHelper;
 import net.minecraft.block.state.IBlockState;
@@ -18,6 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -161,6 +160,7 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
 
         if (klidInfused >= currentRecipe.getRequiredKlid()) {
             COWLogger.logDebug("Infusion complete!");
+            worldObj.playSound(null, pos, ModSounds.kana, SoundCategory.BLOCKS, 2f, 1f);
             if (klidInfused > currentRecipe.getRequiredKlid())
                 WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), klidInfused - currentRecipe.getRequiredKlid());
             outputItemStack = currentRecipe.getResult().copy();
@@ -169,6 +169,10 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
             klidInfused = 0;
             setCurrentIngredients(new ArrayList<ItemStack>());
         }
+
+        IBlockState blockState = worldObj.getBlockState(pos);
+        worldObj.notifyBlockUpdate(pos, blockState, blockState, 1);
+        worldObj.updateComparatorOutputLevel(pos, ModBlocks.klidInfusionBasicPlate);
     }
 
     public void setEfficiency(float efficiency) {
@@ -198,15 +202,26 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
             return currentRecipe.getRequiredKlid();
     }
 
-    private void setCurrentIngredients(ArrayList<ItemStack> ingredients)
-    {
+    public int getComparatorOutput() {
+        if (isInfusionReady() && !isInfusionRunning()) {
+            return 1;
+        } else if (outputItemStack != null) {
+            return 15;
+        } else if (isInfusionReady() && isInfusionRunning()) {
+            return (int) (((double) getKlidInfused() / (double) getKlidRequired()) * 14) + 1;
+        } else {
+            return 0;
+        }
+    }
+
+    private void setCurrentIngredients(ArrayList<ItemStack> ingredients) {
         currentIngredients = ingredients;
         IBlockState blockState = worldObj.getBlockState(pos);
         worldObj.notifyBlockUpdate(pos, blockState, blockState, 1);
+        worldObj.updateComparatorOutputLevel(pos, ModBlocks.klidInfusionBasicPlate);
     }
 
-    public ArrayList<ItemStack> getCurrentIngredients()
-    {
+    public ArrayList<ItemStack> getCurrentIngredients() {
         return currentIngredients;
     }
 
@@ -227,6 +242,7 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
                 if (result == KlidInfusionRecipeResult.Complete) {
                     if (!simulate) {
                         COWLogger.logDebug("Infusion ready!");
+                        worldObj.playSound(null, pos, ModSounds.heimArmed, SoundCategory.BLOCKS, 2f, 1f);
                         currentRecipe = ModKlidInfusionRecipes.getRecipeFor(theoreticalFutureList);
                         setCurrentIngredients(theoreticalFutureList);
                     }

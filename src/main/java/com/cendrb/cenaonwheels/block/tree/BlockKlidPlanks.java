@@ -9,5 +9,6 @@ import net.minecraft.block.material.Material;
 public class BlockKlidPlanks extends BlockBase {
     public BlockKlidPlanks() {
         super(Material.WOOD, "klidPlanks");
+        setHarvestLevel("axe", 1);
     }
 }

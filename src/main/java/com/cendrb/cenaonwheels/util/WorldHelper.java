@@ -10,11 +10,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -64,6 +66,7 @@ public class WorldHelper {
 
     public static void spawnKlidBurst(World world, double x, double y, double z, BlockPos targetLocation, int klidAmount) {
         if (klidAmount > 0) {
+            world.playSound(null, x, y, z, ModSounds.whoa, SoundCategory.BLOCKS, 2f, 1f);
             EntityKlidBurst klidBurst = new EntityKlidBurst(world);
             klidBurst.setPosition(x, y, z);
             klidBurst.setTarget(targetLocation);
@@ -78,6 +81,7 @@ public class WorldHelper {
             KlidWorldSavedData savedData = KlidWorldSavedData.getFor(world);
             savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + klidAmount);
             WorldHelper.spawnKlidReleasedParticles(world, x, y, z);
+            world.playSound(null, x, y, z, ModSounds.klid, SoundCategory.MASTER, 60f, 1f);
         }
     }
 
@@ -87,19 +91,43 @@ public class WorldHelper {
 
     public static void createHeimExplosion(World world, Entity entity, double x, double y, double z, float power) {
         Explosion explosion = new CustomSoundExplosion(world, entity, x, y, z, power, false, true, ModSounds.heimExplosion);
-        //if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(world, explosion)) return;
+        if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(world, explosion)) return;
         explosion.doExplosionA();
         explosion.doExplosionB(true);
     }
 
-    public static boolean surroundedBy(World world, BlockPos pos, Class<? extends Block> block) {
-        for (int xOff = -1; xOff != 1; xOff++)
-            for (int yOff = -1; yOff != 1; yOff++)
-                for (int zOff = -1; zOff != 1; zOff++)
-                    if (!(xOff == 0 && yOff == 0 && zOff == 0)) {
-                        if (!block.isInstance(world.getBlockState(pos.add(xOff, yOff, zOff)).getBlock()))
-                            return false;
-                    }
-        return true;
+    public static ArrayList<BlockPos> getSurroundPositions(World world, BlockPos pos)
+    {
+        ArrayList<BlockPos> positions = new ArrayList<>();
+        positions.add(pos.north());
+        positions.add(pos.south());
+        positions.add(pos.west());
+        positions.add(pos.east());
+        positions.add(pos.north().west());
+        positions.add(pos.north().east());
+        positions.add(pos.south().west());
+        positions.add(pos.south().east());
+
+        positions.add(pos.up());
+        positions.add(pos.up().north());
+        positions.add(pos.up().south());
+        positions.add(pos.up().west());
+        positions.add(pos.up().east());
+        positions.add(pos.up().north().west());
+        positions.add(pos.up().north().east());
+        positions.add(pos.up().south().west());
+        positions.add(pos.up().south().east());
+
+        positions.add(pos.down());
+        positions.add(pos.down().north());
+        positions.add(pos.down().south());
+        positions.add(pos.down().west());
+        positions.add(pos.down().east());
+        positions.add(pos.down().north().west());
+        positions.add(pos.down().north().east());
+        positions.add(pos.down().south().west());
+        positions.add(pos.down().south().east());
+
+        return positions;
     }
 }

@@ -1,5 +1,6 @@
 package com.cendrb.cenaonwheels;
 
+import com.cendrb.cenaonwheels.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
@@ -16,11 +17,11 @@ public class KlidStorageBlockEnergyValues {
     static {
         blockValues.put(Blocks.IRON_BLOCK, 50);
         blockValues.put(Blocks.GOLD_BLOCK, 200);
+        blockValues.put(ModBlocks.klidMetalBlock, 400);
         blockValues.put(Blocks.DIAMOND_BLOCK, 500);
     }
 
-    public static Integer getEnergyValue(Block block)
-    {
+    public static Integer getEnergyValue(Block block) {
         return blockValues.get(block);
     }
 }

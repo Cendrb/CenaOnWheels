@@ -39,11 +39,12 @@ public class JEIPlugin extends BlankModPlugin {
             add(new ItemStack(ModBlocks.klidStorageBasicCore));
             add(new ItemStack(ModBlocks.klidStorageAdvancedCore));
             add(new ItemStack(ModBlocks.klidStorageUltimateCore));
-        }}, "jei.description.core");
+        }}, "jei.description.klidStorageCore");
         registry.addDescription(new ArrayList<ItemStack>() {{
             add(new ItemStack(ModBlocks.klidInfusionBasicPlate));
             add(new ItemStack(ModBlocks.klidInfusionAdvancedPlate));
             add(new ItemStack(ModBlocks.klidInfusionUltimatePlate));
-        }}, "jei.description.plate");
+        }}, "jei.description.klidStoragePlate");
+        registry.addDescription(new ItemStack(ModBlocks.klidStorageCap), "jei.description.klidStorageCap");
     }
 }

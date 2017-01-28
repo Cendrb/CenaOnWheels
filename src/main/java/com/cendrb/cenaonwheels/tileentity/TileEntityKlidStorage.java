@@ -8,6 +8,7 @@ import com.cendrb.cenaonwheels.block.BlockKlidStorageCasing;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageCore;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageExtractor;
 import com.cendrb.cenaonwheels.block.BlockKlidStorageGlass;
+import com.cendrb.cenaonwheels.init.ModBlocks;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import com.cendrb.cenaonwheels.util.WorldHelper;
 import net.minecraft.block.state.IBlockState;
@@ -40,10 +41,17 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
     private int currentEnergy = 0;
     private int outputBurstVolume = 0;
 
+    private int lastComparatorOutput;
+
     private int tickTimer = 0;
 
     public TileEntityKlidStorage() {
 
+    }
+
+    @Override
+    public void onLoad() {
+        lastComparatorOutput = getComparatorOutput();
     }
 
     @Override
@@ -59,11 +67,33 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
 
     @Override
     public void acceptKlid(int amount) {
-        currentEnergy += amount;
-        COWLogger.logDebug("Accepted " + amount + " klid! TOTAL: " + currentEnergy);
-        if (currentEnergy + amount > currentEnergyMax) {
-            WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), amount - (currentEnergyMax - currentEnergy));
-            currentEnergy = currentEnergyMax;
+        if (amount > 0) {
+            if (currentEnergy + amount > currentEnergyMax) {
+                WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), amount - (currentEnergyMax - currentEnergy));
+                setNewKlidAmount(currentEnergyMax);
+            } else {
+                setNewKlidAmount(currentEnergy + amount);
+            }
+            COWLogger.logDebug("Accepted " + amount + " klid! TOTAL: " + currentEnergy);
+        }
+    }
+
+    public void withdrawKlid(int klidAmount) {
+        if (klidAmount > 0) {
+            setNewKlidAmount(currentEnergy - klidAmount);
+        }
+    }
+
+    private void setNewKlidAmount(int klidAmount) {
+        if (!worldObj.isRemote) {
+            IBlockState blockState = worldObj.getBlockState(pos);
+            worldObj.notifyBlockUpdate(pos, blockState, blockState, 1);
+            currentEnergy = klidAmount;
+            int newComparatorOutput = getComparatorOutput();
+            if (newComparatorOutput != lastComparatorOutput) {
+                lastComparatorOutput = newComparatorOutput;
+                worldObj.updateComparatorOutputLevel(pos, ModBlocks.klidStorageCap);
+            }
         }
     }
 
@@ -91,8 +121,6 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
                 }
             }
 
-        if (!success)
-            return;
 
         // check for klid extractors at the top
         ArrayList<BlockPos> extractorPossiblePositions = new ArrayList<>();
@@ -217,7 +245,10 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
             currentEnergy = compound.getInteger("currentEnergy");
         if (compound.hasKey("outputBurstVolume"))
             outputBurstVolume = compound.getInteger("outputBurstVolume");
-
+        if(compound.hasKey("currentEnergyMax"))
+            currentEnergyMax = compound.getInteger("currentEnergyMax");
+        if(outputBurstVolume > 0)
+            multiblockComplete = true;
     }
 
     @Override
@@ -225,6 +256,7 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
         super.writeToNBT(compound);
         compound.setInteger("currentEnergy", currentEnergy);
         compound.setInteger("outputBurstVolume", outputBurstVolume);
+        compound.setInteger("currentEnergyMax", currentEnergyMax);
         return compound;
     }
 
@@ -257,5 +289,9 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
 
     public int getOutputBurstVolume() {
         return outputBurstVolume;
+    }
+
+    public int getComparatorOutput() {
+        return (int) (((double) currentEnergy / (double) currentEnergyMax) * 15);
     }
 }

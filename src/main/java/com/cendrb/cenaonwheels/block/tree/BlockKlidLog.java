@@ -10,5 +10,6 @@ public class BlockKlidLog extends BlockBase {
 
     public BlockKlidLog() {
         super(Material.WOOD, "klidLog");
+        setHarvestLevel("axe", 1);
     }
 }

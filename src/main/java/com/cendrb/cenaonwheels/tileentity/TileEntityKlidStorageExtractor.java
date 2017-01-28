@@ -31,6 +31,7 @@ public class TileEntityKlidStorageExtractor extends TileEntityMultiblockPart imp
                         toBeReleased = masterKlidStorage.getOutputBurstVolume();
                     }
                     if (toBeReleased > 0) {
+                        masterKlidStorage.withdrawKlid(toBeReleased);
                         WorldHelper.spawnKlidBurst(worldObj, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, targetLocation, toBeReleased);
                     }
                 }
@@ -48,6 +49,7 @@ public class TileEntityKlidStorageExtractor extends TileEntityMultiblockPart imp
         if (targetLocation != null)
             compound.setLong("targetLocation", targetLocation.toLong());
         compound.setBoolean("triggered", triggered);
+        compound.setInteger("tickTimer", tickTimer);
         return compound;
     }
 
@@ -58,6 +60,8 @@ public class TileEntityKlidStorageExtractor extends TileEntityMultiblockPart imp
             targetLocation = BlockPos.fromLong(compound.getLong("targetLocation"));
         if (compound.hasKey("triggered"))
             triggered = compound.getBoolean("triggered");
+        if (compound.hasKey("tickTimer"))
+            tickTimer = compound.getInteger("tickTimer");
     }
 
     @Override

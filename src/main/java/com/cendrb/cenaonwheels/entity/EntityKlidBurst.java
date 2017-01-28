@@ -55,8 +55,7 @@ public class EntityKlidBurst extends Entity {
                     if (masterPos != null) {
                         TileEntity masterTileEntity = worldObj.getTileEntity(masterPos);
                         if (masterTileEntity instanceof TileEntityKlidStorage) {
-                            if (!worldObj.isRemote)
-                                ((TileEntityKlidStorage) masterTileEntity).acceptKlid(value);
+                            ((TileEntityKlidStorage) masterTileEntity).acceptKlid(value);
                             klidSaved = true;
                         }
                     }

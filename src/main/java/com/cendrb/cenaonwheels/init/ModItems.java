@@ -2,6 +2,7 @@ package com.cendrb.cenaonwheels.init;
 
 import com.cendrb.cenaonwheels.item.ItemBase;
 import com.cendrb.cenaonwheels.item.ItemWrench;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -15,6 +16,7 @@ public class ModItems {
     public static ItemBase klidMetal;
     public static ItemBase klidGem;
     public static ItemBase aschGem;
+    public static ItemBase timelessGunpowder;
     public static ItemWrench wrench;
 
     public static void init() {
@@ -24,6 +26,7 @@ public class ModItems {
         klidMetal = register(new ItemBase("klidMetal"));
         klidGem = register(new ItemBase("klidGem"));
         aschGem = register(new ItemBase("aschGem"));
+        timelessGunpowder = register(new ItemBase("timelessGunpowder"));
         wrench = register(new ItemWrench());
     }
 

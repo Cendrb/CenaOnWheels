@@ -1,5 +1,6 @@
 package com.cendrb.cenaonwheels.block;
 
+import com.cendrb.cenaonwheels.init.ModBlocks;
 import com.cendrb.cenaonwheels.tileentity.TileEntityHeimCore;
 import com.cendrb.cenaonwheels.util.WorldHelper;
 import net.minecraft.block.Block;
@@ -18,6 +19,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 
 /**
  * Created by cendr_000 on 4. 7. 2015.
@@ -78,41 +80,18 @@ public class BlockHeimCore extends BlockBase implements ITileEntityProvider {
 
     public static boolean setupMultiblockAkbar(World world, BlockPos pos) {
         IBlockState currentState = world.getBlockState(pos);
-        if (currentState.getBlock() instanceof BlockHeimCore)
-            if (WorldHelper.surroundedBy(world, pos, BlockHeim.class)) {
-                world.setBlockState(pos, currentState.withProperty(EXPLOSIVE, true));
-
-                world.setBlockToAir(pos.north());
-                world.setBlockToAir(pos.south());
-                world.setBlockToAir(pos.west());
-                world.setBlockToAir(pos.east());
-                world.setBlockToAir(pos.north().west());
-                world.setBlockToAir(pos.north().east());
-                world.setBlockToAir(pos.south().west());
-                world.setBlockToAir(pos.south().east());
-
-                world.setBlockToAir(pos.up());
-                world.setBlockToAir(pos.up().north());
-                world.setBlockToAir(pos.up().south());
-                world.setBlockToAir(pos.up().west());
-                world.setBlockToAir(pos.up().east());
-                world.setBlockToAir(pos.up().north().west());
-                world.setBlockToAir(pos.up().north().east());
-                world.setBlockToAir(pos.up().south().west());
-                world.setBlockToAir(pos.up().south().east());
-
-                world.setBlockToAir(pos.down());
-                world.setBlockToAir(pos.down().north());
-                world.setBlockToAir(pos.down().south());
-                world.setBlockToAir(pos.down().west());
-                world.setBlockToAir(pos.down().east());
-                world.setBlockToAir(pos.down().north().west());
-                world.setBlockToAir(pos.down().north().east());
-                world.setBlockToAir(pos.down().south().west());
-                world.setBlockToAir(pos.down().south().east());
-
-                return true;
+        if (currentState.getBlock() instanceof BlockHeimCore) {
+            ArrayList<BlockPos> surroundPositions = WorldHelper.getSurroundPositions(world, pos);
+            for (BlockPos position : surroundPositions) {
+                if (world.getBlockState(position).getBlock() != ModBlocks.heim)
+                    return false;
             }
+
+            for (BlockPos position : surroundPositions) {
+                world.setBlockToAir(position);
+            }
+            world.setBlockState(pos, currentState.withProperty(EXPLOSIVE, true));
+        }
         return false;
     }
 

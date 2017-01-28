@@ -75,7 +75,6 @@ public class TileEntityCowKlidGenerator extends TileEntity implements ITickable,
                     int extractedKlidAmount = (int) (cowsCount * (random.nextFloat() + 0.5f));
                     if (extractedKlidAmount > 0)
                         if (targetLocation != null) {
-                            worldObj.playSound(null, pos, ModSounds.whoa, SoundCategory.BLOCKS, 5f, 1f);
                             WorldHelper.spawnKlidBurst(worldObj, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, targetLocation, extractedKlidAmount);
                         } else {
                             WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), extractedKlidAmount);

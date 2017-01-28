@@ -1,6 +1,7 @@
 package com.cendrb.cenaonwheels;
 
 import com.cendrb.cenaonwheels.eventhandlers.EntityStruckByLightningHandler;
+import com.cendrb.cenaonwheels.eventhandlers.ItemTooltipEventHandler;
 import com.cendrb.cenaonwheels.eventhandlers.WorldLoadHandler;
 import com.cendrb.cenaonwheels.init.*;
 import com.cendrb.cenaonwheels.network.SpawnParticleMessage;
@@ -69,6 +70,7 @@ public class Core {
         // crafting recipes, new handlers
         MinecraftForge.EVENT_BUS.register(new WorldLoadHandler());
         MinecraftForge.EVENT_BUS.register(new EntityStruckByLightningHandler());
+        MinecraftForge.EVENT_BUS.register(new ItemTooltipEventHandler());
     }
 
     @Mod.EventHandler

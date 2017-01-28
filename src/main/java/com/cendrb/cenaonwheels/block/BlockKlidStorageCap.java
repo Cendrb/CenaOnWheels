@@ -32,6 +32,20 @@ public class BlockKlidStorageCap extends BlockMultiblockMaster implements ITileE
     }
 
     @Override
+    public boolean hasComparatorInputOverride(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
+        TileEntityKlidStorage klidStorage = (TileEntityKlidStorage) worldIn.getTileEntity(pos);
+        if (klidStorage != null) {
+            return klidStorage.getComparatorOutput();
+        }
+        return 0;
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityKlidStorage();
     }
