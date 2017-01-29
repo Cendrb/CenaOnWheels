@@ -38,7 +38,6 @@ public class BlockKlidSapling extends BlockBase implements IGrowable {
     public BlockKlidSapling(KlidWoodType woodType) {
         super(Material.GRASS, "klidSapling");
         this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, woodType).withProperty(STAGE, 0));
-        this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
 
     @Override

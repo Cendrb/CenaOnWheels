@@ -19,17 +19,11 @@ public enum KlidWoodType implements IStringSerializable {
 
     private final int meta;
     private final String name;
-    private final String unlocalizedName;
     private final MapColor mapColor;
 
     private KlidWoodType(int metaIn, String nameIn, MapColor mapColorIn) {
-        this(metaIn, nameIn, nameIn, mapColorIn);
-    }
-
-    private KlidWoodType(int metaIn, String nameIn, String unlocalizedNameIn, MapColor mapColorIn) {
         this.meta = metaIn;
         this.name = nameIn;
-        this.unlocalizedName = unlocalizedNameIn;
         this.mapColor = mapColorIn;
     }
 
@@ -57,7 +51,8 @@ public enum KlidWoodType implements IStringSerializable {
         return this.name;
     }
 
-    public String getUnlocalizedName() {
-        return this.unlocalizedName;
+    public String getCapitalizedName()
+    {
+        return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 }

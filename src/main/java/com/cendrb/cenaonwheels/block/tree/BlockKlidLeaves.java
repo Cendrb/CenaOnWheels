@@ -9,6 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,7 +33,7 @@ public class BlockKlidLeaves extends BlockBase {
 
     public static final PropertyBool DECAYABLE = PropertyBool.create("decayable");
     public static final PropertyBool CHECK_DECAY = PropertyBool.create("check_decay");
-    int[] surroundings;
+    private int[] surroundings;
 
     public BlockKlidLeaves() {
         super(Material.LEAVES, "klidLeaves");
@@ -65,8 +66,6 @@ public class BlockKlidLeaves extends BlockBase {
     }
 
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        int i = 1;
-        int j = 2;
         int k = pos.getX();
         int l = pos.getY();
         int i1 = pos.getZ();
@@ -90,14 +89,9 @@ public class BlockKlidLeaves extends BlockBase {
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         if (!worldIn.isRemote) {
             if (state.getValue(CHECK_DECAY) && state.getValue(DECAYABLE)) {
-                int i = 4;
-                int j = 5;
                 int k = pos.getX();
                 int l = pos.getY();
                 int i1 = pos.getZ();
-                int j1 = 32;
-                int k1 = 1024;
-                int l1 = 16;
 
                 if (this.surroundings == null) {
                     this.surroundings = new int[32768];
@@ -163,7 +157,7 @@ public class BlockKlidLeaves extends BlockBase {
                 int l2 = this.surroundings[16912];
 
                 if (l2 >= 0) {
-                    worldIn.setBlockState(pos, state.withProperty(CHECK_DECAY, Boolean.valueOf(false)), 4);
+                    worldIn.setBlockState(pos, state.withProperty(CHECK_DECAY, false), 4);
                 } else {
                     this.destroy(worldIn, pos);
                 }
@@ -182,7 +176,7 @@ public class BlockKlidLeaves extends BlockBase {
             double d0 = (double) ((float) pos.getX() + rand.nextFloat());
             double d1 = (double) pos.getY() - 0.05D;
             double d2 = (double) ((float) pos.getZ() + rand.nextFloat());
-            worldIn.spawnParticle(EnumParticleTypes.CLOUD, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+            worldIn.spawnParticle(EnumParticleTypes.CLOUD, d0, d1, d2, 0.0D, 0.0D, 0.0D);
         }
     }
 
@@ -209,6 +203,11 @@ public class BlockKlidLeaves extends BlockBase {
     }
 
     protected void dropApple(World worldIn, BlockPos pos, IBlockState state, int chance) {
+        if (worldIn.rand.nextInt(chance) == 0) {
+            EntityCow entityCow = new EntityCow(worldIn);
+            entityCow.setPosition(pos.getX(), pos.getY(), pos.getZ());
+            worldIn.spawnEntityInWorld(entityCow);
+        }
     }
 
     protected int getSaplingDropChance(IBlockState state) {
@@ -238,7 +237,7 @@ public class BlockKlidLeaves extends BlockBase {
 
     @Override
     public void beginLeavesDecay(IBlockState state, World world, BlockPos pos) {
-        if (!(Boolean) state.getValue(CHECK_DECAY)) {
+        if (!state.getValue(CHECK_DECAY)) {
             world.setBlockState(pos, state.withProperty(CHECK_DECAY, true), 4);
         }
     }
