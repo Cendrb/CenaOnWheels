@@ -75,10 +75,12 @@ public class EntityKlidBurst extends Entity {
             }
         }
 
-        if (worldObj.isRemote) {
-            AschParticle aschParticle = new AschParticle(worldObj, this.posX, this.posY, this.posZ, -this.motionX, -this.motionY, -this.motionZ);
-            Minecraft.getMinecraft().effectRenderer.addEffect(aschParticle);
-        }
+        if (worldObj.isRemote)
+            worldObj.spawnParticle(EnumParticleTypes.CRIT_MAGIC, posX, posY, posZ, -motionX, -motionY, -motionZ);
+        //if (worldObj.isRemote) {
+        //    AschParticle aschParticle = new AschParticle(worldObj, this.posX, this.posY, this.posZ, -this.motionX, -this.motionY, -this.motionZ);
+        //    Minecraft.getMinecraft().effectRenderer.addEffect(aschParticle);
+        //}
 
         super.onUpdate();
     }
