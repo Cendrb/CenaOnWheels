@@ -7,6 +7,11 @@ import net.minecraft.item.Item;
  */
 public class ServerProxy extends CommonProxy {
     @Override
+    public void registerParticleTextureSticher() {
+        // no rendering on server side
+    }
+
+    @Override
     public void registerItemRenderer(Item item, int meta, String id) {
         // no rendering on server side
     }

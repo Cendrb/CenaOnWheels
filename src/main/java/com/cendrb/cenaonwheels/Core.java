@@ -46,6 +46,7 @@ public class Core {
 
         proxy.registerEntityRenderers();
         proxy.registerTileEntitySpecialRenderers();
+        proxy.registerParticleTextureSticher();
 
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(RefStrings.MODID + "_channel");
         networkWrapper.registerMessage(SpawnParticleMessage.Handler.class, SpawnParticleMessage.class, 0, Side.CLIENT);

@@ -2,9 +2,11 @@ package com.cendrb.cenaonwheels.entity;
 
 import com.cendrb.cenaonwheels.IKlidAcceptor;
 import com.cendrb.cenaonwheels.block.BlockKlidStoragePart;
+import com.cendrb.cenaonwheels.particle.AschParticle;
 import com.cendrb.cenaonwheels.tileentity.TileEntityKlidStorage;
 import com.cendrb.cenaonwheels.tileentity.TileEntityMultiblockPart;
 import com.cendrb.cenaonwheels.util.WorldHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.nbt.NBTTagCompound;
@@ -68,10 +70,15 @@ public class EntityKlidBurst extends Entity {
 
             // yeah, you need to move the entity yourself
             setPosition(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            if (posY > 120) {
+                WorldHelper.releaseKlidAt(worldObj, posX, posY, posZ, value);
+            }
         }
 
-        if (worldObj.isRemote)
-            worldObj.spawnParticle(EnumParticleTypes.CRIT_MAGIC, posX, posY, posZ, -motionX, -motionY, -motionZ);
+        if (worldObj.isRemote) {
+            AschParticle aschParticle = new AschParticle(worldObj, this.posX, this.posY, this.posZ, -this.motionX, -this.motionY, -this.motionZ);
+            Minecraft.getMinecraft().effectRenderer.addEffect(aschParticle);
+        }
 
         super.onUpdate();
     }
