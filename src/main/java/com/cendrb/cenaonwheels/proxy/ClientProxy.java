@@ -3,9 +3,11 @@ package com.cendrb.cenaonwheels.proxy;
 import com.cendrb.cenaonwheels.RefStrings;
 import com.cendrb.cenaonwheels.entity.EntityKlidBurst;
 import com.cendrb.cenaonwheels.entity.render.KlidBurstRenderFactory;
+import com.cendrb.cenaonwheels.eventhandlers.OverlayHandlerOverlay;
 import com.cendrb.cenaonwheels.eventhandlers.ParticleTextureSticherHandler;
 import com.cendrb.cenaonwheels.tileentity.TileEntityKlidInfusionPlate;
 import com.cendrb.cenaonwheels.tileentity.render.TileEntityRendererKlidInfusionPlate;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
@@ -36,5 +38,10 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void registerTileEntitySpecialRenderers() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityKlidInfusionPlate.class, new TileEntityRendererKlidInfusionPlate());
+    }
+
+    @Override
+    public void registerHUDRenderer() {
+        MinecraftForge.EVENT_BUS.register(new OverlayHandlerOverlay(Minecraft.getMinecraft()));
     }
 }

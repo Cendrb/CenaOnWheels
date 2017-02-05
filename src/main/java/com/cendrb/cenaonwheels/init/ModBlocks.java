@@ -16,6 +16,7 @@ public class ModBlocks {
     // general
     public static BlockOreTempus oreTempus;
     public static BlockMachineBase machineBase;
+    public static BlockBase tempusBlock;
 
     // klid storage
     public static BlockKlidStorageCap klidStorageCap;
@@ -48,6 +49,7 @@ public class ModBlocks {
     public static BlockHeimCore heimCore;
 
     public static void init() {
+        tempusBlock = registerWithDefaultItemblock(new BlockBase(Material.ROCK, "tempusBlock"));
         oreTempus = registerWithDefaultItemblock(new BlockOreTempus());
         machineBase = registerWithDefaultItemblock(new BlockMachineBase());
         klidStorageCap = registerWithDefaultItemblock(new BlockKlidStorageCap());

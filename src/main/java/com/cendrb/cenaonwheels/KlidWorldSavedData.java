@@ -1,18 +1,23 @@
 package com.cendrb.cenaonwheels;
 
+import com.cendrb.cenaonwheels.network.SyncEntityNBTMessage;
+import com.cendrb.cenaonwheels.network.SyncWorldKlidToClientMessage;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import me.guichaguri.tickratechanger.api.TickrateAPI;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 /**
  * Created by cendr_000 on 14.10.2016.
  */
 public class KlidWorldSavedData extends WorldSavedData {
 
-    private static int DEFAULT_TICKRATE = 20;
-    private static int MINIMAL_TICKRATE = 5;
+    public static final int KLID_TIME_SLOW_THRESHOLD = 10000;
+
+    private static final int DEFAULT_TICKRATE = 20;
+    private static final int MINIMAL_TICKRATE = 5;
 
     private int klidInTheAtmosphere = 0;
 
@@ -44,25 +49,43 @@ public class KlidWorldSavedData extends WorldSavedData {
         return tag;
     }
 
+
+    @Override
+    public void deserializeNBT(NBTTagCompound p_deserializeNBT_1_) {
+        readFromNBT(p_deserializeNBT_1_);
+    }
+
+    @Override
+    public NBTTagCompound serializeNBT() {
+        return writeToNBT(new NBTTagCompound());
+    }
+
     public int getKlidInTheAtmosphere() {
         return klidInTheAtmosphere;
     }
 
-    public void setKlidInTheAtmosphere(int klidInTheAtmosphere) {
+    public void setKlidInTheAtmosphere(int klidInTheAtmosphere, boolean isServer) {
         this.klidInTheAtmosphere = klidInTheAtmosphere;
         markDirty();
+        if (isServer) {
+            sendCurrentValuesToAllClients();
+        }
         COWLogger.logDebug("BEWARE: Klid levels are rising... " + klidInTheAtmosphere);
-        refreshCurrentTickRate();
+        refreshCurrentTickRate(isServer);
     }
 
-    public void refreshCurrentTickRate() {
-        if (klidInTheAtmosphere > 100000) {
-            int calculatedTickRate = DEFAULT_TICKRATE - (klidInTheAtmosphere - 1000) / 100;
+    public void sendCurrentValuesToAllClients()
+    {
+        Core.networkWrapper.sendToAll(new SyncWorldKlidToClientMessage(klidInTheAtmosphere));
+    }
+
+    private void refreshCurrentTickRate(boolean isServer) {
+        if (klidInTheAtmosphere > KLID_TIME_SLOW_THRESHOLD) {
+            int calculatedTickRate = DEFAULT_TICKRATE - (klidInTheAtmosphere - KLID_TIME_SLOW_THRESHOLD) / 100;
             if (calculatedTickRate < MINIMAL_TICKRATE)
                 calculatedTickRate = MINIMAL_TICKRATE;
-            if ((int)TickrateAPI.getServerTickrate() != calculatedTickRate) {
-                TickrateAPI.changeMapTickrate(calculatedTickRate);
-                TickrateAPI.changeTickrate(calculatedTickRate);
+            if (isServer && (int) TickrateAPI.getServerTickrate() != calculatedTickRate) {
+                TickrateAPI.changeTickrate(calculatedTickRate, true);
             }
         }
     }

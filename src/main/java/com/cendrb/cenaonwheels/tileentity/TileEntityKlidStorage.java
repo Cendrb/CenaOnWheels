@@ -162,6 +162,7 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
                     success = false;
             }
 
+            boolean allStorageBlocksFound = true;
             if (success) {
                 for (int yOff = 2; yOff < successfulLayers + 2; yOff++) {
                     for (int xOff = -1; xOff < 2; xOff++)
@@ -169,28 +170,30 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
                             if (xOff != 0 || zOff != 0) { // do not count cores - do not execute when both coords are 0
                                 IBlockState blockState = worldObj.getBlockState(pos.down(yOff).west(xOff).north(zOff));
                                 Integer energyValue = KlidStorageBlockEnergyValues.getEnergyValue(blockState.getBlock());
-                                if (energyValue != null)
+                                if (energyValue == null) {
+                                    allStorageBlocksFound = false;
+                                } else {
                                     currentEnergyMax += energyValue;
+                                }
                             }
-                }
-                if (currentEnergyMax > 0) {
-                    multiblockComplete = true;
-                    for (BlockPos pos : blockPositions) {
-                        TileEntity tileEntity = worldObj.getTileEntity(pos);
-                        if (tileEntity != null && tileEntity instanceof TileEntityMultiblockPart) {
-                            // set the master to the parts so they can notify
-                            ((TileEntityMultiblockPart) tileEntity).setMasterPos(this.pos);
+                    if (allStorageBlocksFound && currentEnergyMax > 0) {
+                        multiblockComplete = true;
+                        for (BlockPos pos : blockPositions) {
+                            TileEntity tileEntity = worldObj.getTileEntity(pos);
+                            if (tileEntity != null && tileEntity instanceof TileEntityMultiblockPart) {
+                                // set the master to the parts so they can notify
+                                ((TileEntityMultiblockPart) tileEntity).setMasterPos(this.pos);
+                            }
                         }
                     }
                 }
             }
-        }
-        if (!multiblockComplete && currentEnergy > 0) {
-            KlidWorldSavedData savedData = KlidWorldSavedData.getFor(worldObj);
-            savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + currentEnergy);
-            currentEnergy = 0;
-            EntityLightningBolt lightningBolt = new EntityLightningBolt(worldObj, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, false);
-            worldObj.spawnEntityInWorld(lightningBolt);
+            if (!multiblockComplete && currentEnergy > 0) {
+                WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), currentEnergy);
+                currentEnergy = 0;
+                EntityLightningBolt lightningBolt = new EntityLightningBolt(worldObj, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, false);
+                worldObj.spawnEntityInWorld(lightningBolt);
+            }
         }
     }
 
@@ -245,9 +248,9 @@ public class TileEntityKlidStorage extends TileEntityMultiblockMaster implements
             currentEnergy = compound.getInteger("currentEnergy");
         if (compound.hasKey("outputBurstVolume"))
             outputBurstVolume = compound.getInteger("outputBurstVolume");
-        if(compound.hasKey("currentEnergyMax"))
+        if (compound.hasKey("currentEnergyMax"))
             currentEnergyMax = compound.getInteger("currentEnergyMax");
-        if(outputBurstVolume > 0)
+        if (outputBurstVolume > 0)
             multiblockComplete = true;
     }
 

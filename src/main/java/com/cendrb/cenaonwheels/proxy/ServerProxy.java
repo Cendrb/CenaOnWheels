@@ -25,4 +25,9 @@ public class ServerProxy extends CommonProxy {
     public void registerTileEntitySpecialRenderers() {
         // no rendering on server side
     }
+
+    @Override
+    public void registerHUDRenderer() {
+        // no rendering on server side
+    }
 }

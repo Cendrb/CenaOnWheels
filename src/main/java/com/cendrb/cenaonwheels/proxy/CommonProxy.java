@@ -10,4 +10,5 @@ public abstract class CommonProxy {
     public abstract void registerItemRenderer(Item item, int meta, String id);
     public abstract void registerEntityRenderers();
     public abstract void registerTileEntitySpecialRenderers();
+    public abstract void registerHUDRenderer();
 }

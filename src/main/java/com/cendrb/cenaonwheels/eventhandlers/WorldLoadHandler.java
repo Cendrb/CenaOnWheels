@@ -3,6 +3,8 @@ package com.cendrb.cenaonwheels.eventhandlers;
 import com.cendrb.cenaonwheels.KlidWorldSavedData;
 import com.cendrb.cenaonwheels.util.COWLogger;
 import me.guichaguri.tickratechanger.api.TickrateAPI;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -12,10 +14,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class WorldLoadHandler {
 
     @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load worldLoadEvent)
-    {
-        COWLogger.logDebug("World got loaded");
-        KlidWorldSavedData klidWorldSavedData = KlidWorldSavedData.getFor(worldLoadEvent.getWorld());
-        klidWorldSavedData.refreshCurrentTickRate();
+    public void onEntityJoin(EntityJoinWorldEvent joinWorldEvent) {
+        if (!joinWorldEvent.getWorld().isRemote && joinWorldEvent.getEntity() instanceof EntityPlayer) {
+            KlidWorldSavedData.getFor(joinWorldEvent.getWorld()).sendCurrentValuesToAllClients();
+        }
     }
 }

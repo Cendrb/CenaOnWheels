@@ -66,7 +66,7 @@ public class WorldHelper {
 
     public static void spawnKlidBurst(World world, double x, double y, double z, BlockPos targetLocation, int klidAmount) {
         if (klidAmount > 0) {
-            world.playSound(null, x, y, z, ModSounds.whoa, SoundCategory.BLOCKS, 2f, 1f);
+            world.playSound(null, x, y, z, ModSounds.whoa, SoundCategory.BLOCKS, 2f, 0.8f + (world.rand.nextFloat() * 0.4f));
             EntityKlidBurst klidBurst = new EntityKlidBurst(world);
             klidBurst.setPosition(x, y, z);
             klidBurst.setTarget(targetLocation);
@@ -79,7 +79,8 @@ public class WorldHelper {
     public static void releaseKlidAt(World world, double x, double y, double z, int klidAmount) {
         if (klidAmount > 0) {
             KlidWorldSavedData savedData = KlidWorldSavedData.getFor(world);
-            savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + klidAmount);
+            if (!world.isRemote) // update clients only with messages - do not do it manually
+                savedData.setKlidInTheAtmosphere(savedData.getKlidInTheAtmosphere() + klidAmount, true);
             WorldHelper.spawnKlidReleasedParticles(world, x, y, z);
             world.playSound(null, x, y, z, ModSounds.klid, SoundCategory.MASTER, 60f, 1f);
         }
@@ -96,8 +97,7 @@ public class WorldHelper {
         explosion.doExplosionB(true);
     }
 
-    public static ArrayList<BlockPos> getSurroundPositions(World world, BlockPos pos)
-    {
+    public static ArrayList<BlockPos> getSurroundPositions(World world, BlockPos pos) {
         ArrayList<BlockPos> positions = new ArrayList<>();
         positions.add(pos.north());
         positions.add(pos.south());

@@ -6,6 +6,7 @@ item.klidManipulationCircuit.name=Klid Manipulation Circuit
 item.klidMetal.name=Klidmetal
 item.klidGem.name=Klidgem
 item.aschGem.name=Aschgem
+item.klidDetector.name=Klid Detector
 
 # Blocks
 tile.oreTempus.name=Tempus Ore
@@ -28,6 +29,7 @@ tile.klidLeaves.name=Fucking leaves
 tile.heim.name=Akbar
 tile.heimCore.name=Akbar Core
 tile.klidStorageExtractor.name=Klid Storage Extractor
+tile.tempusBlock.name=Tempus Block
 
 # Entities
 entity.cenaonwheels.KlidBurst.name=Klid Burst

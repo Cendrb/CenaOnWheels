@@ -148,12 +148,14 @@ public class TileEntityKlidInfusionPlate extends TileEntity implements IKlidAcce
     private void infuseWith(int klidAmount) {
         int efficientKlidAmount = (int) (klidAmount * efficiency);
         int klidLost;
-        if (efficientKlidAmount >= currentRecipe.getKlidAcceptanceThreshold()) {
+        if (klidAmount >= currentRecipe.getKlidAcceptanceThreshold()) {
             klidLost = klidAmount - efficientKlidAmount;
             klidInfused += efficientKlidAmount;
+            worldObj.playSound(null, pos, ModSounds.jes, SoundCategory.BLOCKS, 2f, 0.8f + (worldObj.rand.nextFloat() * 0.4f));
             COWLogger.logDebug("Added " + efficientKlidAmount + ", progress " + klidInfused + "/" + getKlidRequired() + ", klid loss: " + klidLost);
         } else {
             klidLost = klidAmount;
+            worldObj.playSound(null, pos, ModSounds.saka, SoundCategory.BLOCKS, 2f, 0.8f + (worldObj.rand.nextFloat() * 0.4f));
             COWLogger.logDebug("Threshold not reached. Klid lost: " + klidLost);
         }
         WorldHelper.releaseKlidAt(worldObj, pos.getX(), pos.getY(), pos.getZ(), klidLost);

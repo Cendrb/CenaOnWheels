@@ -12,5 +12,6 @@
   "nadavat": {"category": "master", "sounds": ["cenaonwheels:nadavat"]},
   "nesmysl": {"category": "master", "sounds": ["cenaonwheels:nesmysl"]},
   "saka": {"category": "master", "sounds": ["cenaonwheels:saka"]},
-  "whoa": {"category": "master", "sounds": ["cenaonwheels:whoa"]}
+  "whoa": {"category": "master", "sounds": ["cenaonwheels:whoa"]},
+  "jes": {"category": "master", "sounds": ["cenaonwheels:jes"]}
 }

@@ -25,6 +25,7 @@ public class ModSounds {
     public static SoundEvent nesmysl;
     public static SoundEvent saka;
     public static SoundEvent whoa;
+    public static SoundEvent jes;
 
     private static int size = 0;
 
@@ -46,6 +47,7 @@ public class ModSounds {
         nesmysl = loadSound("nesmysl");
         saka = loadSound("saka");
         whoa = loadSound("whoa");
+        jes = loadSound("jes");
     }
 
     private static SoundEvent loadSound(String name)
